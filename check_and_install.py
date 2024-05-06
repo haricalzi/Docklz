@@ -72,3 +72,4 @@ def controllo_trivy():
         os.system("rm -f trivy_0.50.1_Linux-64bit.deb")
     else:
         print("Trivy già installato ed aggiornato\n")
+        
