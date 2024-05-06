@@ -4,10 +4,10 @@ import os
 def controllo_git():
     print("Controllo se hai già installato git, in caso contrario lo installo\n")
     #estraggo il nome del pacchetto (git) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -w git | awk '{ print $2 }'").read()
+    nome = os.popen("dpkg -l | grep -E '(^|\s)git($|\s)' | awk '{ print $2 }'").read()
     #controllo se il pacchetto è installato
-    if(nome != "curl\n"):
-        print("Curl non installato, procedo con l'installazione ...\n")
+    if(nome != "git\n"):
+        print("Git non installato, procedo con l'installazione ...\n")
         os.system("sudo apt install git")
     else:
         print("Git già installato\n")
@@ -15,9 +15,9 @@ def controllo_git():
 
 #funzione che controlla se wget è già installato, in caso contrario lo installa
 def controllo_wget():
-    rint("Controllo se hai già installato wget, in caso contrario lo installo\n")
+    print("Controllo se hai già installato wget, in caso contrario lo installo\n")
     #estraggo il nome del pacchetto (wget) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -w wget | awk '{ print $2 }'").read()
+    nome = os.popen("dpkg -l | grep -E '(^|\s)wget($|\s)' | awk '{ print $2 }'").read()
     #controllo se il pacchetto è installato
     if(nome != "wget\n"):
         print("Wget non installato, procedo con l'installazione ...\n")
@@ -30,7 +30,7 @@ def controllo_wget():
 def controllo_curl():
     print("Controllo se hai già installato curl, in caso contrario lo installo\n")
     #estraggo il nome del pacchetto (curl) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -w curl | awk '{ print $2 }'").read()
+    nome = os.popen("dpkg -l | grep -E '(^|\s)curl($|\s)' | awk '{ print $2 }'").read()
     #controllo se il pacchetto è installato
     if(nome != "curl\n"):
         print("Curl non installato, procedo con l'installazione ...\n")
@@ -53,7 +53,7 @@ def controllo_DBS():
 def controllo_trivy():
     print("Controllo se hai già installato trivy, in caso contrario lo installo\n")
     #estraggo il nome del pacchetto (trivy) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -w trivy | awk '{ print $2 }'").read()
+    nome = os.popen("dpkg -l | grep -E '(^|\s)trivy($|\s)' | awk '{ print $2 }'").read()
     #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 3, cut taglia al punto e mi stampa la colonna 1 o 2
     versione1 = int(os.popen("dpkg -l | grep trivy | awk '{ print $3 }' | cut -d '.' -f1").read())
     versione2 = int(os.popen("dpkg -l | grep trivy | awk '{ print $3 }' | cut -d '.' -f2").read())

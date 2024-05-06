@@ -2,25 +2,19 @@ from functions import *
 from gestione_directory import *
 
 #funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
-presentazione()
-
-#scelta iniziale da fare
-scelta_iniziale = input()
-assegna_compito(scelta_iniziale)
-
-#funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
 def presentazione():
+    os.system("clear")
     print("---------------------------------------------")
     print("--- SECURITY ANALISYS OF DOCKER CONTAINER ---")
     print("---------------------------------------------")
-    print("\nBenvenuto :), quale tipo di analisi vuoi effettuare?")
+    print("\nBenvenuto :), quale tipo di analisi vuoi effettuare?\n")
     print("1 -- LIGHT: analisi della configurazione di Docker presente sul sistema")
     print("2 -- BASE: analisi di un'immagine Docker")
-    print("3 -- FULL: analisi completa di un progetto Docker")
-    print("---------------------------------------------")
+    print("3 -- FULL: analisi completa di un progetto Docker (immagine + container + source code)")
+    print("\n---------------------------------------------")
     print("\n\nNB 1: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
-    print("\n\nNB 2: si presuppone che sul sistema sia già stato installato configurato correttamente Docker\n\n")
-    print("\nopzione desiderata: ")
+    print("NB 2: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
+    print("\n\nInserire l'opzione desiderata: ")
 
 
 #funzione che gestice la scelta effettuata dall'utente
@@ -39,3 +33,14 @@ def assegna_compito(scelta_iniziale):
 
         case _:
             exit("Parametro non valido, il programma termina")
+
+
+#inizio main vero e proprio ----------------------------------------------------------
+
+#funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
+presentazione()
+#scelta iniziale da fare
+scelta_iniziale = int(input())
+assegna_compito(scelta_iniziale)
+
+#fine main vero e proprio ------------------------------------------------------------
