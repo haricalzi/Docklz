@@ -1,5 +1,3 @@
-#test
-
 import os
 
 #funzione controlla se git è già installato, in caso contrario lo installa
