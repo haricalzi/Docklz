@@ -54,7 +54,7 @@ def controllo_trivy():
     print("Controllo se hai già installato trivy, in caso contrario lo installo\n")
     #estraggo il nome del pacchetto (trivy) se esiste, read per leggere popen
     nome = os.popen("dpkg -l | grep -w trivy | awk '{ print $2 }'").read()
-    #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo 
+    #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 3, cut taglia al punto e mi stampa la colonna 1 o 2
     versione1 = int(os.popen("dpkg -l | grep trivy | awk '{ print $3 }' | cut -d '.' -f1").read())
     versione2 = int(os.popen("dpkg -l | grep trivy | awk '{ print $3 }' | cut -d '.' -f2").read())
     #controllo se il pacchetto è installato o non aggiornato
@@ -69,14 +69,14 @@ def controllo_trivy():
 
 #funzione che controlla se semgrep è già installato, in caso contrario lo installa
 def controllo_semgrep():
-    print("Controllo se hai già installato semgrep, in caso contrario lo installo\n")ù
+    print("Controllo se hai già installato semgrep, in caso contrario lo installo\n")
     #estraggo il nome del pacchetto (trivy) se esiste, read per leggere popen
     nome = os.popen("pip list | grep semgrep | awk '{ print $1 }'").read()
-    #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo 
+    #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 2, cut taglia al punto e mi stampa la colonna 1 o 2
     versione1 = int(os.popen("pip list | grep semgrep | awk '{ print $2 }' | cut -d '.' -f1").read())
     versione2 = int(os.popen("pip list | grep semgrep | awk '{ print $2 }' | cut -d '.' -f2").read())
     #controllo se il pacchetto è installato o non aggiornato
-    if(nome != "semgrep\n" or (versione1 <= 1 and versione2 <69)):
+    if(nome != "semgrep\n" or (versione1 < 1) or (versione1 == 1 and versione2 < 69)):
         print("Semgrep non installato o non aggiornato, procedo con l'installazione / aggiornamento ...\n")
         os.system("python3 -m pip install semgrep")
     else:
