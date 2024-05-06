@@ -38,13 +38,6 @@ def controllo_curl():
     else:
         print("Curl già installato\n")
 
-
-#funzione che controlla se semgrep è già installato, in caso contrario lo installa
-def controllo_semgrep():
-    print("Controllo se hai già installato semgrep, in caso contrario lo installo\n")
-    os.system("python3 -m pip install semgrep")
-
-
 #funzione che controlla se il Docker Bench for Security è già installato, in caso contrario lo installa
 def controllo_DBS():
     print("Controllo se hai già installato Docker Bench for Security nell'attuale directory, in caso contrario lo installo\n")
@@ -73,3 +66,18 @@ def controllo_trivy():
     else:
         print("Trivy già installato ed aggiornato\n")
         
+
+#funzione che controlla se semgrep è già installato, in caso contrario lo installa
+def controllo_semgrep():
+    print("Controllo se hai già installato semgrep, in caso contrario lo installo\n")ù
+    #estraggo il nome del pacchetto (trivy) se esiste, read per leggere popen
+    nome = os.popen("pip list | grep semgrep | awk '{ print $1 }'").read()
+    #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo 
+    versione1 = int(os.popen("pip list | grep semgrep | awk '{ print $2 }' | cut -d '.' -f1").read())
+    versione2 = int(os.popen("pip list | grep semgrep | awk '{ print $2 }' | cut -d '.' -f2").read())
+    #controllo se il pacchetto è installato o non aggiornato
+    if(nome != "semgrep\n" or (versione1 <= 1 and versione2 <69)):
+        print("Semgrep non installato o non aggiornato, procedo con l'installazione / aggiornamento ...\n")
+        os.system("python3 -m pip install semgrep")
+    else:
+        print("Semgrep già installato ed aggiornato\n")
