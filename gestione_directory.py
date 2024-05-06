@@ -30,7 +30,7 @@ def change_workdir():
 
 
 #funzione che crea la cartella per i risultati
-def mkdir_results(scelta_iniziale):
+def mkdir_results(s):
     #controllo che la cartella non sia già stata creata
     ris = os.popen("ls | grep results").read()
     if(ris!="results\n"):
@@ -39,7 +39,7 @@ def mkdir_results(scelta_iniziale):
         print("PS: ricordati di spostarla o rimuoverla, una volta terminate le scansioni, e salvati i dati, per evitare interferenze\n")
         os.system("mkdir results")
    #controllo se devo creare le cartelle per le varie modalità 
-    match scelta_iniziale:
+    match s:
         case 1:
             #cartella per risultati delle scansioni LIGHT 
             #controllo che la cartella non sia già stata creata

@@ -18,18 +18,23 @@ def presentazione():
 
 
 #funzione che gestice la scelta effettuata dall'utente
-def assegna_compito(scelta_iniziale):
+def assegna_compito(s):
     os.system("clear")
     #controllo il valore inserito dall'utente
-    match scelta_iniziale:
+    match s:
         case 1:
-            mkdir_results(scelta_iniziale)
-            docker_bench_security(scelta_iniziale)
+            mkdir_results(s)
+            docker_bench_security(s)
         case 2:
             check_workdir()
-            mkdir_results(scelta_iniziale)
-            trivy_image(scelta_iniziale)
-        case 3: mkdir_results(scelta_iniziale)
+            mkdir_results(s)
+            trivy_image(s)
+        case 3:
+            mkdir_results(s)
+            docker_bench_security(s)
+            trivy_image(s)
+            trivy_fs()
+            semgrep_scan()
 
         case _:
             exit("Parametro non valido, il programma termina")
@@ -40,7 +45,7 @@ def assegna_compito(scelta_iniziale):
 #funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
 presentazione()
 #scelta iniziale da fare
-scelta_iniziale = int(input())
-assegna_compito(scelta_iniziale)
+s = int(input())
+assegna_compito(s)
 
 #fine main vero e proprio ------------------------------------------------------------
