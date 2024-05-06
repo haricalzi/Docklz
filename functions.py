@@ -24,11 +24,11 @@ def assegna_compito(scelta_iniziale):
     #controllo il valore inserito dall'utente
     match scelta_iniziale:
         case 1:
-            mkdir_results()
+            mkdir_results(scelta_iniziale)
             docker_bench_security()
         case 2:
             check_workdir()
-            mkdir_results()
+            mkdir_results(scelta_iniziale)
             trivy_image()
         case _:
             exit("Parametro non valido, il programma termina")

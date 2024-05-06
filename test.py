@@ -2,4 +2,4 @@ import os
 
 from functions import *
 
-controllo_semgrep()
+mkdir_results(2)
