@@ -3,6 +3,7 @@ from sys import exit
 from check_and_install import *
 from gestione_directory import *
 
+
 #funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
 def presentazione():
     print("---------------------------------------------")
@@ -25,11 +26,13 @@ def assegna_compito(scelta_iniziale):
     match scelta_iniziale:
         case 1:
             mkdir_results(scelta_iniziale)
-            docker_bench_security()
+            docker_bench_security(scelta_iniziale)
         case 2:
             check_workdir()
             mkdir_results(scelta_iniziale)
-            trivy_image()
+            trivy_image(scelta_iniziale)
+        case 3: mkdir_results(scelta_iniziale)
+
         case _:
             exit("Parametro non valido, il programma termina")
 
@@ -43,7 +46,15 @@ def docker_bench_security():
     controllo_DBS()
     os.chdir("docker-bench-security")
     print("\n\nAnalisi in corso, attendere...")
-    os.system("sudo ./docker-bench-security.sh > ../results/DockerBenchmarkSecurity.txt")
+    #in base alla scelta, lo salvo nella cartella giusta 
+    match scelta_iniziale:
+        case 1:
+            os.system("sudo ./docker-bench-security.sh > ../results/light/DockerBenchmarkSecurity.txt")
+        case 2:
+            os.system("sudo ./docker-bench-security.sh > ../results/base/DockerBenchmarkSecurity.txt")
+        case 3:
+            os.system("sudo ./docker-bench-security.sh > ../results/full/DockerBenchmarkSecurity.txt")
+
     print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati in /results nel file DockerBenchmarkSecurity.txt\n")
 
 
@@ -56,12 +67,19 @@ def trivy_image():
     controllo_trivy()
     os.system("clear")
     #stampo le immagini docker presenti nel sistema 
-    print("Ecco un elenco delle immagini docker presenti in locale\n\n")
+    print("Ecco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
     #scelgo ed analizzo un'immagine
     print("\n\nQuale immagine vuoi scansionare? Inserisici il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     immagine = input()
     print("\n\nAnalisi in corso, attendere...")
-    os.system(f"trivy image {immagine} > results/trivy_image.txt")
-    print("\nAnalisi dell'immagine completata, trovi i risultati in /results nel file trivy_image.txt\n")
+    #in base alla scelta, lo salvo nella cartella giusta 
+    match scelta_iniziale:
+        case 1:
+            os.system(f"trivy image {immagine} > results/light/trivy_image.txt")
+        case 2:
+            os.system(f"trivy image {immagine} > results/base/trivy_image.txt")
+        case 3:
+            os.system(f"trivy image {immagine} > results/full/trivy_image.txt")
     
+    print("\nAnalisi dell'immagine completata, trovi i risultati in /results nel file trivy_image.txt\n")
