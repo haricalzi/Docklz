@@ -50,12 +50,11 @@ def docker_bench_security():
     match scelta_iniziale:
         case 1:
             os.system("sudo ./docker-bench-security.sh > ../results/light/DockerBenchmarkSecurity.txt")
+            print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati grezzi in /results/light nel file DockerBenchmarkSecurity.txt\n")
         case 2:
-            os.system("sudo ./docker-bench-security.sh > ../results/base/DockerBenchmarkSecurity.txt")
+            print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati grezzi in /results/base nel file DockerBenchmarkSecurity.txt\n")
         case 3:
-            os.system("sudo ./docker-bench-security.sh > ../results/full/DockerBenchmarkSecurity.txt")
-
-    print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati in /results nel file DockerBenchmarkSecurity.txt\n")
+            print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati grezzi in /results/full nel file DockerBenchmarkSecurity.txt\n")
 
 
 #funzione che ispeziona un'immagine Docker tranmite trivy
@@ -77,9 +76,12 @@ def trivy_image():
     match scelta_iniziale:
         case 1:
             os.system(f"trivy image {immagine} > results/light/trivy_image.txt")
+            print("\nAnalisi dell'immagine completata, trovi i risultati grezzi in /results/light nel file trivy_image.txt\n")
         case 2:
             os.system(f"trivy image {immagine} > results/base/trivy_image.txt")
+            print("\nAnalisi dell'immagine completata, trovi i risultati grezzi in /results/base nel file trivy_image.txt\n")
         case 3:
             os.system(f"trivy image {immagine} > results/full/trivy_image.txt")
+            print("\nAnalisi dell'immagine completata, trovi i risultati grezzu in /results/full nel file trivy_image.txt\n")
     
-    print("\nAnalisi dell'immagine completata, trovi i risultati in /results nel file trivy_image.txt\n")
+    
