@@ -81,6 +81,3 @@ def controllo_semgrep():
         os.system("python3 -m pip install semgrep")
     else:
         print("Semgrep già installato ed aggiornato\n")
-
-#test
-
