@@ -31,7 +31,7 @@ def trivy_image(path):
     print("Ecco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
     #scelgo ed analizzo un'immagine
-    print("\n\nQuale immagine vuoi scansionare? Inserisici il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
+    print("\n\nQuale immagine vuoi scansionare? Inserisci il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     immagine = input()
     print("\n\nAnalisi in corso, attendere...\n")
     #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella

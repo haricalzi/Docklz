@@ -19,21 +19,21 @@ def presentazione():
 
 
 #funzione che gestice la scelta effettuata dall'utente
-def assegna_compito(s):
+def assegna_compito(scelta):
     os.system("clear")
     #controllo il valore inserito dall'utente
-    match s:
+    match scelta:
         case 1:
-            path = mkdir_results(s)
+            path = mkdir_results(scelta)
             docker_bench_security(path)
         case 2:
             check_workdir()
-            path = mkdir_results(s)
+            path = mkdir_results(scelta)
             trivy_image(path)
         case 3:
             check_workdir()
-            path = mkdir_results(s)
-            controllo_sourcecode()
+            path = mkdir_results(scelta)
+            check_sourcecode_dir()
             docker_bench_security(path)
             trivy_image(path)
             trivy_fs(path)
