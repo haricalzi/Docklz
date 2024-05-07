@@ -47,7 +47,6 @@ def mkdir_results(s):
             nome_sottodir = "base"
         case 3:
             nome_sottodir = "full"
-
     #controllo che la cartella non sia già stata creata
     ris = os.popen(f"ls \\{nome_dir}  | grep {nome_sottodir}").read()
     if(ris!=f"{nome_sottodir}\n"):
@@ -56,7 +55,6 @@ def mkdir_results(s):
         os.chdir(f"{nome_dir}")
         os.system(f"mkdir {nome_sottodir}")
         os.chdir("..")
-
     #creo il path e lo ritorno, utile per le funzioni successive
     path = f"{nome_dir}/{nome_sottodir}" 
     return path
