@@ -60,8 +60,3 @@ def semgrep_scan():
     nome_file = "semgrep_scan.txt"
     os.system(f"semgrep scan > {path}/{nome_file}")
     print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
-
-
-#funzione che scansiona un progetto locale
-def trufflehog():
-    print()
