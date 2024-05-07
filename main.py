@@ -52,12 +52,12 @@ while (end != "true"):
     presentazione()
     #scelta iniziale da fare
     assegna_compito(int(input()))
-    print("\n\n\n\n Vuoi effettuare un'altra operazione?")
-    if (int(input() == 0)):
+    print("\n\n\n\nVuoi effettuare un'altra operazione? 1 = sì, 0 = no")
+    if (int(input()) == 0 ):
         end = "true"
 
 #pulisco e termino
 os.system("clear")
-print("Grazie per aver utilizzato questo tool, spero ti sia stato utile")
-print("Per ulteriori informazione: Hari / github / linkedin")
+print("\n\nGrazie per aver utilizzato questo tool, spero ti sia stato utile")
+print("\nPer ulteriori informazione: Hari / github / linkedin\n\n")
 #fine main vero e proprio ------------------------------------------------------------
