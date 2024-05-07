@@ -32,6 +32,7 @@ def assegna_compito(s):
         case 3:
             check_workdir()
             path = mkdir_results(s)
+            controllo_sourcecode()
             docker_bench_security(path)
             trivy_image(path)
             trivy_fs(path)

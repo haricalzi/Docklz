@@ -32,46 +32,31 @@ def change_workdir():
 #funzione che crea la cartella per i risultati
 def mkdir_results(s):
     #controllo che la cartella non sia già stata creata
-    ris = os.popen("ls | grep results").read()
-    if(ris!="results\n"):
+    nome_dir = "results"
+    ris = os.popen(f"ls | grep {nome_dir}").read()
+    if(ris!=f"{nome_dir}\n"):
         #in caso non esista la creo
-        print("Creo una cartella chiamata \"results\" all'interno dell'attuale area di lavoro, contenente i risultati delle varie scansioni")
+        print(f"Creo una cartella chiamata \"{nome_dir}\" all'interno dell'attuale area di lavoro, contenente i risultati delle varie scansioni")
         print("PS: ricordati di spostarla o rimuoverla, una volta terminate le scansioni, e salvati i dati, per evitare interferenze\n")
-        os.system("mkdir results")
-   #controllo se devo creare le cartelle per le varie modalità 
+        os.system(f"mkdir {nome_dir}")
+   #nomi per le directory nelle varie modalità di scansione 
     match s:
         case 1:
-            #cartella per risultati delle scansioni LIGHT 
-            #controllo che la cartella non sia già stata creata
-            ris = os.popen("ls \\results | grep light").read()
-            if(ris!="light\n"):
-                #in caso non esista la creo
-                print("Creo una cartella chiamata \"light\" all'interno di \"results\", contenente i risultati delle scansioni LIGHT")
-                os.chdir("results")
-                os.system("mkdir light")
-                os.chdir("..")
-                path = "results/light"
+            nome_sottodir = "light"
         case 2:
-            #cartella per risultati delle scansioni BASE 
-            #controllo che la cartella non sia già stata creata
-            ris = os.popen("ls \\results | grep base").read()
-            if(ris!="base\n"):
-                #in caso non esista la creo
-                print("Creo una cartella chiamata \"base\" all'interno di \"results\", contenente i risultati delle scansioni BASE")
-                os.chdir("results")
-                os.system("mkdir base")
-                os.chdir("..")
-                path = "results/base"
+            nome_sottodir = "base"
         case 3:
-            #cartella per risultati delle scansioni FULL 
-            #controllo che la cartella non sia già stata creata
-            ris = os.popen("ls \\results | grep full").read()
-            if(ris!="full\n"):
-                #in caso non esista la creo
-                print("Creo una cartella chiamata \"full\" all'interno di \"results\", contenente i risultati delle scansioni FULL")
-                os.chdir("results")
-                os.system("mkdir full")
-                os.chdir("..")
-                path = "results/full"
-    #ritorno il path creato 
+            nome_sottodir = "full"
+
+    #controllo che la cartella non sia già stata creata
+    ris = os.popen(f"ls \\{nome_dir}  | grep {nome_sottodir}").read()
+    if(ris!=f"{nome_sottodir}\n"):
+        #in caso non esista la creo
+        print(f"Creo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}")
+        os.chdir(f"{nome_dir}")
+        os.system(f"mkdir {nome_sottodir}")
+        os.chdir("..")
+
+    #creo il path e lo ritorno, utile per le funzioni successive
+    path = f"{nome_dir}/{nome_sottodir}" 
     return path
