@@ -20,19 +20,19 @@ def docker_bench_security(s):
 
 #funzione che ispeziona un'immagine Docker tramite trivy
 def trivy_image(path):
+    os.system("clear")
     print("\nAnalisi di un'immagine Docker\n")   
     #controllo wget
     controllo_wget()
     #controllo trivy
     controllo_trivy()
-    os.system("clear")
     #stampo le immagini docker presenti nel sistema 
     print("Ecco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
     #scelgo ed analizzo un'immagine
     print("\n\nQuale immagine vuoi scansionare? Inserisici il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     immagine = input()
-    print("\n\nAnalisi in corso, attendere...")
+    print("\n\nAnalisi in corso, attendere...\n")
     #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
     nome_file = "trivy_image.txt"
     os.system(f"trivy image {immagine} > {path}/{nome_file}")

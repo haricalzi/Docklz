@@ -1,42 +1,17 @@
 import os
 
-#funzione controlla se git è già installato, in caso contrario lo installa
-def controllo_git():
-    print("Controllo se hai già installato git, in caso contrario lo installo\n")
-    #estraggo il nome del pacchetto (git) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -E '(^|\s)git($|\s)' | awk '{ print $2 }'").read()
+#funzione controlla se git/wget/curl è già installato, in caso contrario lo installa (passargli il nome del comando alla funzione)
+def controllo_gwc(comando):
+    print(f"Controllo se hai già installato {comando} , in caso contrario lo installo\n")
+    #estraggo il nome del pacchetto se esiste, read per leggere popen
+    nome = os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '\{{ print $2 }}'").read()
     #controllo se il pacchetto è installato
-    if(nome != "git\n"):
-        print("Git non installato, procedo con l'installazione ...\n")
-        os.system("sudo apt install git")
+    if(nome != f"{comando}\n"):
+        print(f"{comando} non installato, procedo con l'installazione ...\n")
+        os.system(f"sudo apt install {comando}")
     else:
-        print("Git già installato\n")
+        print(f"{comando} già installato\n")
 
-
-#funzione che controlla se wget è già installato, in caso contrario lo installa
-def controllo_wget():
-    print("Controllo se hai già installato wget, in caso contrario lo installo\n")
-    #estraggo il nome del pacchetto (wget) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -E '(^|\s)wget($|\s)' | awk '{ print $2 }'").read()
-    #controllo se il pacchetto è installato
-    if(nome != "wget\n"):
-        print("Wget non installato, procedo con l'installazione ...\n")
-        os.system("sudo apt install wget")
-    else:
-        print("Wget già installato\n")
-
-
-#funzione che controlla se curl è già installato, in caso contrario lo installa
-def controllo_curl():
-    print("Controllo se hai già installato curl, in caso contrario lo installo\n")
-    #estraggo il nome del pacchetto (curl) se esiste, read per leggere popen
-    nome = os.popen("dpkg -l | grep -E '(^|\s)curl($|\s)' | awk '{ print $2 }'").read()
-    #controllo se il pacchetto è installato
-    if(nome != "curl\n"):
-        print("Curl non installato, procedo con l'installazione ...\n")
-        os.system("sudo apt install curl")
-    else:
-        print("Curl già installato\n")
 
 #funzione che controlla se il Docker Bench for Security è già installato, in caso contrario lo installa
 def controllo_DBS():
