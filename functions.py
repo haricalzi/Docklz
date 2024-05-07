@@ -57,5 +57,3 @@ def trivy_fs():
 #funzione che ispezione tramite semgrep una directory
 def semgrep_scan():
    print()
-
-#test
