@@ -12,19 +12,17 @@ def docker_bench_security(s):
     controllo_DBS()
     os.chdir("docker-bench-security")
     print("\n\nAnalisi in corso, attendere...")
-    #in base alla scelta, lo salvo nella cartella giusta 
-    match s:
-        case 1:
-            os.system("sudo ./docker-bench-security.sh > ../results/light/DockerBenchmarkSecurity.txt")
-            print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati grezzi in /results/light nel file DockerBenchmarkSecurity.txt\n")
-        case 2:
-            print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati grezzi in /results/base nel file DockerBenchmarkSecurity.txt\n")
-        case 3:
-            print("\nAnalisi della configurazione di Docker presente sul sistema completata, trovi i risultati grezzi in /results/full nel file DockerBenchmarkSecurity.txt\n")
 
 
-#funzione che ispeziona un'immagine Docker tranmite trivy
-def trivy_image(s):
+
+    #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
+    nome_file = "DockerBenchmarkSecurity.txt"
+    os.system(f"sudo ./docker-bench-security.sh > {path}/{nome_file}")
+    print("\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+            
+
+#funzione che ispeziona un'immagine Docker tramite trivy
+def trivy_image(path):
     print("\nAnalisi di un'immagine Docker\n")   
     #controllo wget
     controllo_wget()
@@ -38,21 +36,21 @@ def trivy_image(s):
     print("\n\nQuale immagine vuoi scansionare? Inserisici il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     immagine = input()
     print("\n\nAnalisi in corso, attendere...")
-    #in base alla scelta, lo salvo nella cartella giusta 
-    match s:
-        case 1:
-            os.system(f"trivy image {immagine} > results/light/trivy_image.txt")
-            print("\nAnalisi dell'immagine completata, trovi i risultati grezzi in /results/light nel file trivy_image.txt\n")
-        case 2:
-            os.system(f"trivy image {immagine} > results/base/trivy_image.txt")
-            print("\nAnalisi dell'immagine completata, trovi i risultati grezzi in /results/base nel file trivy_image.txt\n")
-        case 3:
-            os.system(f"trivy image {immagine} > results/full/trivy_image.txt")
-            print("\nAnalisi dell'immagine completata, trovi i risultati grezzu in /results/full nel file trivy_image.txt\n")
+    #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
+    nome_file = "trivy_image.txt"
+    os.system(f"trivy image {immagine} > {path}/{nome_file}")
+    print(f"\nAnalisi dell'immagine completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
 
-#funzione che ispezione tramite trivy una directory
+
+#funzione che ispezione, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
 def trivy_fs():
-   print()
+    os.system("clear")
+    print("\n\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...")
+    #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
+    nome_file = "trivy_fs.txt"
+    os.system(f"trivy fs --scanners vuln,secret,misconfig . > {path}/{nome_file}")
+    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+    
 
 #funzione che ispezione tramite semgrep una directory
 def semgrep_scan():

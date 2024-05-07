@@ -14,7 +14,7 @@ def presentazione():
     print("\n---------------------------------------------")
     print("\n\nNB 1: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
     print("NB 2: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
-    print("\n\nInserire l'opzione desiderata: ")
+    print("\n\nInserire l'opztrivy fs --scanners vuln,secret,misconfig . ione desiderata: ")
 
 
 #funzione che gestice la scelta effettuata dall'utente
@@ -23,18 +23,19 @@ def assegna_compito(s):
     #controllo il valore inserito dall'utente
     match s:
         case 1:
-            mkdir_results(s)
-            docker_bench_security(s)
+            path = mkdir_results(s)
+            docker_bench_security(path)
         case 2:
             check_workdir()
-            mkdir_results(s)
-            trivy_image(s)
+            path = mkdir_results(s)
+            trivy_image(path)
         case 3:
-            mkdir_results(s)
-            docker_bench_security(s)
-            trivy_image(s)
-            trivy_fs()
-            semgrep_scan()
+            check_workdir()
+            path = mkdir_results(s)
+            docker_bench_security(path)
+            trivy_image(path)
+            trivy_fs(path)
+            semgrep_scan(path)
 
         case _:
             exit("Parametro non valido, il programma termina")

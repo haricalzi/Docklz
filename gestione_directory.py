@@ -50,6 +50,7 @@ def mkdir_results(s):
                 os.chdir("results")
                 os.system("mkdir light")
                 os.chdir("..")
+                path = "results/light"
         case 2:
             #cartella per risultati delle scansioni BASE 
             #controllo che la cartella non sia già stata creata
@@ -60,6 +61,7 @@ def mkdir_results(s):
                 os.chdir("results")
                 os.system("mkdir base")
                 os.chdir("..")
+                path = "results/base"
         case 3:
             #cartella per risultati delle scansioni FULL 
             #controllo che la cartella non sia già stata creata
@@ -70,3 +72,6 @@ def mkdir_results(s):
                 os.chdir("results")
                 os.system("mkdir full")
                 os.chdir("..")
+                path = "results/full"
+    #ritorno il path creato 
+    return path
