@@ -7,7 +7,7 @@ from gestione_directory import *
 def docker_bench_security(s):
     print("\nAnalisi della configurazione di Docker presente sul sistema\n")
     #controllo git
-    controllo_git()
+    controllo_comando_installato("git")
     #controllo Docker Bench for security
     controllo_DBS()
     os.chdir("docker-bench-security")
@@ -23,9 +23,9 @@ def trivy_image(path):
     os.system("clear")
     print("\nAnalisi di un'immagine Docker\n")   
     #controllo wget
-    controllo_wget()
+    controllo_comando_installato("wget")
     #controllo trivy
-    controllo_trivy()
+    controllo_comando_installato("trivy")
     #stampo le immagini docker presenti nel sistema 
     print("Ecco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
@@ -52,10 +52,15 @@ def trivy_fs():
 #funzione che ispezione tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan():
     #controllo semgrep
-    controllo_semgrep()
+    controllo_comando_installato("semgrep")
     os.system("clear")
     print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
     #eseguo il comando semgrep scan, lo salvo nella relativa cartella
     nome_file = "semgrep_scan.txt"
     os.system(f"semgrep scan > {path}/{nome_file}")
     print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+
+
+#funzione che scansiona un progetto locale
+def trufflehog():
+    print()

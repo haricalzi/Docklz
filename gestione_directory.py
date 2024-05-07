@@ -39,7 +39,7 @@ def mkdir_results(s):
         print(f"Creo una cartella chiamata \"{nome_dir}\" all'interno dell'attuale area di lavoro, contenente i risultati delle varie scansioni")
         print("PS: ricordati di spostarla o rimuoverla, una volta terminate le scansioni, e salvati i dati, per evitare interferenze\n")
         os.system(f"mkdir {nome_dir}")
-   #nomi per le directory nelle varie modalità di scansione 
+    #nomi per le directory nelle varie modalità di scansione 
     match s:
         case 1:
             nome_sottodir = "light"
