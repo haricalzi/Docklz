@@ -3,6 +3,7 @@ from sys import exit
 from check_and_install import *
 from gestione_directory import *
 
+
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
 def docker_bench_security(s):
     print("\nAnalisi della configurazione di Docker presente sul sistema\n")
