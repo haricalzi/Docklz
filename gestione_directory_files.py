@@ -1,5 +1,7 @@
 import os 
 
+from datetime import datetime
+
 #funzione che controlla se bisogna cambiare la cartella di lavoro
 def check_workdir():
     scelta = int(input(f"Attualmente ti trovi nella seguente cartella: \"{os.getcwd()}\", devo creare una cartella in cui inserire i risultati, va bene se lo faccio qua [1 = si, 0 = no]? "))
@@ -14,21 +16,12 @@ def change_workdir():
     scelta = 0
     while(scelta != 1):
         path = input("Inserisci il percorso assoluto o relativo dalla cartella in cui ti trovi fino a quella desiderata [es. progetti/docker/test]\n\nPS: Se hai bisogno di aiuto, inserisci HELP_PLIS per eseguire un ls. Se devi spostarti indietro, inserisci HELP_BACK oppure .. (come se fosse il comando cd)\n")
-        #eseguo un ls per vedere i nomi delle cartelle 
-        if(path == "HELP_PLIS"):
-            print("\n\n")
-            os.system("ls -lah")
-            print("\n\n")
-        else:
-            if(path == "HELP_BACK"):
-                path = ".."
-            os.chdir(path)
-            scelta = int(input(f"Ti sei spostato nella seguente cartella: \"{os.getcwd()}\", è corretta [1 = si, 0 = no]? "))
-            #se scelta = 1 esco dal ciclo, se = 2 reinserisco 
-    return os.getcwd()
-
-
-#funzione che crea la cartella per i risultati
+        #eseguo uncurrentDateAndTime = datetime.now()print("The current year is ", currentDateAndTime.year) # Output: The current year is  2022
+print("The current month is ", currentDateAndTime.month) # Output: The current month is  3 
+print("The current day is ", currentDateAndTime.day) # Output: The current day is  19
+print("The current hour is ", currentDateAndTime.hour) # Output: The current hour is  10 
+print("The current minute is ", currentDateAndTime.minute) # Output: The current minute is  49
+print("The current second is ", currentDateAndTime.second) # Output: The current second is  18 la cartella per i risultati
 def mkdir_results(s):
     #controllo che la cartella non sia già stata creata
     nome_dir = "results"
@@ -51,8 +44,6 @@ def mkdir_results(s):
         os.chdir(f"{nome_dir}")
         os.mkdir(nome_sottodir)
         os.chdir("..")
-        #funzione che gestice le sottocartelle, con un numero progressivo, in cui mettere i file 
-        sottocartella_indice(nome_dir, nome_sottodir)
     #creo il path e lo ritorno, utile per le funzioni successive
     path_ris = f"{nome_dir}/{nome_sottodir}" 
     return path_ris
@@ -92,17 +83,7 @@ def git_clone_sourcecode():
     print("\nOra ti verrà chiesto di selezionare questa cartella per le scansioni, rispondi no alla prossima domanda e seleziona la cartella che si è appena creata dopo il git clone")
 
 
-#funzione che permette di trovare il primo prefisso libero da utilizzare per i file da salvare
-def sottocartella_indice(nome_dir, nome_sottodir):
-    prefisso = 1
-
-
-def trovare_prossimo_prefisso(nome_file):
-    prefisso = 1
-    while True:
-        nuova_cartella = f"{prefisso}_{nome_file}"
-        if not os.path.exists(nuovo_nome_file):
-            
-            return prefisso
-        prefisso += 1
-
+#funzione che gestisce data e ora per creare file unici ed evitare sovrascrittura
+def data_ora():
+    attuale = datetime.now()
+    return f"_{attuale.year}-{attuale.month}-{attuale.day}__{attuale.hour}-{attuale.minute}-"

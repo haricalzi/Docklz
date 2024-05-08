@@ -16,7 +16,7 @@ def docker_bench_security(path_ris):
     os.chdir("docker-bench-security")
     print("\n\nAnalisi in corso, attendere...")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
-    nome_file = "DockerBenchmarkSecurity.txt"
+    nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
     os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
     #torno nella cartella originale
     os.chdir(path_actual)
@@ -33,7 +33,7 @@ def docker_inspect(path_ris):
     #scelgo ed analizzo un'immagine
     immagine = input("\n\nQuale immagine vuoi scansionare? Inserisci il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     #eseguo il comando docker image inspect sull'immagine specificata, lo salvo nella relativa cartella
-    nome_file = "docker_inspect.txt"
+    nome_file = f"docker_inspect{data_ora()}.txt"
     os.system(f"docker image inspect {immagine} > {path_ris}/{nome_file}")
     print(f"\nAnalisi dell'immagine completata con Docker CLI, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     return immagine
@@ -49,7 +49,7 @@ def trivy_image(path_ris ,immagine):
     controllo_comando_installato("trivy")
     print("\n\nAnalisi in corso, attendere...\n")
     #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
-    nome_file = "trivy_image.txt"
+    nome_file = f"trivy_image{data_ora()}.txt"
     os.system(f"trivy image {immagine} > {path_ris}/{nome_file}")
     print(f"\nAnalisi dell'immagine completata con Trivy, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
@@ -61,7 +61,7 @@ def trivy_fs(path_ris, path_scansioni):
         os.system("clear")
         print("\n\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...")
         #eseguo il comando trivy fs, lo salvo nella relativa cartella
-        nome_file = "trivy_fs.txt"
+        nome_file = f"trivy_fs{data_ora()}.txt"
         os.system(f"trivy fs --scanners vuln,secret,misconfig {path_scansioni} > {path_ris}/{nome_file}")
         print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     
@@ -75,7 +75,7 @@ def semgrep_scan(path_ris, path_scansioni):
         controllo_comando_installato("semgrep")
         print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
         #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
-        nome_file = "semgrep_scan.txt"
+        nome_file = f"semgrep_scan{data_ora()}.txt"
         path_actual = os.getcwd()
         os.chdir(path_scansioni)
         os.system(f"semgrep scan > {path_actual}/{path_ris}/{nome_file}")
@@ -87,5 +87,3 @@ def semgrep_scan(path_ris, path_scansioni):
 def attendi_input():
     print("---------------------------------------------")
     input("\n\nPremi un tasto qualsiasi per proseguire...")
-
-
