@@ -87,3 +87,4 @@ def semgrep_scan(path_ris, path_scansioni):
 def attendi_input():
     print("---------------------------------------------")
     input("\n\nPremi un tasto qualsiasi per proseguire...")
+    

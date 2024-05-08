@@ -33,7 +33,7 @@ def controllo_base(comando):
         os.system(f"sudo apt install {comando}")
     else:
         print(f"{comando} già installato\n")
-        
+
 
 #funzione che gestisce il controllo di comandi base come trivy, semgrep
 def controllo_avanzato(comando):
@@ -73,3 +73,4 @@ def controllo_semgrep(comando):
         os.system("python3 -m pip install semgrep")
     else:
         print(f"{comando} già installato ed aggiornato\n")
+        
