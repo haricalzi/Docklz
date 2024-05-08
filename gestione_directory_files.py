@@ -47,7 +47,7 @@ def mkdir_results(s):
         case 3:
             nome_sottodir = "full"
     #controllo che la cartella non sia già stata creata
-    if not os.path.exists(nome_sotto_dir):
+    if not os.path.exists(nome_sottodir):
         #in caso non esista la creo
         print(f"Creo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}")
         os.chdir(f"{nome_dir}")
