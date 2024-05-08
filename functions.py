@@ -42,24 +42,28 @@ def trivy_image(path_ris):
 
 #funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
 def trivy_fs(path_ris, path_scansioni):
-    os.system("clear")
-    print("\n\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...")
-    #eseguo il comando trivy fs, lo salvo nella relativa cartella
-    nome_file = "trivy_fs.txt"
-    os.system(f"trivy fs --scanners vuln,secret,misconfig {path_scansioni} > {path_ris}/{nome_file}")
-    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    #se non è presente il source code da analizzare, non eseguo questa funzione 
+    if(path_scansioni != "NO_TRIVY_SEMGREP"):
+        os.system("clear")
+        print("\n\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...")
+        #eseguo il comando trivy fs, lo salvo nella relativa cartella
+        nome_file = "trivy_fs.txt"
+        os.system(f"trivy fs --scanners vuln,secret,misconfig {path_scansioni} > {path_ris}/{nome_file}")
+        print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     
 
 #funzione che ispezione tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris, path_scansioni):
-    #controllo semgrep
-    controllo_comando_installato("semgrep")
-    os.system("clear")
-    print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
-    #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
-    nome_file = "semgrep_scan.txt"
-    path_actual = os.getcwd()
-    os.chdir(path_scansioni)
-    os.system(f"semgrep scan > {path_actual}/{path_ris}/{nome_file}")
-    os.chdir(path_actual)
-    print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    #se non è presente il source code da analizzare, non eseguo questa funzione 
+    if(path_scansioni != "NO_TRIVY_SEMGREP"):
+        #controllo semgrep
+        controllo_comando_installato("semgrep")
+        os.system("clear")
+        print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
+        #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
+        nome_file = "semgrep_scan.txt"
+        path_actual = os.getcwd()
+        os.chdir(path_scansioni)
+        os.system(f"semgrep scan > {path_actual}/{path_ris}/{nome_file}")
+        os.chdir(path_actual)
+        print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")

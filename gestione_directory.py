@@ -90,7 +90,6 @@ def check_sourcecode_dir():
         return os.getcwd()
   
     
-
 #funzione che permette di effettuare un clone da una repository GitHub
 def git_clone_sourcecode():
     print("Recati tramite browser nella relativa repository GitHub --> pulsante Code verde --> copia il path di HTTPS --> incollalo qui di seguito")
