@@ -47,7 +47,7 @@ def mkdir_results(s):
         case 3:
             nome_sottodir = "full"
     #controllo che la cartella non sia già stata creata
-    if not os.path.exists(nome_sottodir):
+    if not os.path.exists(f"{nome_dir}/{nome_sottodir}"):
         #in caso non esista la creo
         print(f"Creo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}")
         os.chdir(f"{nome_dir}")
@@ -95,4 +95,4 @@ def git_clone_sourcecode():
 #funzione che gestisce data e ora per creare file unici ed evitare sovrascrittura
 def data_ora():
     attuale = datetime.now()
-    return f"_{attuale.year}-{attuale.month}-{attuale.day}__{attuale.hour}-{attuale.minute}-"
+    return f"__{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
