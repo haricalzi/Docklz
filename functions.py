@@ -31,8 +31,7 @@ def docker_inspect(path_ris):
     print("\nEcco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
     #scelgo ed analizzo un'immagine
-    print("\n\nQuale immagine vuoi scansionare? Inserisci il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
-    immagine = input()
+    immagine = input("\n\nQuale immagine vuoi scansionare? Inserisci il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     #eseguo il comando docker image inspect sull'immagine specificata, lo salvo nella relativa cartella
     nome_file = "docker_inspect.txt"
     os.system(f"docker image inspect {immagine} > {path_ris}/{nome_file}")
@@ -71,9 +70,9 @@ def trivy_fs(path_ris, path_scansioni):
 def semgrep_scan(path_ris, path_scansioni):
     #se non è presente il source code da analizzare, non eseguo questa funzione 
     if(path_scansioni != "NO_TRIVY_SEMGREP"):
+        os.system("clear")
         #controllo semgrep
         controllo_comando_installato("semgrep")
-        os.system("clear")
         print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
         #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
         nome_file = "semgrep_scan.txt"
@@ -82,3 +81,8 @@ def semgrep_scan(path_ris, path_scansioni):
         os.system(f"semgrep scan > {path_actual}/{path_ris}/{nome_file}")
         os.chdir(path_actual)
         print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+
+#funzione che attende che l'utente prema un tasto qualsiasi prima di continuare
+def attendi_input():
+    print("---------------------------------------------")
+    input("\n\nPremi un tasto qualsiasi per proseguire con la prossima scansioni...")

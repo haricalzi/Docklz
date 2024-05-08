@@ -2,8 +2,7 @@ import os
 
 #funzione che controlla se bisogna cambiare la cartella di lavoro
 def check_workdir():
-    print(f"Attualmente ti trovi nella seguente cartella: \"{os.getcwd()}\", devo creare una cartella in cui inserire i risultati, va bene se lo faccio qua? [1 = si, 0 = no]")    
-    scelta = int(input())
+    scelta = int(input(f"Attualmente ti trovi nella seguente cartella: \"{os.getcwd()}\", devo creare una cartella in cui inserire i risultati, va bene se lo faccio qua? [1 = si, 0 = no]"))
     #la cartella di lavoro va cambiata    
     if(scelta == 0):
         change_workdir()
@@ -14,9 +13,7 @@ def check_workdir():
 def change_workdir():
     scelta = 0
     while(scelta != 1):
-        print("Inserisci il percorso assoluto o relativo dalla cartella in cui ti trovi fino a quella desiderata [es. progetti/docker/test]")
-        print("PS: Se hai bisogno di aiuto, inserisci HELP_PLIS per eseguire un ls. Se devi spostarti indietro, inserisci HELP_BACK oppure .. (come se fosse il comando cd)\n")
-        path = input()
+        path = input("Inserisci il percorso assoluto o relativo dalla cartella in cui ti trovi fino a quella desiderata [es. progetti/docker/test]\n\nPS: Se hai bisogno di aiuto, inserisci HELP_PLIS per eseguire un ls. Se devi spostarti indietro, inserisci HELP_BACK oppure .. (come se fosse il comando cd)\n")
         #eseguo un ls per vedere i nomi delle cartelle 
         if(path == "HELP_PLIS"):
             print("\n\n")
@@ -26,8 +23,7 @@ def change_workdir():
             if(path == "HELP_BACK"):
                 path = ".."
             os.chdir(path)
-            print(f"Ti sei spostato nella seguente cartella: \"{os.getcwd()}\", è corretta? [1 = si, 0 = no]")
-            scelta = int(input())
+            scelta = int(input(f"Ti sei spostato nella seguente cartella: \"{os.getcwd()}\", è corretta? [1 = si, 0 = no]"))
             #se scelta = 1 esco dal ciclo, se = 2 reinserisco 
     return os.getcwd()
 
@@ -64,21 +60,18 @@ def mkdir_results(s):
 
 #funzione che permette di selezionare il path per raggiungere il source code da analizzare
 def check_sourcecode_dir():
-    print("Alcune delle seguenti scansioni, per essere eseguite, necessitano del path fino alla cartella in cui è presente il source code da analizzare.\n")
-    print("\nHai a disposizione, sul tuo sistema, una cartella in cui è salvato il source code del progetto? [1 = si, 0 = no]")
-    #se la risposta è no chiedo se proprio non lo ha, o se vuole effetuare un clone da github
-    if(int(input()) == 0):
-        print("\nNon hai proprio il source code (o non vuoi scansionarlo), oppure è presente su GitHub? [1 = GitHub, 0 = non presente / non voglio]")
-        #se non è presente chiamo la funzione che lo clona da GitHub
-        if(int(input()) == 0):
+    print("\n\nAlcune delle seguenti scansioni, per essere eseguite, necessitano del path fino alla cartella in cui è presente il source code da analizzare")    
+    if(int(input("\nHai a disposizione, sul tuo sistema, una cartella in cui è salvato il source code del progetto? [1 = si, 0 = no]")) == 0):
+        #se la risposta è no chiedo se proprio non lo ha, o se vuole effetuare un clone da github        
+        if(int(input("\nNon hai proprio il source code (o non vuoi scansionarlo), oppure è presente su GitHub? [1 = GitHub, 0 = non presente / non voglio]")) == 0):
             print("\nNessun problema, alcune scansioni non verranno effettuate")
             #codice per evitare alcune scansioni 
             return "NO_TRIVY_SEMGREP"
         else:
+            #se non è presente chiamo la funzione che lo clona da GitHub
             git_clone_sourcecode()
-    print("\nLa cartella in cui hai deciso di salvare i risultati è la stessa in cui sono presenti i file da analizzare? [1 = si, 0 = no]")
     #se la cartella non coincide bisogna ottenere il path del percorso da analizzare 
-    if(int(input()) == 0):
+    if(int(input("\nLa cartella in cui hai deciso di salvare i risultati è la stessa in cui sono presenti i file da analizzare? [1 = si, 0 = no]")) == 0):
         print("\nTi verrà chiesto di spostarti (temporaneamente) fino alla cartella da analizzare\n")
         #salvo la posizione attuale, mi sposto, salvo e torno
         attuale = os.getcwd()
@@ -93,8 +86,7 @@ def check_sourcecode_dir():
     
 #funzione che permette di effettuare un clone da una repository GitHub
 def git_clone_sourcecode():
-    print("Recati tramite browser nella relativa repository GitHub --> pulsante Code verde --> copia il path di HTTPS --> incollalo qui di seguito")
-    path_git = input()
+    path_git = input("Recati tramite browser nella relativa repository GitHub --> pulsante Code verde --> copia il path di HTTPS --> incollalo qui di seguito")
     os.system(f"git clone {path_git}")
     print("\n\ngit clone effettuato correttamente")
     print("\nOra ti verrà chiesto di selezionare questa cartella per le scansioni, rispondi no alla prossima domanda e seleziona la cartella che si è appena creata dopo il git clone")

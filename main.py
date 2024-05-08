@@ -15,8 +15,6 @@ def presentazione():
     print("\n---------------------------------------------")
     print("\n\nNB 1: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
     print("NB 2: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
-    print("\n\nInserire l'opzione desiderata: ")
-
 
 #funzione che gestice la scelta effettuata dall'utente
 def assegna_compito(scelta):
@@ -52,9 +50,8 @@ while (end != "true"):
     #stampo il menù di benvenuto 
     presentazione()
     #scelta iniziale da fare
-    assegna_compito(int(input()))
-    print("\n\n\n\nVuoi effettuare un'altra operazione? [1 = sì, 0 = no]")
-    if (int(input()) == 0 ):
+    assegna_compito(int(input("\n\nInserire l'opzione desiderata: ")))
+    if (int(input("\n\n\n\nVuoi effettuare un'altra operazione? [1 = sì, 0 = no]")) == 0 ):
         end = "true"
 
 #pulisco e termino
