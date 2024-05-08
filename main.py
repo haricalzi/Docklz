@@ -36,7 +36,8 @@ def assegna_compito(scelta):
             path_ris = mkdir_results(scelta)
             path_scansioni = check_sourcecode_dir()
             docker_bench_security(path_ris)
-            trivy_image(path_ris)
+            immagine = docker_inspect(path_ris)
+            trivy_image(path_ris, immagine)
             trivy_fs(path_ris, path_scansioni)
             semgrep_scan(path_ris, path_scansioni)
         case _:
