@@ -11,11 +11,15 @@ def docker_bench_security(path_ris):
     controllo_comando_installato("git")
     #controllo Docker Bench for security
     controllo_DBS()
+    #salvo la cartella e mi sposto 
+    path_actual = os.getcwd()
     os.chdir("docker-bench-security")
     print("\n\nAnalisi in corso, attendere...")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
     nome_file = "DockerBenchmarkSecurity.txt"
-    os.system(f"sudo ./docker-bench-security.sh > print(path_scansioni){path_ris}/{nome_file}")
+    os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
+    #torno nella cartella originale 
+    os.chdir(path_actual)
     print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
 
