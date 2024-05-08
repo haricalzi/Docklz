@@ -16,12 +16,21 @@ def change_workdir():
     scelta = 0
     while(scelta != 1):
         path = input("Inserisci il percorso assoluto o relativo dalla cartella in cui ti trovi fino a quella desiderata [es. progetti/docker/test]\n\nPS: Se hai bisogno di aiuto, inserisci HELP_PLIS per eseguire un ls. Se devi spostarti indietro, inserisci HELP_BACK oppure .. (come se fosse il comando cd)\n")
-        #eseguo uncurrentDateAndTime = datetime.now()print("The current year is ", currentDateAndTime.year) # Output: The current year is  2022
-print("The current month is ", currentDateAndTime.month) # Output: The current month is  3 
-print("The current day is ", currentDateAndTime.day) # Output: The current day is  19
-print("The current hour is ", currentDateAndTime.hour) # Output: The current hour is  10 
-print("The current minute is ", currentDateAndTime.minute) # Output: The current minute is  49
-print("The current second is ", currentDateAndTime.second) # Output: The current second is  18 la cartella per i risultati
+        #eseguo un ls per vedere i nomi delle cartelle 
+        if(path == "HELP_PLIS"):
+            print("\n\n")
+            os.system("ls -lah")
+            print("\n\n")
+        else:
+            if(path == "HELP_BACK"):
+                path = ".."
+            os.chdir(path)
+            scelta = int(input(f"Ti sei spostato nella seguente cartella: \"{os.getcwd()}\", è corretta [1 = si, 0 = no]? "))
+            #se scelta = 1 esco dal ciclo, se = 2 reinserisco 
+    return os.getcwd()
+
+
+#funzione che crea la cartella per i risultati
 def mkdir_results(s):
     #controllo che la cartella non sia già stata creata
     nome_dir = "results"
