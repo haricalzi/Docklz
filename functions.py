@@ -1,7 +1,7 @@
 import os
 from sys import exit
 from check_and_install import *
-from gestione_directory import *
+from gestione_directory_files import *
 
 
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security

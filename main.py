@@ -1,5 +1,5 @@
 from functions import * 
-from gestione_directory import *
+from gestione_directory_files import *
 
 #funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
 def presentazione():

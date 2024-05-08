@@ -32,8 +32,7 @@ def change_workdir():
 def mkdir_results(s):
     #controllo che la cartella non sia già stata creata
     nome_dir = "results"
-    ris = os.popen(f"ls | grep {nome_dir}").read()
-    if(ris!=f"{nome_dir}\n"):
+    if not os.path.exists(nome_dir):
         #in caso non esista la creo
         print(f"Creo una cartella chiamata \"{nome_dir}\" all'interno di quella attuale, contenente i risultati delle varie scansioni")
         os.mkdir(nome_dir)
@@ -46,13 +45,14 @@ def mkdir_results(s):
         case 3:
             nome_sottodir = "full"
     #controllo che la cartella non sia già stata creata
-    ris = os.popen(f"ls \\{nome_dir}  | grep {nome_sottodir}").read()
-    if(ris!=f"{nome_sottodir}\n"):
+    if not os.path.exists(nome_sotto_dir):
         #in caso non esista la creo
         print(f"Creo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}")
         os.chdir(f"{nome_dir}")
         os.mkdir(nome_sottodir)
         os.chdir("..")
+        #funzione che gestice le sottocartelle, con un numero progressivo, in cui mettere i file 
+        sottocartella_indice(nome_dir, nome_sottodir)
     #creo il path e lo ritorno, utile per le funzioni successive
     path_ris = f"{nome_dir}/{nome_sottodir}" 
     return path_ris
@@ -90,3 +90,19 @@ def git_clone_sourcecode():
     os.system(f"git clone {path_git}")
     print("\n\ngit clone effettuato correttamente")
     print("\nOra ti verrà chiesto di selezionare questa cartella per le scansioni, rispondi no alla prossima domanda e seleziona la cartella che si è appena creata dopo il git clone")
+
+
+#funzione che permette di trovare il primo prefisso libero da utilizzare per i file da salvare
+def sottocartella_indice(nome_dir, nome_sottodir):
+    prefisso = 1
+
+
+def trovare_prossimo_prefisso(nome_file):
+    prefisso = 1
+    while True:
+        nuova_cartella = f"{prefisso}_{nome_file}"
+        if not os.path.exists(nuovo_nome_file):
+            
+            return prefisso
+        prefisso += 1
+
