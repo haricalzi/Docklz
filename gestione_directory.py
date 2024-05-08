@@ -36,7 +36,7 @@ def mkdir_results(s):
     if(ris!=f"{nome_dir}\n"):
         #in caso non esista la creo
         print(f"Creo una cartella chiamata \"{nome_dir}\" all'interno di quella attuale, contenente i risultati delle varie scansioni")
-        os.system(f"mkdir {nome_dir}")
+        os.mkdir(nome_dir)
     #nomi per le directory nelle varie modalità di scansione 
     match s:
         case 1:
@@ -51,7 +51,7 @@ def mkdir_results(s):
         #in caso non esista la creo
         print(f"Creo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}")
         os.chdir(f"{nome_dir}")
-        os.system(f"mkdir {nome_sottodir}")
+        os.mkdir(nome_sottodir)
         os.chdir("..")
     #creo il path e lo ritorno, utile per le funzioni successive
     path_ris = f"{nome_dir}/{nome_sottodir}" 
