@@ -61,6 +61,7 @@ def mkdir_results(s):
     path_ris = f"{nome_dir}/{nome_sottodir}" 
     return path_ris
 
+
 #funzione che permette di selezionare il path per raggiungere il source code da analizzare
 def check_sourcecode_dir():
     print("Alcune delle seguenti scansioni, per essere eseguite, necessitano del path fino alla cartella in cui è presente il source code da analizzare.\n")

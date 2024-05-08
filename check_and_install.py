@@ -33,7 +33,7 @@ def controllo_base(comando):
         os.system(f"sudo apt install {comando}")
     else:
         print(f"{comando} già installato\n")
-
+docker_inspect("results/light")
 
 #funzione che gestisce il controllo di comandi base come trivy, semgrep
 def controllo_avanzato(comando):
@@ -43,6 +43,7 @@ def controllo_avanzato(comando):
         controllo_trivy(comando)
     else:
         controllo_semgrep(comando)
+
 
 #funzione che gestisce il controllo avanzato specifico per trivy
 def controllo_trivy(comando):
