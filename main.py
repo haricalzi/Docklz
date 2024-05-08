@@ -38,7 +38,6 @@ def assegna_compito(scelta):
             trivy_image(path_ris)
             trivy_fs(path_ris, path_scansioni)
             semgrep_scan(path_ris, path_scansioni)
-
         case _:
             exit("Parametro non valido, il programma termina")
 
@@ -60,4 +59,5 @@ while (end != "true"):
 os.system("clear")
 print("\n\nGrazie per aver utilizzato questo tool, spero ti sia stato utile")
 print("\nPer ulteriori informazione: Hari / github / linkedin\n\n")
+
 #fine main vero e proprio ------------------------------------------------------------
