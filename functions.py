@@ -24,7 +24,7 @@ def docker_inspect(path_ris):
     os.system("clear")
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     #stampo le immagini docker presenti nel sistema 
-    print("\n\nEcco un elenco delle immagini Docker presenti in locale\n\n")
+    print("\nEcco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
     #scelgo ed analizzo un'immagine
     print("\n\nQuale immagine vuoi scansionare? Inserisci il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
