@@ -5,7 +5,7 @@ from gestione_directory import *
 
 
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
-def docker_bench_security(s):
+def docker_bench_security(path_ris):
     print("\nAnalisi della configurazione di Docker presente sul sistema\n")
     #controllo git
     controllo_comando_installato("git")
@@ -15,12 +15,12 @@ def docker_bench_security(s):
     print("\n\nAnalisi in corso, attendere...")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
     nome_file = "DockerBenchmarkSecurity.txt"
-    os.system(f"sudo ./docker-bench-security.sh > {path}/{nome_file}")
-    print("\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+    os.system(f"sudo ./docker-bench-security.sh > print(path_scansioni){path_ris}/{nome_file}")
+    print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
             
 
 #funzione che ispeziona un'immagine Docker tramite trivy
-def trivy_image(path):
+def trivy_image(path_ris):
     os.system("clear")
     print("\nAnalisi di un'immagine Docker\n")   
     #controllo wget
@@ -36,27 +36,27 @@ def trivy_image(path):
     print("\n\nAnalisi in corso, attendere...\n")
     #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
     nome_file = "trivy_image.txt"
-    os.system(f"trivy image {immagine} > {path}/{nome_file}")
-    print(f"\nAnalisi dell'immagine completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+    os.system(f"trivy image {immagine} > {path_ris}/{nome_file}")
+    print(f"\nAnalisi dell'immagine completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
 
 #funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
-def trivy_fs():
+def trivy_fs(path_ris, path_scansioni):
     os.system("clear")
     print("\n\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...")
     #eseguo il comando trivy fs, lo salvo nella relativa cartella
     nome_file = "trivy_fs.txt"
-    os.system(f"trivy fs --scanners vuln,secret,misconfig . > {path}/{nome_file}")
-    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+    os.system(f"trivy fs --scanners vuln,secret,misconfig {path_scansioni} > {path_ris}/{nome_file}")
+    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     
 
 #funzione che ispezione tramite semgrep il codice sorgente dell'applicazione
-def semgrep_scan():
+def semgrep_scan(path_ris, path_scansioni):
     #controllo semgrep
     controllo_comando_installato("semgrep")
     os.system("clear")
     print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
     #eseguo il comando semgrep scan, lo salvo nella relativa cartella
     nome_file = "semgrep_scan.txt"
-    os.system(f"semgrep scan > {path}/{nome_file}")
-    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path} nel file {nome_file}\n")
+    os.system(f"semgrep scan {path_scansioni} > {path_ris}/{nome_file}")
+    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")

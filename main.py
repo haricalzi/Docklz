@@ -24,20 +24,20 @@ def assegna_compito(scelta):
     #controllo il valore inserito dall'utente
     match scelta:
         case 1:
-            path = mkdir_results(scelta)
-            docker_bench_security(path)
+            path_ris = mkdir_results(scelta)
+            docker_bench_security(path_ris)
         case 2:
             check_workdir()
-            path = mkdir_results(scelta)
-            trivy_image(path)
+            path_ris = mkdir_results(scelta)
+            trivy_image(path_ris)
         case 3:
             check_workdir()
-            path = mkdir_results(scelta)
-            check_sourcecode_dir()
-            docker_bench_security(path)
-            trivy_image(path)
-            trivy_fs(path)
-            semgrep_scan(path)
+            path_ris = mkdir_results(scelta)
+            path_scansioni = check_sourcecode_dir()
+            docker_bench_security(path_ris)
+            trivy_image(path_ris)
+            trivy_fs(path_ris, path_scansioni)
+            semgrep_scan(path_ris, path_scansioni)
 
         case _:
             exit("Parametro non valido, il programma termina")

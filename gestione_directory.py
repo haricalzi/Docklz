@@ -56,8 +56,8 @@ def mkdir_results(s):
         os.system(f"mkdir {nome_sottodir}")
         os.chdir("..")
     #creo il path e lo ritorno, utile per le funzioni successive
-    path = f"{nome_dir}/{nome_sottodir}" 
-    return path
+    path_ris = f"{nome_dir}/{nome_sottodir}" 
+    return path_ris
 
 #funzione che permette di selezionare il path per raggiungere il source code da analizzare
 def check_sourcecode_dir():
@@ -68,7 +68,9 @@ def check_sourcecode_dir():
         print("\nTi verrà chiesto di spostarti (temporaneamente) fino alla cartella da analizzare\n")
         #salvo la posizione attuale 
         attuale = os.getcwd()
-        path_sourcecode = change_workdir()
+        path_scansioni = change_workdir()
         os.chdir(attuale)
         print(os.getcwd())
     print("\nPerfetto, ora iniziano le scansioni!\n\n")
+    #ritorno il path da analizzare successivamente
+    return path_scansioni
