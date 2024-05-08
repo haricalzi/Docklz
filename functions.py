@@ -82,7 +82,10 @@ def semgrep_scan(path_ris, path_scansioni):
         os.chdir(path_actual)
         print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
+
 #funzione che attende che l'utente prema un tasto qualsiasi prima di continuare
 def attendi_input():
     print("---------------------------------------------")
     input("\n\nPremi un tasto qualsiasi per proseguire...")
+
+
