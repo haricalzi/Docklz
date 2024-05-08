@@ -56,7 +56,10 @@ def semgrep_scan(path_ris, path_scansioni):
     controllo_comando_installato("semgrep")
     os.system("clear")
     print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
-    #eseguo il comando semgrep scan, lo salvo nella relativa cartella
+    #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
     nome_file = "semgrep_scan.txt"
-    os.system(f"semgrep scan {path_scansioni} > {path_ris}/{nome_file}")
-    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    path_actual = os.getcwd()
+    os.chdir(path_scansioni)
+    os.system(f"semgrep scan > {path_actual}/{path_ris}/{nome_file}")
+    os.chdir(path_actual)
+    print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
