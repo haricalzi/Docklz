@@ -16,6 +16,13 @@ def presentazione():
     print("\n\nNB 1: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
     print("NB 2: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
 
+
+#funzione che stampa la conclusione del programma
+def fine():
+    os.system("clear")
+    print("\n\nGrazie per aver utilizzato questo tool, spero ti sia stato utile")
+    print("\nPer ulteriori informazione: Hari / github / linkedin\n\n")
+
 #funzione che gestice la scelta effettuata dall'utente
 def assegna_compito(scelta):
     os.system("clear")
@@ -52,19 +59,18 @@ def assegna_compito(scelta):
 
 #inizio main vero e proprio ----------------------------------------------------------
 
-#funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
 end = "false"
 while (end != "true"):
     #stampo il menù di benvenuto 
     presentazione()
     #scelta iniziale da fare
     assegna_compito(int(input("\n\nInserire l'opzione desiderata: ")))
-    if (int(input("\n\n\n\nVuoi effettuare un'altra operazione? [1 = sì, 0 = no]")) == 0 ):
+    os.system(clear)
+
+    if (int(input("\n\nScansione completata, vuoi effettuare un'altra analisi? [1 = sì, 0 = no]")) == 0 ):
         end = "true"
 
-#pulisco e termino
-os.system("clear")
-print("\n\nGrazie per aver utilizzato questo tool, spero ti sia stato utile")
-print("\nPer ulteriori informazione: Hari / github / linkedin\n\n")
+#stampo la conclusione del programma
+fine()
 
 #fine main vero e proprio ------------------------------------------------------------
