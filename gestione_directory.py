@@ -87,7 +87,7 @@ def check_sourcecode_dir():
         print(os.getcwd())
         return path_scansioni
     else:
-        #altrimenti il path delle scanisioni è quello attuale, lo ritorno
+        #altrimenti il path delle scansioni è quello attuale, lo ritorno
         return os.getcwd()
   
     

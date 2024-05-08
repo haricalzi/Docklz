@@ -18,7 +18,7 @@ def docker_bench_security(path_ris):
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
     nome_file = "DockerBenchmarkSecurity.txt"
     os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
-    #torno nella cartella originale 
+    #torno nella cartella originale
     os.chdir(path_actual)
     print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
