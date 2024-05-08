@@ -85,4 +85,4 @@ def semgrep_scan(path_ris, path_scansioni):
 #funzione che attende che l'utente prema un tasto qualsiasi prima di continuare
 def attendi_input():
     print("---------------------------------------------")
-    input("\n\nPremi un tasto qualsiasi per proseguire con la prossima scansioni...")
+    input("\n\nPremi un tasto qualsiasi per proseguire...")

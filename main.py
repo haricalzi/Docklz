@@ -24,20 +24,28 @@ def assegna_compito(scelta):
         case 1:
             path_ris = mkdir_results(scelta)
             docker_bench_security(path_ris)
+            attendi_input()
         case 2:
             check_workdir()
             path_ris = mkdir_results(scelta)
             immagine = docker_inspect(path_ris)
+            attendi_input()
             trivy_image(path_ris, immagine)
+            attendi_input()
         case 3:
             check_workdir()
             path_ris = mkdir_results(scelta)
             path_scansioni = check_sourcecode_dir()
             docker_bench_security(path_ris)
+            attendi_input()
             immagine = docker_inspect(path_ris)
+            attendi_input()
             trivy_image(path_ris, immagine)
+            attendi_input()
             trivy_fs(path_ris, path_scansioni)
+            attendi_input()
             semgrep_scan(path_ris, path_scansioni)
+            attendi_input()
         case _:
             exit("Parametro non valido, il programma termina")
 
