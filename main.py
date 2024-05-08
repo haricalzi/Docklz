@@ -29,7 +29,8 @@ def assegna_compito(scelta):
         case 2:
             check_workdir()
             path_ris = mkdir_results(scelta)
-            trivy_image(path_ris)
+            immagine = docker_inspect(path_ris)
+            trivy_image(path_ris, immagine)
         case 3:
             check_workdir()
             path_ris = mkdir_results(scelta)

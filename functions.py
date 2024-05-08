@@ -17,27 +17,38 @@ def docker_bench_security(path_ris):
     nome_file = "DockerBenchmarkSecurity.txt"
     os.system(f"sudo ./docker-bench-security.sh > print(path_scansioni){path_ris}/{nome_file}")
     print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
-            
 
-#funzione che ispeziona un'immagine Docker tramite trivy
-def trivy_image(path_ris):
+
+#funzione che ispeziona un'immagine Docker tramite Docker CLI
+def docker_inspect(path_ris):
     os.system("clear")
-    print("\nAnalisi di un'immagine Docker\n")   
-    #controllo wget
-    controllo_comando_installato("wget")
-    #controllo trivy
-    controllo_comando_installato("trivy")
+    print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     #stampo le immagini docker presenti nel sistema 
-    print("Ecco un elenco delle immagini Docker presenti in locale\n\n")
+    print("\n\nEcco un elenco delle immagini Docker presenti in locale\n\n")
     os.system("docker images")
     #scelgo ed analizzo un'immagine
     print("\n\nQuale immagine vuoi scansionare? Inserisci il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID: ")
     immagine = input()
+    #eseguo il comando docker image inspect sull'immagine specificata, lo salvo nella relativa cartella
+    nome_file = "docker_inspect.txt"
+    os.system(f"docker image inspect {immagine} > {path_ris}/{nome_file}")
+    print(f"\nAnalisi dell'immagine completata con Docker CLI, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    return immagine
+
+
+#funzione che ispeziona un'immagine Docker tramite trivy
+def trivy_image(path_ris ,immagine):
+    os.system("clear")
+    print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
+    #controllo wget
+    controllo_comando_installato("wget")
+    #controllo trivy
+    controllo_comando_installato("trivy")
     print("\n\nAnalisi in corso, attendere...\n")
     #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
     nome_file = "trivy_image.txt"
     os.system(f"trivy image {immagine} > {path_ris}/{nome_file}")
-    print(f"\nAnalisi dell'immagine completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    print(f"\nAnalisi dell'immagine completata con Trivy, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
 
 #funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
