@@ -53,7 +53,7 @@ while (end != "true"):
     presentazione()
     #scelta iniziale da fare
     assegna_compito(int(input()))
-    print("\n\n\n\nVuoi effettuare un'altra operazione? 1 = sì, 0 = no")
+    print("\n\n\n\nVuoi effettuare un'altra operazione? [1 = sì, 0 = no]")
     if (int(input()) == 0 ):
         end = "true"
 
