@@ -2,7 +2,6 @@ import os
 
 #di default le print per le installazioni sono disabilitate, togliere il commento per abilitarle
 
-
 #funzione che controlla se il Docker Bench for Security è già installato, in caso contrario lo installa
 def controllo_DBS():
     #print("Controllo se hai già installato Docker Bench for Security nell'attuale directory, in caso contrario lo installo\n")
