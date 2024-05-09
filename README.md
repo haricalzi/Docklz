@@ -1,6 +1,6 @@
 # Analisi di immagini e container Docker, realizzato da Hari Calzi
 
-### Options:
+### Opzion:
 
 **-h, --help**  -->  show this help message and exit
   
