@@ -11,6 +11,7 @@ def docker_bench_security(path_ris):
     os.chdir("docker-bench-security")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
     nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
+    print("Analisi della configurazione di Docker in corso...")
     os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
     #torno nella cartella originale
     os.chdir(path_actual)
@@ -18,7 +19,7 @@ def docker_bench_security(path_ris):
 
 
 #funzione che ispeziona un'immagine Docker tramite Docker CLI
-def docker_inspect(path_ris):
+def docker_inspect(path_ris, immagine):
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     nome_file = f"docker_inspect{data_ora()}.txt"
     os.system(f"docker image inspect {immagine} > {path_ris}/{nome_file}")
