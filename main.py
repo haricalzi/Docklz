@@ -64,7 +64,7 @@ while (end != "true"):
     #stampo il menù di benvenuto 
     presentazione()
     #scelta iniziale da fare
-    assegna_compito(int(input("\n\nInserire l'op\zione desiderata: ")))
+    assegna_compito(int(input("\n\nInserire l'opzione desiderata: ")))
     os.system("clear")
 
     if (int(input("\n\nScansione completata, vuoi effettuare un'altra analisi [1 = si, 0 = no]? ")) == 0 ):
