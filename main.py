@@ -1,80 +1,34 @@
+import argparse, sys, os
 from functions import * 
-from gestione_directory_files import *
 
+#creo il parser
+parser = argparse.ArgumentParser(description='Docker analisys')
 
-#test cli
+#aggiungo le opzioni
+parser.add_argument('-light', action="store_true", help='LIGHT: analisi della configurazione di Docker presente sul sistema')
+parser.add_argument('-base', action="store", dest="immagine", help='BASE: analisi di un\'immagine Docker, specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con docker images)')
+parser.add_argument('-base', action="store", dest="immagine", help='FULL: analisi completa di un progetto Docker (immagine + container + source code), specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con docker images)')
+parser.add_argument('-path', action="store", dest="path_risultati", default=".", help='specificare il path assoluto/relativo di dove creare la cartella dei risultati')
+parser.add_argument('-git', action="store", dest="path_github", help='specificare il path di GitHub in cui scaricare il source code (repository GitHub --> pulsante Code verde --> HTTPS)')
 
+#parso gli argomenti e agisco di conseguenza
+args = parser.parse_args()
 
-#funzione che stampa il menù iniziale e chiede quale operazione si vuole effettuare
-def presentazione():
-
-    os.system("clear")
-    print("---------------------------------------------")
-    print("--- SECURITY ANALISYS OF DOCKER CONTAINER ---")
-    print("---------------------------------------------")
-    print("\nBenvenuto :), quale tipo di analisi vuoi effettuare?\n")
-    print("1 -- LIGHT: analisi della configurazione di Docker presente sul sistema")
-    print("2 -- BASE: analisi di un'immagine Docker")
-    print("3 -- FULL: analisi completa di un progetto Docker (immagine + container + source code)")
-    print("\n---------------------------------------------")
-    print("\n\nNB 1: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
-    print("NB 2: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
-
-
-#funzione che stampa la conclusione del programma
-def fine():
-    os.system("clear")
-    print("\n\nGrazie per aver utilizzato questo tool, spero ti sia stato utile")
-    print("\nPer ulteriori informazione: Hari / github / linkedin\n\n")
-
-#funzione che gestice la scelta effettuata dall'utente
-def assegna_compito(scelta):
-    os.system("clear")
-    #controllo il valore inserito dall'utente
-    match scelta:
-        case 1:
-            path_ris = mkdir_results(scelta)
-            docker_bench_security(path_ris)
-            attendi_input()
-        case 2:
-            check_workdir()
-            path_ris = mkdir_results(scelta)
-            immagine = docker_inspect(path_ris)
-            attendi_input()
-            trivy_image(path_ris, immagine)
-            attendi_input()
-        case 3:
-            check_workdir()
-            path_ris = mkdir_results(scelta)
-            path_scansioni = check_sourcecode_dir()
-            docker_bench_security(path_ris)
-            attendi_input()
-            immagine = docker_inspect(path_ris)
-            attendi_input()
-            trivy_image(path_ris, immagine)
-            attendi_input()
-            trivy_fs(path_ris, path_scansioni)
-            attendi_input()
-            semgrep_scan(path_ris, path_scansioni)
-            attendi_input()
-        case _:
-            exit("Parametro non valido, il programma termina")
-
-
-#inizio main vero e proprio ----------------------------------------------------------
-
-end = "false"
-while (end != "true"):
-    #stampo il menù di benvenuto 
-    presentazione()
-    #scelta iniziale da fare
-    assegna_compito(int(input("\n\nInserire l'opzione desiderata: ")))
-    os.system("clear")
-
-    if (int(input("\n\nScansione completata, vuoi effettuare un'altra analisi [1 = si, 0 = no]? ")) == 0 ):
-        end = "true"
-
-#stampo la conclusione del programma
-fine()
-
-#fine main vero e proprio ------------------------------------------------------------
+if(args.light):
+        path_ris = mkdir_results(1, args.path_risultati)
+        docker_bench_security(path_ris)
+elif(args.base):
+        path_ris = mkdir_results(2, args.path_risultati)
+        docker_inspect(path_ris, args.immagine)
+        trivy_image(path_ris, args.immagine)
+elif(args.full):
+        path_ris = mkdir_results(3, args.path_risultati)
+        if(args.git):
+            git_clone_sourcecode(args.path_github)
+        docker_bench_security(path_ris)
+        docker_inspect(path_ris, args.immagine)
+        trivy_image(path_ris, args.immagine)
+        trivy_fs(path_ris)
+        semgrep_scan(path_ris)
+else:
+        sys.exit(-1)
