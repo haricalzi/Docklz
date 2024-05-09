@@ -8,7 +8,6 @@ def docker_bench_security(path_ris):
     print("----------------------------------------------------------------")
     controllo_comando_installato("git")
     controllo_DBS()
-    path_actual = os.getcwd()
     os.chdir("docker-bench-security")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
     nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
@@ -84,9 +83,6 @@ def mkdir_results(s, path):
         os.chdir(f"{nome_dir}")
         os.mkdir(nome_sottodir)
         print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
-print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
-    print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
-    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi di installazione, procedere manualmente con l'installazione e poi avviare nuovamente lo script\n")
         path_ris = f"{nome_dir}/{nome_sottodir}" 
     return path_ris
 
