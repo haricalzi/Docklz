@@ -104,10 +104,10 @@ def data_ora():
 
 #funzione che stampa un messaggio iniziale
 def stampa_iniziale():
-    print("---------------------------------------------")
+    print("\n\n---------------------------------------------")
     print("--- SECURITY ANALISYS OF DOCKER CONTAINER ---")
-    print("---------------------------------------------")
-    print("\n\nNB 1: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
+    print("---------------------------------------------\n\n")
+    print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
     print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
-    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi di installazione, procedere manualmente e poi avviare nuovamente lo script\n")
+    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi di installazione, procedere manualmente con l'installazione e poi avviare nuovamente lo script\n")
     
