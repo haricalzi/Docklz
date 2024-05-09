@@ -11,9 +11,12 @@ parser.add_argument('-full', action="store", dest="immagine_full", help='FULL: a
 parser.add_argument('-path', action="store", dest="path_risultati", default=".", help='Permette di specificare il path assoluto/relativo di dove creare la cartella dei risultati. Di default viene considerato quello attuale')
 parser.add_argument('-git', action="store", dest="path_github", help='Permette di specificare il path di GitHub in cui scaricare il source code (repository GitHub --> pulsante Code verde --> HTTPS). Opzionale, non utilizzare se è già presente il source code')
 
-#parso gli argomenti e agisco di conseguenza
+#parso gli argomenti
 args = parser.parse_args()
 
+stampa_iniziale()
+
+#agisco di conseguenza
 if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
     print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
 elif(args.light):

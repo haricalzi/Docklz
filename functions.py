@@ -50,8 +50,8 @@ def trivy_fs(path_ris):
     #eseguo il comando trivy fs, lo salvo nella relativa cartella
     nome_file = f"trivy_fs{data_ora()}.txt"
     os.system(f"trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
-    print(f"\nAnalisiprint("----------------------------------------------------------------") della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
-    
+    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+
 
 #funzione che ispezione tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris):
@@ -63,7 +63,6 @@ def semgrep_scan(path_ris):
     nome_file = f"semgrep_scan{data_ora()}.txt"
     os.system(f"semgrep scan > {path_ris}/{nome_file}")
     print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
-    
 
 
 #funzione che crea la cartella per i risultati
@@ -101,3 +100,14 @@ def git_clone_sourcecode(path_git):
 def data_ora():
     attuale = datetime.now()
     return f"__{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
+
+
+#funzione che stampa un messaggio iniziale
+def stampa_iniziale():
+    print("---------------------------------------------")
+    print("--- SECURITY ANALISYS OF DOCKER CONTAINER ---")
+    print("---------------------------------------------")
+    print("\n\nNB 1: si presuppone che sul sistema sia già stato installato configurato correttamente Docker")
+    print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti\n")
+    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi di installazione, procedere manualmente e poi avviare nuovamente lo script\n")
+    
