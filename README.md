@@ -3,7 +3,7 @@
 ### Note importanti
 - si presuppone che sul sistema sia già stato installato e configurato correttamente Docker
 - potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti
-- lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi di installazione, procedere manualmente con l'installazione e poi avviare nuovamente lo script
+- lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script
 
 ### Opzioni:
 **`-h, --help`**  -->  show this help message and exit
