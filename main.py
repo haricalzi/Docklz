@@ -28,7 +28,7 @@ elif(args.immagine_base):
 elif(args.immagine_full):
         #full 
         path_ris = mkdir_results(3, args.path_risultati)
-        if(args.gitclone):
+        if(args.path_github):
             git_clone_sourcecode(args.path_github)
         docker_bench_security(path_ris)
         docker_inspect(path_ris, args.immagine_full)

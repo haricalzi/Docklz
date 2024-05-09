@@ -15,7 +15,7 @@ def controllo_comando_installato(comando):
     if (comando in comandi_base):
         controllo_base(comando)
     elif (comando == "trivy"):
-        controllo_trivy(comando)
+        controllo_trivy()
     else:
         controllo_semgrep() 
 
@@ -30,7 +30,8 @@ def controllo_base(comando):
 
 
 #funzione che gestisce il controllo avanzato specifico per trivy
-def controllo_trivy(comando):
+def controllo_trivy():
+    comando = "trivy"
     #estraggo il nome del pacchetto se esiste, read per leggere popen
     nome = os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $2 }}'").read()
     #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 3, cut taglia al punto e mi stampa la colonna 1 o 2
@@ -44,7 +45,8 @@ def controllo_trivy(comando):
         
 
 #funzione che gestisce il controllo avanzato specifico per semgrep
-def controllo_semgrep(comando):
+def controllo_semgrep():
+    comando = "semgrep"
     #estraggo il nome del pacchetto se esiste, read per leggere popen
     nome = os.popen(f"pip list | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $1 }}'").read()
     #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 2, cut taglia al punto e mi stampa la colonna 1 o 2
