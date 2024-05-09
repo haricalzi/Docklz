@@ -37,3 +37,5 @@ elif(args.immagine_full):
         semgrep_scan(path_ris)
 else:
         sys.exit(-1)
+
+print("----------------------------------------------------------------")

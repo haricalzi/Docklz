@@ -5,7 +5,7 @@ def controllo_DBS():
     #print("Controllo se hai già installato Docker Bench for Security nell'attuale directory, in caso contrario lo installo\n")
     ris = os.popen("ls | grep docker-bench-security").read()
     if(ris!="docker-bench-security\n"):
-        print("Docker Bench for Security non installato, procedo con l'installazione ...\n")
+        print("\nDocker Bench for Security non installato, procedo con l'installazione ...\n")
         os.system("git clone https://github.com/docker/docker-bench-security.git")
 
 
@@ -38,7 +38,7 @@ def controllo_trivy():
     versione1 = int(os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $3 }}' | cut -d '.' -f1").read())
     versione2 = int(os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $3 }}' | cut -d '.' -f2").read())
     if(nome != f"{comando}\n" or (versione1 == 0 and versione2 <50)):
-        print(f"{comando} non installato o non aggiornato, procedo con l'installazione / aggiornamento ...\n")
+        print(f"\n{comando} non installato o non aggiornato, procedo con l'installazione / aggiornamento ...\n")
         os.system("wget https://github.com/aquasecurity/trivy/releases/download/v0.50.1/trivy_0.50.1_Linux-64bit.deb")
         os.system("sudo dpkg -i trivy_0.50.1_Linux-64bit.deb")
         os.system("rm -f trivy_0.50.1_Linux-64bit.deb")
@@ -53,5 +53,5 @@ def controllo_semgrep():
     versione1 = int(os.popen(f"pip list | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $2 }}' | cut -d '.' -f1").read())
     versione2 = int(os.popen(f"pip list | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $2 }}' | cut -d '.' -f2").read())
     if((nome != f"{comando}\n") or (versione1 < 1) or (versione1 == 1 and versione2 < 69)):
-        print(f"{comando} non installato o non aggiornato, procedo con l'installazione / aggiornamento ...\n")
+        print(f"\n{comando} non installato o non aggiornato, procedo con l'installazione dell'ultima versione...\n")
         os.system("python3 -m pip install semgrep")

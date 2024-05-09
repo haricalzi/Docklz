@@ -5,6 +5,7 @@ from check_and_install import *
 
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
 def docker_bench_security(path_ris):
+    print("----------------------------------------------------------------")
     controllo_comando_installato("git")
     controllo_DBS()
     path_actual = os.getcwd()
@@ -20,6 +21,7 @@ def docker_bench_security(path_ris):
 
 #funzione che ispeziona un'immagine Docker tramite Docker CLI
 def docker_inspect(path_ris, immagine):
+    print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     nome_file = f"docker_inspect{data_ora()}.txt"
     os.system(f"docker image inspect {immagine} > {path_ris}/{nome_file}")
@@ -28,6 +30,7 @@ def docker_inspect(path_ris, immagine):
 
 #funzione che ispeziona un'immagine Docker tramite trivy
 def trivy_image(path_ris ,immagine):
+    print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
     #controllo wget
     controllo_comando_installato("wget")
@@ -42,22 +45,25 @@ def trivy_image(path_ris ,immagine):
 
 #funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
 def trivy_fs(path_ris):
-    print("\n\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...\n")
+    print("----------------------------------------------------------------")
+    print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...\n")
     #eseguo il comando trivy fs, lo salvo nella relativa cartella
     nome_file = f"trivy_fs{data_ora()}.txt"
     os.system(f"trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
-    print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    print(f"\nAnalisiprint("----------------------------------------------------------------") della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     
 
 #funzione che ispezione tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris):
+    print("----------------------------------------------------------------")
     #controllo semgrep
     controllo_comando_installato("semgrep")
-    print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
+    print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
     #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
     nome_file = f"semgrep_scan{data_ora()}.txt"
     os.system(f"semgrep scan > {path_ris}/{nome_file}")
     print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    
 
 
 #funzione che crea la cartella per i risultati
@@ -66,7 +72,8 @@ def mkdir_results(s, path):
     nome_dir = "results"
     if not os.path.exists(nome_dir):
         os.mkdir(nome_dir)
-        print(f"Creo una cartella chiamata \"{nome_dir}\" all'interno di quella attuale, contenente i risultati delle varie scansioni")
+        print("----------------------------------------------------------------")
+        print(f"\nCreo una cartella chiamata \"{nome_dir}\" all'interno di quella attuale, contenente i risultati delle varie scansioni")
     match s:
         case 1:
             nome_sottodir = "light"
@@ -77,7 +84,7 @@ def mkdir_results(s, path):
     if not os.path.exists(f"{nome_dir}/{nome_sottodir}"):
         os.chdir(f"{nome_dir}")
         os.mkdir(nome_sottodir)
-        print(f"Creo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}")
+        print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
         os.chdir("..")
     path_ris = f"{nome_dir}/{nome_sottodir}" 
     return path_ris
@@ -85,8 +92,9 @@ def mkdir_results(s, path):
 
 #funzione che permette di effettuare un clone da una repository GitHub
 def git_clone_sourcecode(path_git):
+    print("----------------------------------------------------------------")
     os.system(f"git clone {path_git}")
-    print("\n\ngit clone effettuato correttamente")
+    print("\ngit clone effettuato correttamente")
 
 
 #funzione che gestisce data e ora per creare file unici ed evitare sovrascrittura
