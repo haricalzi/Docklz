@@ -56,7 +56,7 @@ def semgrep_scan(path_ris):
     print("\n\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
     #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
     nome_file = f"semgrep_scan{data_ora()}.txt"
-    os.system(f"semgrep scan > {path_actual}/{path_ris}/{nome_file}")
+    os.system(f"semgrep scan > {path_ris}/{nome_file}")
     print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
 
