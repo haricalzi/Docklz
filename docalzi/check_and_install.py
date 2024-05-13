@@ -10,6 +10,7 @@ def controllo_comando_installato(comando):
     else:
         controllo_semgrep() 
 
+
 #funzione che gestisce il controllo di comandi base come wget, curl, git 
 def controllo_base(comando):
     try:
@@ -39,6 +40,7 @@ def controllo_trivy():
             os.system("rm -f trivy_0.50.1_Linux-64bit.deb")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}")   
+
 
 #funzione che gestisce il controllo avanzato specifico per semgrep
 def controllo_semgrep():

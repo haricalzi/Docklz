@@ -74,17 +74,19 @@ def semgrep_scan(path_ris):
     #controllo semgrep
     controllo_comando_installato("semgrep")
     print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
+    print(os.getcwd())
     #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
     nome_file = f"semgrep_scan{data_ora()}.txt"
-    try:
-        os.system(f"semgrep scan > {path_ris}/{nome_file}")
-        print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
-    except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}") 
+    #try:
+    os.system(f"semgrep scan > {path_ris}/{nome_file}")
+    print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+    #except Exception as e:
+    #     print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}") 
 
 
 #funzione che crea la cartella per i risultati
 def mkdir_results(s, path):
+    actual = os.getcwd()
     os.chdir(path) 
     nome_dir = "results"
     if not os.path.exists(nome_dir):
@@ -111,6 +113,7 @@ def mkdir_results(s, path):
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
+    os.chdir(actual)
     return f"{nome_dir}/{nome_sottodir}"
 
 
@@ -132,6 +135,7 @@ def data_ora():
     except Exception as e:
         print(f"Errore durante la generazione di data ed ora: {e}")
         return None
+
 
 #funzione che stampa un messaggio iniziale
 def stampa_iniziale():
