@@ -9,7 +9,8 @@
 1. clonare la repository
 2. spostarsi nella directory appena creata
 3. utilizare il comando `pip install .`
-4. utilizzare il comando `docalzi` per eseguire le scansioni
+4. spostarsi nella directory da analizzare
+5. utilizzare il comando `docalzi` per eseguire le scansioni
 
 ### Opzioni di `docalzi`:
 `-h, --help`  -->  show this help message and exit
