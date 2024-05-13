@@ -18,7 +18,7 @@ def main():
         stampa_iniziale()
 
         #comando senza parametri 
-        if!(args.light or args.immagine_base or args.immagine_full):
+        if not (args.light or args.immagine_base or args.immagine_full):
                 stampa_help()
 
         #agisco di conseguenza
