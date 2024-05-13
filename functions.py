@@ -8,6 +8,7 @@ def docker_bench_security(path_ris):
     print("----------------------------------------------------------------")
     controllo_comando_installato("git")
     #installo il DBS 
+    print("\nInstallo il Docker Bench of Security\n")
     os.system("git clone https://github.com/docker/docker-bench-security.git")
     os.chdir("docker-bench-security")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
