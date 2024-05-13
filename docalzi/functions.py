@@ -108,7 +108,6 @@ def mkdir_results(s, path):
             os.chdir(nome_dir)
             os.mkdir(nome_sottodir)
             print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
-            os.chdir("..") 
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
