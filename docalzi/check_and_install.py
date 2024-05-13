@@ -19,7 +19,7 @@ def controllo_base(comando):
         #controllo se il pacchetto è installato, altrimenti lo installo
         if(nome != f"{comando}\n"):
             print(f"{comando} non installato, procedo con l'installazione ...\n")
-            os.system(f"sudo apt install {comando}")
+            os.system(f"sudo apt -y install {comando}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}")
 
