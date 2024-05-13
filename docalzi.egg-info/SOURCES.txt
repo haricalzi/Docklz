@@ -1,0 +1,7 @@
+README.md
+setup.py
+docalzi.egg-info/PKG-INFO
+docalzi.egg-info/SOURCES.txt
+docalzi.egg-info/dependency_links.txt
+docalzi.egg-info/entry_points.txt
+docalzi.egg-info/top_level.txt
