@@ -1,14 +1,5 @@
 import os
 
-#funzione che controlla se il Docker Bench for Security è già installato, in caso contrario lo installa
-def controllo_DBS():
-    #print("Controllo se hai già installato Docker Bench for Security nell'attuale directory, in caso contrario lo installo\n")
-    ris = os.popen("ls | grep docker-bench-security").read()
-    if(ris!="docker-bench-security\n"):
-        print("\nDocker Bench for Security non installato, procedo con l'installazione ...\n")
-        os.system("git clone https://github.com/docker/docker-bench-security.git")
-
-
 #funzione controlla se un comando è già installato, in caso contrario lo installa (passargli il nome del comando)
 def controllo_comando_installato(comando):
     comandi_base = ["wget", "curl", "git"]

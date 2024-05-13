@@ -7,14 +7,16 @@ from check_and_install import *
 def docker_bench_security(path_ris):
     print("----------------------------------------------------------------")
     controllo_comando_installato("git")
-    controllo_DBS()
+    #installo il DBS 
+    os.system("git clone https://github.com/docker/docker-bench-security.git")
     os.chdir("docker-bench-security")
     #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
     nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
     print("\nAnalisi della configurazione di Docker in corso...")
     os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
-    #torno nella cartella originale
+    #torno nella cartella orginale e rimuovo il Docker Bench of Security
     os.chdir("..")
+    os.system("sudo rm -rf docker-bench-security")
     print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
 
