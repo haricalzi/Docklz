@@ -80,9 +80,10 @@ def mkdir_results(s, path):
         case 3:
             nome_sottodir = "full"
     if not os.path.exists(f"{nome_dir}/{nome_sottodir}"):
-        os.chdir(f"{nome_dir}")
+        os.chdir(nome_dir)
         os.mkdir(nome_sottodir)
-        print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")  
+        print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
+        os.chdir("..")  
     return f"{nome_dir}/{nome_sottodir}"
 
 
