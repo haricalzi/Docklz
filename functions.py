@@ -14,7 +14,7 @@ def docker_bench_security(path_ris):
     print("\nAnalisi della configurazione di Docker in corso...")
     os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
     #torno nella cartella originale
-    os.chdir(path_actual)
+    os.chdir("..")
     print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
 
 
@@ -82,9 +82,8 @@ def mkdir_results(s, path):
     if not os.path.exists(f"{nome_dir}/{nome_sottodir}"):
         os.chdir(f"{nome_dir}")
         os.mkdir(nome_sottodir)
-        print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
-        path_ris = f"{nome_dir}/{nome_sottodir}" 
-    return path_ris
+        print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")  
+    return f"{nome_dir}/{nome_sottodir}"
 
 
 #funzione che permette di effettuare un clone da una repository GitHub
