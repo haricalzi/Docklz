@@ -19,7 +19,7 @@ def main():
 
         #agisco di conseguenza
         if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
-        print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
+                print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
         elif(args.light):
                 #light 
                 path_ris = mkdir_results(1, args.path_risultati)
@@ -33,12 +33,12 @@ def main():
                 #full 
                 path_ris = mkdir_results(3, args.path_risultati)
                 if(args.path_github):
-                git_clone_sourcecode(args.path_github)
-                docker_bench_security(path_ris)
-                docker_inspect(path_ris, args.immagine_full)
-                trivy_image(path_ris, args.immagine_full)
-                trivy_fs(path_ris)
-                semgrep_scan(path_ris)
+                        git_clone_sourcecode(args.path_github)
+                        docker_bench_security(path_ris)
+                        docker_inspect(path_ris, args.immagine_full)
+                        trivy_image(path_ris, args.immagine_full)
+                        trivy_fs(path_ris)
+                        semgrep_scan(path_ris)
         else:
                 sys.exit(-1)
 
