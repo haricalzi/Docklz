@@ -1,3 +1,0 @@
-[console_scripts]
-docalzi = docalzi.docalzi:main
-
