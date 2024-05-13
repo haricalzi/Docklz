@@ -17,6 +17,10 @@ def main():
 
         stampa_iniziale()
 
+        #comando senza parametri 
+        if!(args.light or args.immagine_base or args.immagine_full):
+                stampa_help()
+
         #agisco di conseguenza
         if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
                 print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
