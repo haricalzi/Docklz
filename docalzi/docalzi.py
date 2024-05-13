@@ -30,15 +30,15 @@ def main():
                 docker_inspect(path_ris, args.immagine_base)
                 trivy_image(path_ris, args.immagine_base)
         elif(args.immagine_full):
-                #full 
+                #full   
                 path_ris = mkdir_results(3, args.path_risultati)
                 if(args.path_github):
                         git_clone_sourcecode(args.path_github)
-                        docker_bench_security(path_ris)
-                        docker_inspect(path_ris, args.immagine_full)
-                        trivy_image(path_ris, args.immagine_full)
-                        trivy_fs(path_ris)
-                        semgrep_scan(path_ris)
+                docker_bench_security(path_ris)
+                docker_inspect(path_ris, args.immagine_full)
+                trivy_image(path_ris, args.immagine_full)
+                trivy_fs(path_ris)
+                semgrep_scan(path_ris)
         else:
                 sys.exit(-1)
 

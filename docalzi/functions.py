@@ -131,7 +131,7 @@ def data_ora():
         return f"__{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
     except Exception as e:
         print(f"Errore durante la generazione di data ed ora: {e}")
-        eturn None
+        return None
 
 #funzione che stampa un messaggio iniziale
 def stampa_iniziale():
@@ -140,7 +140,7 @@ def stampa_iniziale():
     print("--------------------------------------------------\n\n")
     print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
     print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
-    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script\n")
+    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script")
     print("\n\n---------------------------------------------------")
     print("-------------- 'docalzi -h' per help --------------")
     print("-------------------------------------------------\n\n")
