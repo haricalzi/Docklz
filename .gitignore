@@ -1,5 +1,5 @@
 results/*
-__pycache__/*
+docalzi/__pycache__/*
 test.py
 docker-bench-security/*
 docalzi.egg-info/
