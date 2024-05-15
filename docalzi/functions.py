@@ -8,23 +8,21 @@ def docker_bench_security(path_ris):
     print("----------------------------------------------------------------")
     controllo_comando_installato("git")
     try:
-        #installo il DBS 
         print("\nInstallo il Docker Bench of Security\n")
         os.system("git clone https://github.com/docker/docker-bench-security.git")
         os.chdir("docker-bench-security")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione del Docker Bench for Security: {str(e)}")
     try:
-        #eseguo lo script del DockerBenchmarkSecurity, lo salvo nella relativa cartella
         nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
         print("\nAnalisi della configurazione di Docker in corso...")
         os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
-        #torno nella cartella orginale e rimuovo il Docker Bench of Security
         os.chdir("..")
         os.system("sudo rm -rf docker-bench-security")
         print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
+
 
 #funzione che ispeziona un'immagine Docker tramite Docker CLI
 def docker_inspect(path_ris, immagine):
@@ -37,6 +35,7 @@ def docker_inspect(path_ris, immagine):
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
 
+
 #funzione che ispeziona un'immagine Docker tramite trivy
 def trivy_image(path_ris ,immagine):
     print("----------------------------------------------------------------")
@@ -46,7 +45,6 @@ def trivy_image(path_ris ,immagine):
     #controllo trivy
     controllo_comando_installato("trivy")
     print("\nAnalisi in corso, attendere...\n")
-    #eseguo il comando trivy image sull'immagine specificata, lo salvo nella relativa cartella
     nome_file = f"trivy_image{data_ora()}.txt"
     try:
         os.system(f"trivy image {immagine} > {path_ris}/{nome_file}")
@@ -59,7 +57,6 @@ def trivy_image(path_ris ,immagine):
 def trivy_fs(path_ris):
     print("----------------------------------------------------------------")
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...\n")
-    #eseguo il comando trivy fs, lo salvo nella relativa cartella
     nome_file = f"trivy_fs{data_ora()}.txt"
     try:
         os.system(f"trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
@@ -68,13 +65,11 @@ def trivy_fs(path_ris):
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")   
 
 
-#funzione che ispezione tramite semgrep il codice sorgente dell'applicazione
+#funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris):
     print("----------------------------------------------------------------")
-    #controllo semgrep
     controllo_comando_installato("semgrep")
-    print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
-    #eseguo il comando }semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
+    print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere...")
     nome_file = f"semgrep_scan{data_ora()}.txt"
     try:
         os.system(f"semgrep scan > {path_ris}/{nome_file}")
@@ -108,7 +103,7 @@ def mkdir_results(s, path):
         try:
             os.chdir(nome_dir)
             os.mkdir(nome_sottodir)
-            print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
+            print(f"\nCprint(f"{os.getcwd()} ---- ../{path_ris}/{nome_file} ")reo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
@@ -144,10 +139,13 @@ def stampa_iniziale():
     print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
     print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
     print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script")
+    print("\n\nRiferimenti:")
+    print("     - https://github.com/haricalzi")
+    print("     - https://www.linkedin.com/in/haricalzi")
 
 
 #funzione che stampa il menù di help
 def stampa_help():
     print("\n\n---------------------------------------------------")
     print("-------------- 'docalzi -h' per help --------------")
-    print("-------------------------------------------------\n\n")
+    print("---------------------------------------------------\n\n")
