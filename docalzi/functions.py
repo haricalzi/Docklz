@@ -74,7 +74,7 @@ def semgrep_scan(path_ris):
     #controllo semgrep
     controllo_comando_installato("semgrep")
     print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, attendere...")
-    #eseguo il comando semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
+    #eseguo il comando }semgrep scan, lo salvo nella relativa cartella. Prima di fare ciò mi devo spostare nella cartella del progetto per eseguire lo scan
     nome_file = f"semgrep_scan{data_ora()}.txt"
     try:
         os.system(f"semgrep scan > {path_ris}/{nome_file}")
@@ -86,7 +86,8 @@ def semgrep_scan(path_ris):
 #funzione che crea la cartella per i risultati
 def mkdir_results(s, path):
     actual = os.getcwd()
-    os.chdir(path) 
+    os.chdir(path)
+    tosave = os.getcwd() 
     nome_dir = "results"
     if not os.path.exists(nome_dir):
         try:
@@ -112,7 +113,7 @@ def mkdir_results(s, path):
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
     os.chdir(actual)
-    return f"{nome_dir}/{nome_sottodir}"
+    return f"{tosave}/{nome_dir}/{nome_sottodir}"
 
 
 #funzione che permette di effettuare un clone da una repository GitHub
