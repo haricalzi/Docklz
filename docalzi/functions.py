@@ -40,9 +40,7 @@ def docker_inspect(path_ris, immagine):
 def trivy_image(path_ris ,immagine):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
-    #controllo wget
     controllo_comando_installato("wget")
-    #controllo trivy
     controllo_comando_installato("trivy")
     print("\nAnalisi in corso, attendere...\n")
     nome_file = f"trivy_image{data_ora()}.txt"

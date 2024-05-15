@@ -16,7 +16,6 @@ def controllo_base(comando):
     try:
         #estraggo il nome del pacchetto se esiste, read per leggere popen
         nome = os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $2 }}'").read()
-        #controllo se il pacchetto è installato, altrimenti lo installo
         if(nome != f"{comando}\n"):
             print(f"{comando} non installato, procedo con l'installazione ...\n")
             os.system(f"sudo apt -y install {comando}")

@@ -12,12 +12,11 @@ def main():
         parser.add_argument('-path', action="store", dest="path_risultati", default=".", help='Permette di specificare il path assoluto/relativo di dove creare la cartella dei risultati. Di default viene considerato quello attuale')
         parser.add_argument('-git', action="store", dest="path_github", help='Permette di specificare il path di GitHub in cui scaricare il source code (repository GitHub --> pulsante Code verde --> HTTPS). Opzionale, non utilizzare se è già presente il source code')
 
-        #parso gli argomenti
+        #parso gli argomenti passati da linea di comando
         args = parser.parse_args()
 
+        #se passo il comando senza parametri stamoo anche l'help, altrimenti solo il menù iniziale
         stampa_iniziale()
-
-        #comando senza parametri 
         if not (args.light or args.immagine_base or args.immagine_full):
                 stampa_help()
 
