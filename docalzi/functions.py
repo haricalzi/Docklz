@@ -16,7 +16,7 @@ def docker_bench_security(path_ris):
     try:
         nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
         print("\nAnalisi della configurazione di Docker in corso...")
-        os.system(f"sudo ./docker-bench-security.sh > ../{path_ris}/{nome_file}")
+        os.system(f"sudo ./docker-bench-security.sh > {path_ris}/{nome_file}")
         os.chdir("..")
         os.system("sudo rm -rf docker-bench-security")
         print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
@@ -139,7 +139,7 @@ def stampa_iniziale():
     print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script")
     print("\n\nAutore:")
     print("     - https://github.com/haricalzi")
-    print("     - https://www.linkedin.com/in/haricalzi")
+    print("     - https://www.linkedin.com/in/haricalzi\n")
 
 
 #funzione che stampa il menù di help
