@@ -3,7 +3,7 @@ from .functions import *
 
 def main():
         #creo il parser
-        parser = argparse.ArgumentParser(description='Docker analisys')
+        parser = argparse.ArgumentParser(description='Analisi di immagini e container Docker')
 
         #aggiungo le opzioni
         parser.add_argument('-light', action="store_true", help='LIGHT: analisi della configurazione di Docker presente sul sistema')
