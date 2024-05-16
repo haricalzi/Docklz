@@ -132,7 +132,7 @@ def data_ora():
 #funzione che stampa un messaggio iniziale
 def stampa_iniziale():
     print("\n\n--------------------------------------------------")
-    print("--------------------- DOCALZI --------------------")
+    print("-------------------- DOCALZI ---------------------")
     print("--------------------------------------------------")
     print("----- SECURITY ANALISYS OF DOCKER CONTAINERS -----")
     print("--------------------------------------------------\n\n")
