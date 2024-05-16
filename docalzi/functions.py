@@ -134,7 +134,7 @@ def stampa_iniziale():
     print("\n\n--------------------------------------------------")
     print("--------------------- DOCALZI --------------------")
     print("--------------------------------------------------")
-    print("----- SECURITY ANALISYS OF DOCKER CONTAINER ------")
+    print("----- SECURITY ANALISYS OF DOCKER CONTAINERS -----")
     print("--------------------------------------------------\n\n")
     print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
     print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
