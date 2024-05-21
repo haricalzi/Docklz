@@ -1,5 +1,5 @@
 import argparse, sys, os
-from .functions import * #test
+from .functions import *
 
 def main():
         #creo il parser
