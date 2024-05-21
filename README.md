@@ -1,4 +1,4 @@
-# Analisi di immagini e container Docker, realizzato da Hari Calzi
+# Analisi di immagini e container Docker
 
 ### Note importanti
 - si presuppone che sul sistema siano già stati installati e configurati correttamente **Docker** e **Python**
