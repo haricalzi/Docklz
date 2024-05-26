@@ -5,7 +5,6 @@ from .check_and_install import *
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
 def docker_bench_security(path_ris):
     print("----------------------------------------------------------------")
-    controllo_comando_installato("git")
     try:
         print("\nInstallo il Docker Bench of Security\n")
         os.system("git clone https://github.com/docker/docker-bench-security.git")
@@ -29,7 +28,7 @@ def docker_inspect(path_ris, immagine):
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     try:
         nome_file = f"docker_inspect{data_ora()}.txt"
-        os.system(f"docker image inspect {immagine} > {path_ris}/{nome_file}")
+        os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi dell'immagine con Docker CLI completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
@@ -39,8 +38,6 @@ def docker_inspect(path_ris, immagine):
 def trivy_image(path_ris ,immagine):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
-    controllo_comando_installato("wget")
-    controllo_comando_installato("trivy")
     print("\nAnalisi in corso, attendere...\n")
     nome_file = f"trivy_image{data_ora()}.txt"
     try:
@@ -65,7 +62,6 @@ def trivy_fs(path_ris):
 #funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris):
     print("----------------------------------------------------------------")
-    controllo_comando_installato("semgrep")
     print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere...")
     nome_file = f"semgrep_scan{data_ora()}.txt"
     try:
@@ -136,11 +132,8 @@ def stampa_iniziale():
     print("----- SECURITY ANALISYS OF DOCKER CONTAINERS -----")
     print("--------------------------------------------------\n\n")
     print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
-    print("\nNB 2: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
-    print("\nNB 3: lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script")
-    print("\n\nAutore:")
-    print("     - https://github.com/haricalzi")
-    print("     - https://www.linkedin.com/in/haricalzi\n")
+    print("\nNB 2: prerequisiti: wget, curl, pip, trivy, semgrep")
+    print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
 
 
 #funzione che stampa il menù di help
