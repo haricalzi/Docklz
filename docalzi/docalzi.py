@@ -1,6 +1,6 @@
 import argparse, sys, os
 from .functions import *
-#lol
+
 def main():
         #creo il parser
         parser = argparse.ArgumentParser(description='Analisi di immagini e container Docker')

@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 from .check_and_install import *
 
-
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
 def docker_bench_security(path_ris):
     print("----------------------------------------------------------------")
