@@ -41,7 +41,7 @@ def trivy_image(path_ris ,immagine):
     print("\nAnalisi in corso, attendere...\n")
     nome_file = f"trivy_image{data_ora()}.txt"
     try:
-        os.system(f"trivy image {immagine} > {path_ris}/{nome_file}")
+        os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi dell'immagine con trivy completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
@@ -53,7 +53,7 @@ def trivy_fs(path_ris):
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...\n")
     nome_file = f"trivy_fs{data_ora()}.txt"
     try:
-        os.system(f"trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
+        os.system(f"sudo trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")   
