@@ -27,7 +27,7 @@ def docker_inspect(path_ris, immagine):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     try:
-        nome_file = f"docker_inspect{data_ora()}.txt"
+        nome_file = f"docker_inspect{data_ora()}.json"
         os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi dell'immagine con Docker CLI completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
@@ -39,9 +39,9 @@ def trivy_image(path_ris ,immagine):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
     print("\nAnalisi in corso, attendere...\n")
-    nome_file = f"trivy_image{data_ora()}.txt"
+    nome_file = f"trivy_image{data_ora()}.json"
     try:
-        os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file}")
+        os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi dell'immagine con trivy completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
@@ -51,9 +51,9 @@ def trivy_image(path_ris ,immagine):
 def trivy_fs(path_ris):
     print("----------------------------------------------------------------")
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...\n")
-    nome_file = f"trivy_fs{data_ora()}.txt"
+    nome_file = f"trivy_fs{data_ora()}.json"
     try:
-        os.system(f"sudo trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
+        os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")   
