@@ -3,7 +3,7 @@
 ### Note importanti
 - si presuppone che sul sistema siano già stati installati e configurati correttamente **Docker** e **Python**
 - potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti
-- lo script installa in automatico, nel caso non presenti ed in caso di necessità, i seguenti programmi: wget, curl, pip, trivy, semgrep. In caso di problemi, procedere manualmente con l'installazione e la configurazione, poi avviare nuovamente lo script
+- prerequisiti: wget, curl, pip, trivy, semgrep
 
 ### Setup
 1. clonare la repository
