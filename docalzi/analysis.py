@@ -66,7 +66,6 @@ elif (pwbi == "minimal"):
 else:
     mw_calc = 'high'
 
-print(mw_calc)
 
 # final decision
 decision = ssvc.Decision(
