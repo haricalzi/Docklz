@@ -1,14 +1,13 @@
 import ssvc
 from RPA.Browser.Selenium import Selenium
 
-cve = "CVE-2023-0049"
-anno = cve[4:8]
+VulnerabilityID = "CVE-2023-50495"
+V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
 
-url = f"https://github.com/trickest/cve/blob/main/{anno}/{cve}.md"
-
-
+# expoitability
+anno = VulnerabilityID[4:8]
+url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
 browser = Selenium()
-
 options = {
         "arguments": ["--headless"]
     }
@@ -24,20 +23,28 @@ try:
     page_source = browser.get_source()
 
     if search_text1 in page_source and search_text2 in page_source:
-        exploitable='none'
+        exploit_calc='none'
     else:
-        exploitable='poc'
+        exploit_calc='poc'
 except Exception as e:
     print(f"Si è verificato un errore: {e}")
 finally:
     browser.close_all_browsers()
 
+#automatibility
+value = V3Vector[26]
+if(value == 'N'):
+    automation_calc = 'no'
+else:
+    automation_calc = 'yes'
+
+    
 
 decision = ssvc.Decision(
-    exploitation=exploitable,   # none, poc, (active) --> from trickest on github
-    automatable='no',           # yes, no
-    technical_impact='total',   # partial, total
-    mission_wellbeing='high',   # low, medium, high
+    exploitation=exploit_calc,      # none, poc, (active)   --> from trickest on github
+    automatable=automation_calc,    # yes, no               --> from V3Vector, human interaction field
+    technical_impact='total',       # partial, total
+    mission_wellbeing='high',       # low, medium, high
 )
 
 outcome = decision.evaluate()
