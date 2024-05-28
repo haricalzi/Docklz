@@ -4,6 +4,7 @@ from RPA.Browser.Selenium import Selenium
 VulnerabilityID = "CVE-2023-50495"
 V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
 
+
 # expoitability
 anno = VulnerabilityID[4:8]
 url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
@@ -11,7 +12,6 @@ browser = Selenium()
 options = {
         "arguments": ["--headless"]
     }
-
 try:
 
     browser.open_available_browser(url, options=options)
@@ -31,15 +31,21 @@ except Exception as e:
 finally:
     browser.close_all_browsers()
 
-#automatibility
-value = V3Vector[26]
-if(value == 'N'):
+
+# automatibility
+ui = V3Vector[27]
+
+if(ui == 'N'):
     automation_calc = 'no'
 else:
     automation_calc = 'yes'
 
-    
+print(automation_calc)
 
+
+
+
+# final decision
 decision = ssvc.Decision(
     exploitation=exploit_calc,      # none, poc, (active)   --> from trickest on github
     automatable=automation_calc,    # yes, no               --> from V3Vector, human interaction field
