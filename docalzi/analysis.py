@@ -1,10 +1,22 @@
 import ssvc
-
+import requests
 
 cve = "CVE-2023-0013"
 anno = cve[4:8]
 
-req = f"https://github.com/trickest/cve/blob/main/{anno}/{cve}.md"
+URL = f"https://github.com/trickest/cve/blob/main/{anno}/{cve}.md"
+ 
+result = requests.get(url = URL)
+
+print(result)
+
+data = r.json()
+
+print(data)
+
+
+
+
 
 decision = ssvc.Decision(
     exploitation='poc',         #none, poc, active
