@@ -3,6 +3,7 @@ from RPA.Browser.Selenium import Selenium
 
 VulnerabilityID = "CVE-2023-50495"
 V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
+V3Score = 6.5
 
 
 # expoitability
@@ -43,14 +44,24 @@ else:
 print(automation_calc)
 
 
+# technical impact
+confidentiality = V3Vector[35]
+integrity = V3Vector[39]
+availability = V3Vector[43]
+if(confidentiality == "H" or integrity == "H" or availability == "H"):
+    ti_calc = 'total'
+else:
+    ti_calc = 'partial'
+
+
 
 
 # final decision
 decision = ssvc.Decision(
-    exploitation=exploit_calc,      # none, poc, (active)   --> from trickest on github
-    automatable=automation_calc,    # yes, no               --> from V3Vector, human interaction field
-    technical_impact='total',       # partial, total
-    mission_wellbeing='high',       # low, medium, high
+    exploitation = exploit_calc,    # none, poc, (active)   --> from trickest on github
+    automatable = automation_calc,  # yes, no               --> from V3Vector, human interaction field
+    technical_impact = ti_calc,     # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
+    mission_wellbeing = 'high',     # low, medium, high
 )
 
 outcome = decision.evaluate()
