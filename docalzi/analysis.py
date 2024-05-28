@@ -54,8 +54,8 @@ else:
 
 
 # mission wellbeing
-pwbi = ""
 mp = ""
+pwbi = ""
 
 if (pwbi == "irreversible"):
     mw_calc = 'high'
@@ -73,7 +73,7 @@ decision = ssvc.Decision(
     exploitation = exploit_calc,    # none, poc, (active)   --> from trickest on github
     automatable = automation_calc,  # yes, no               --> from V3Vector, human interaction field
     technical_impact = ti_calc,     # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
-    mission_wellbeing = 'medium',   # low, medium, high
+    mission_wellbeing = mw_calc,    # low, medium, high
 )
 
 outcome = decision.evaluate()
