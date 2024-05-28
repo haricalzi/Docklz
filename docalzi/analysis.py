@@ -41,27 +41,39 @@ if(ui == 'N'):
 else:
     automation_calc = 'yes'
 
-print(automation_calc)
-
 
 # technical impact
 confidentiality = V3Vector[35]
 integrity = V3Vector[39]
 availability = V3Vector[43]
+
 if(confidentiality == "H" or integrity == "H" or availability == "H"):
     ti_calc = 'total'
 else:
     ti_calc = 'partial'
 
 
+# mission wellbeing
+pwbi = ""
+mp = ""
 
+if (pwbi == "irreversible"):
+    mw_calc = 'high'
+elif (pwbi == "material" and mp in ["minimal", "support"]):
+    mw_calc = 'medium'
+elif (pwbi == "minimal"):
+    mw_calc = 'low' if (mp == "minimal") else 'medium'
+else:
+    mw_calc = 'high'
+
+print(mw_calc)
 
 # final decision
 decision = ssvc.Decision(
     exploitation = exploit_calc,    # none, poc, (active)   --> from trickest on github
     automatable = automation_calc,  # yes, no               --> from V3Vector, human interaction field
     technical_impact = ti_calc,     # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
-    mission_wellbeing = 'high',     # low, medium, high
+    mission_wellbeing = 'medium',   # low, medium, high
 )
 
 outcome = decision.evaluate()
