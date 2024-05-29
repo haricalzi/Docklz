@@ -2,6 +2,8 @@ import ssvc
 from RPA.Browser.Selenium import Selenium
 import json
 
+import json
+
 def estrai_CVE_da_JSON(json_file):
     # Lista per salvare i dati estratti
     vulnerabilities_list = []
@@ -17,14 +19,24 @@ def estrai_CVE_da_JSON(json_file):
             vulnerability_id = vulnerability.get('VulnerabilityID', '')
             title = vulnerability.get('Title', '')
             description = vulnerability.get('Description', '')
-            v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
-            v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
+            severity = vulnerability.get('Severity', '')
+            
+            # Verifica se ci sono dati CVSS specifici per Red Hat
+            if 'redhat' in vulnerability.get('CVSS', {}):
+                redhat_cvss = vulnerability['CVSS']['redhat']
+                v3vector = redhat_cvss.get('V3Vector', '')
+                v3score = redhat_cvss.get('V3Score', '')
+            else:
+                # Altrimenti, utilizza i dati CVSS standard
+                v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
+                v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
 
             # Aggiunge il dizionario alla lista
             vulnerabilities_list.append({
                 'VulnerabilityID': vulnerability_id,
                 'Title': title,
                 'Description': description,
+                'Severity': severity,
                 'V3Vector': v3vector,
                 'V3Score': v3score
             })
@@ -34,11 +46,13 @@ def estrai_CVE_da_JSON(json_file):
         print(f"VulnerabilityID: {vulnerability['VulnerabilityID']}")
         print(f"Title: {vulnerability['Title']}")
         print(f"Description: {vulnerability['Description']}")
+        print(f"Severity: {vulnerability['Severity']}")
         print(f"V3Vector: {vulnerability['V3Vector']}")
         print(f"V3Score: {vulnerability['V3Score']}")
         print("------")
     
     return vulnerabilities_list
+
 
 # funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
@@ -171,7 +185,7 @@ VulnerabilityID = "CVE-2023-29383"
 V3Vector = "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N"
 
 
-estrai_CVE_da_JSON("results/results__29-5-2024__16-39-53/trivy_image.json")
+estrai_CVE_da_JSON("../results/results__29-5-2024__16-39-53/trivy_image.json")
 
 peso = calcolo_peso(V3Vector, VulnerabilityID)
 print(peso)
