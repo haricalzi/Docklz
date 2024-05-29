@@ -1,10 +1,6 @@
 import ssvc
 from RPA.Browser.Selenium import Selenium
 
-VulnerabilityID = "CVE-2023-50495"
-V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
-V3Score = 6.5
-
 # funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
@@ -107,3 +103,27 @@ def calcolo_peso(V3Vector, VulnerabilityID):
     outcome = decision.evaluate()
     outcome_cutted = str(outcome.action)[11:]
     print(outcome_cutted)
+
+    match outcome_cutted:
+        case "Track":
+            peso = 1
+        case "Track*":
+            peso = 2
+        case "Attend":
+            peso = 3
+        case "Act":
+            peso = 4
+        case _:
+            print("Errore, peso settato al massimo per precauzione")
+            peso = 4
+    
+    return peso
+
+
+
+
+#temporary main code
+VulnerabilityID = "CVE-2023-50495"
+V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
+V3Score = 6.5
+peso = calcolo_peso(V3Vector, VulnerabilityID)
