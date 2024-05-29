@@ -4,6 +4,8 @@ import json
 
 import json
 
+
+# funzione che estrae cve e relative informazioni da un json
 def estrai_CVE_da_JSON(json_file):
     # Lista per salvare i dati estratti
     vulnerabilities_list = []
@@ -47,12 +49,15 @@ def estrai_CVE_da_JSON(json_file):
     
     return vulnerabilities_list
 
+
+# funzione che analizza le info di un CVE e ne calcola il peso
 def analisi_CVE(vulnerabilities_list):
     new_vulnerabilities_list = []
+    threshold = 20
 
     for vulnerability in vulnerabilities_list:
-        if vulnerability['V3Vector'] != -1 and vulnerability['V3Score'] != -1:
-            if len(vulnerabilities_list) < 20 or vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
+        if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
+            if len(vulnerabilities_list) < threshold or vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
                 peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
             else:
                 peso = 1
@@ -63,6 +68,7 @@ def analisi_CVE(vulnerabilities_list):
         new_vulnerabilities_list.append(vulnerability)
     
     return new_vulnerabilities_list
+
 
 # funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
@@ -172,8 +178,6 @@ def calcolo_peso(V3Vector, VulnerabilityID):
     outcome = decision.evaluate()
     outcome_cutted = str(outcome.action)[11:]
     
-    print(f"--{outcome_cutted}--")
-
     match outcome_cutted:
         case "TRACK":
             peso = 0
@@ -207,6 +211,7 @@ for vulnerability in vulnerabilities_list_peso:
     print(f"Severity: {vulnerability['Severity']}")
     print(f"V3Vector: {vulnerability['V3Vector']}")
     print(f"V3Score: {vulnerability['V3Score']}")
+    print(f"Peso: {vulnerability['Peso']}")
     print("------")
 
 peso = calcolo_peso(V3Vector, VulnerabilityID)
