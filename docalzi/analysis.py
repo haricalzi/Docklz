@@ -30,6 +30,10 @@ def estrai_CVE_da_JSON(json_file):
                 # Altrimenti, utilizza i dati CVSS standard
                 v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
                 v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
+            
+            # Imposta i valori di default se non presenti
+            v3vector = v3vector if v3vector else '-1'
+            v3score = v3score if v3score else '-1'
 
             # Aggiunge il dizionario alla lista
             vulnerabilities_list.append({
