@@ -44,19 +44,25 @@ def estrai_CVE_da_JSON(json_file):
                 'V3Vector': v3vector,
                 'V3Score': v3score
             })
-
-    # Stampa i dati estratti per verificare
-    for vulnerability in vulnerabilities_list:
-        print(f"VulnerabilityID: {vulnerability['VulnerabilityID']}")
-        print(f"Title: {vulnerability['Title']}")
-        print(f"Description: {vulnerability['Description']}")
-        print(f"Severity: {vulnerability['Severity']}")
-        print(f"V3Vector: {vulnerability['V3Vector']}")
-        print(f"V3Score: {vulnerability['V3Score']}")
-        print("------")
     
     return vulnerabilities_list
 
+def analisi_CVE(vulnerabilities_list):
+    new_vulnerabilities_list = []
+
+    for vulnerability in vulnerabilities_list:
+        if vulnerability['V3Vector'] != -1 and vulnerability['V3Score'] != -1:
+            if len(vulnerabilities_list) < 20 or vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
+                peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
+            else:
+                peso = 1
+        else:
+            peso = 0
+            
+        vulnerability['Peso'] = peso
+        new_vulnerabilities_list.append(vulnerability)
+    
+    return new_vulnerabilities_list
 
 # funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
@@ -189,7 +195,19 @@ VulnerabilityID = "CVE-2023-29383"
 V3Vector = "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N"
 
 
-estrai_CVE_da_JSON("../results/results__29-5-2024__16-39-53/trivy_image.json")
+vulnerabilities_list = estrai_CVE_da_JSON("../results/results__29-5-2024__16-39-53/trivy_image.json")
+
+vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
+
+# Stampa i dati estratti per verificare
+for vulnerability in vulnerabilities_list_peso:
+    print(f"VulnerabilityID: {vulnerability['VulnerabilityID']}")
+    print(f"Title: {vulnerability['Title']}")
+    print(f"Description: {vulnerability['Description']}")
+    print(f"Severity: {vulnerability['Severity']}")
+    print(f"V3Vector: {vulnerability['V3Vector']}")
+    print(f"V3Score: {vulnerability['V3Score']}")
+    print("------")
 
 peso = calcolo_peso(V3Vector, VulnerabilityID)
 print(peso)
