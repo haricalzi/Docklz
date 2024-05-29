@@ -195,10 +195,6 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
 
 #temporary main code
-VulnerabilityID = "CVE-2023-29383"
-V3Vector = "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N"
-
-
 vulnerabilities_list = estrai_CVE_da_JSON("../results/results__29-5-2024__16-39-53/trivy_image.json")
 
 vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
@@ -213,6 +209,3 @@ for vulnerability in vulnerabilities_list_peso:
     print(f"V3Score: {vulnerability['V3Score']}")
     print(f"Peso: {vulnerability['Peso']}")
     print("------")
-
-peso = calcolo_peso(V3Vector, VulnerabilityID)
-print(peso)
