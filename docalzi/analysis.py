@@ -77,16 +77,21 @@ def technical_impact(V3Vector):
 def mission_wellbeing(V3Vector):
     # mission prevalence (minimal, support, essential), rilevanza dell'oggetto vulnerabile all'interno del progetto, default = essential (livello massimo)
     mp = "essential" 
-    pwbi = ""
+    # impatto dei sistemi compromessi sull'uomo, default = irreversible (livello massimo)
+    pwbi = "irreversible"
 
-    if (pwbi == "irreversible"):
-        mw_calc = 'high'
-    elif (pwbi == "material" and mp in ["minimal", "support"]):
-        mw_calc = 'medium'
-    elif (pwbi == "minimal"):
-        mw_calc = 'low' if (mp == "minimal") else 'medium'
-    else:
-        mw_calc = 'high'
+    mw_calc = 'high'
+
+    # nel caso venisse implementato un modo per calcolare mp e pwbi, decommentare la parte sottostante
+
+    # if (pwbi == "irreversible"):
+    #     mw_calc = 'high'
+    # elif (pwbi == "material" and mp in ["minimal", "support"]):
+    #     mw_calc = 'medium'
+    # elif (pwbi == "minimal"):
+    #     mw_calc = 'low' if (mp == "minimal") else 'medium'
+    # else:
+    #     mw_calc = 'high'
 
     return mw_calc
 
@@ -106,13 +111,13 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
     match outcome_cutted:
         case "Track":
-            peso = 1
+            peso = 0
         case "Track*":
-            peso = 2
+            peso = 1
         case "Attend":
-            peso = 3
+            peso = 2
         case "Act":
-            peso = 4
+            peso = 3
         case _:
             print("Errore, peso settato al massimo per precauzione")
             peso = 4
