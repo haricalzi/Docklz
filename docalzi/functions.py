@@ -12,7 +12,7 @@ def docker_bench_security(path_ris):
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione del Docker Bench for Security: {str(e)}")
     try:
-        nome_file = f"DockerBenchmarkSecurity{data_ora()}.txt"
+        nome_file = "DockerBenchmarkSecurity.txt"
         print("\nAnalisi della configurazione di Docker in corso...")
         os.system(f"sudo ./docker-bench-security.sh > {path_ris}/{nome_file}")
         os.chdir("..")
@@ -27,7 +27,7 @@ def docker_inspect(path_ris, immagine):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     try:
-        nome_file = f"docker_inspect{data_ora()}.json"
+        nome_file = "docker_inspect.json"
         os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi dell'immagine con Docker CLI completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
     except Exception as e:
@@ -39,7 +39,7 @@ def trivy_image(path_ris ,immagine):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
     print("\nAnalisi in corso, attendere...\n")
-    nome_file = f"trivy_image{data_ora()}.json"
+    nome_file = "trivy_image.json"
     try:
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi dell'immagine con trivy completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
@@ -51,7 +51,7 @@ def trivy_image(path_ris ,immagine):
 def trivy_fs(path_ris):
     print("----------------------------------------------------------------")
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations in corso, attendere...\n")
-    nome_file = f"trivy_fs{data_ora()}.json"
+    nome_file = "trivy_fs.json"
     try:
         os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         print(f"\nAnalisi della directory completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
@@ -63,7 +63,7 @@ def trivy_fs(path_ris):
 def semgrep_scan(path_ris):
     print("----------------------------------------------------------------")
     print("\nSemgrep: analisi del codice sorgente dell'applicazione in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere...")
-    nome_file = f"semgrep_scan{data_ora()}.txt"
+    nome_file = "semgrep_scan.txt"
     try:
         os.system(f"semgrep scan > {path_ris}/{nome_file}")
         print(f"\nAnalisi del codice sorgente completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
@@ -72,7 +72,7 @@ def semgrep_scan(path_ris):
 
 
 #funzione che crea la cartella per i risultati
-def mkdir_results(s, path):
+def mkdir_results(path):
     actual = os.getcwd()
     os.chdir(path)
     tosave = os.getcwd() 
@@ -85,18 +85,14 @@ def mkdir_results(s, path):
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_dir}\": {e}")
             return None   
-    match s:
-        case 1:
-            nome_sottodir = "light"
-        case 2:
-            nome_sottodir = "base"
-        case 3:
-            nome_sottodir = "full"
+    
+    nome_sottodir = data_ora()
+
     if not os.path.exists(f"{nome_dir}/{nome_sottodir}"):
         try:
             os.chdir(nome_dir)
             os.mkdir(nome_sottodir)
-            print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni {nome_sottodir}\n")
+            print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni\n")
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
@@ -118,7 +114,7 @@ def git_clone_sourcecode(path_git):
 def data_ora():
     try:
         attuale = datetime.now()
-        return f"__{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
+        return f"results__{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
     except Exception as e:
         print(f"Errore durante la generazione di data ed ora: {e}")
         return None

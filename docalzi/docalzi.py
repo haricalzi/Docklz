@@ -27,13 +27,13 @@ def main():
                 print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
         elif(args.light):
                 #light 
-                path_ris = mkdir_results(1, args.path_risultati)
+                path_ris = mkdir_results(args.path_risultati)
                 if(args.install):
                         controllo_comando_installato("git")
                 docker_bench_security(path_ris)
         elif(args.immagine_base):
                 #base  
-                path_ris = mkdir_results(2, args.path_risultati)
+                path_ris = mkdir_results(args.path_risultati)
                 if(args.install):
                         controllo_comando_installato("wget")
                         controllo_comando_installato("trivy") 
@@ -41,7 +41,7 @@ def main():
                 trivy_image(path_ris, args.immagine_base)
         elif(args.immagine_full):
                 #full   
-                path_ris = mkdir_results(3, args.path_risultati)
+                path_ris = mkdir_results(args.path_risultati)
                 if(args.path_github):
                         git_clone_sourcecode(args.path_github)
                 if(args.install):

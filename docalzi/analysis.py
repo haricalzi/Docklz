@@ -5,6 +5,7 @@ from RPA.Browser.Selenium import Selenium
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
+    print(url)
     browser = Selenium()
     options = {
             "arguments": ["--headless"]
@@ -107,11 +108,13 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
     outcome = decision.evaluate()
     outcome_cutted = str(outcome.action)[11:]
+    
+    print(f"--{outcome_cutted}--")
 
     match outcome_cutted:
         case "TRACK":
             peso = 0
-        case "TRACK*":
+        case "TRACK_STAR":
             peso = 1
         case "ATTEND":
             peso = 2
@@ -125,8 +128,8 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
 
 #temporary main code
-VulnerabilityID = "CVE-2023-50495"
-V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
-V3Score = 6.5
+VulnerabilityID = "CVE-2023-29383"
+V3Vector = "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N"
+
 peso = calcolo_peso(V3Vector, VulnerabilityID)
 print(peso)
