@@ -1,5 +1,44 @@
 import ssvc
 from RPA.Browser.Selenium import Selenium
+import json
+
+def estrai_CVE_da_JSON(json_file):
+    # Lista per salvare i dati estratti
+    vulnerabilities_list = []
+
+    # Legge il file JSON
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+
+    # Itera sulle vulnerabilità nel JSON
+    for result in data['Results']:
+        for vulnerability in result['Vulnerabilities']:
+            # Estrazione dei dati desiderati
+            vulnerability_id = vulnerability.get('VulnerabilityID', '')
+            title = vulnerability.get('Title', '')
+            description = vulnerability.get('Description', '')
+            v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
+            v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
+
+            # Aggiunge il dizionario alla lista
+            vulnerabilities_list.append({
+                'VulnerabilityID': vulnerability_id,
+                'Title': title,
+                'Description': description,
+                'V3Vector': v3vector,
+                'V3Score': v3score
+            })
+
+    # Stampa i dati estratti per verificare
+    for vulnerability in vulnerabilities_list:
+        print(f"VulnerabilityID: {vulnerability['VulnerabilityID']}")
+        print(f"Title: {vulnerability['Title']}")
+        print(f"Description: {vulnerability['Description']}")
+        print(f"V3Vector: {vulnerability['V3Vector']}")
+        print(f"V3Score: {vulnerability['V3Score']}")
+        print("------")
+    
+    return vulnerabilities_list
 
 # funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
@@ -130,6 +169,9 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 #temporary main code
 VulnerabilityID = "CVE-2023-29383"
 V3Vector = "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N"
+
+
+estrai_CVE_da_JSON("results/results__29-5-2024__16-39-53/trivy_image.json")
 
 peso = calcolo_peso(V3Vector, VulnerabilityID)
 print(peso)
