@@ -107,16 +107,15 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
     outcome = decision.evaluate()
     outcome_cutted = str(outcome.action)[11:]
-    print(outcome_cutted)
 
     match outcome_cutted:
-        case "Track":
+        case "TRACK":
             peso = 0
-        case "Track*":
+        case "TRACK*":
             peso = 1
-        case "Attend":
+        case "ATTEND":
             peso = 2
-        case "Act":
+        case "ACT":
             peso = 3
         case _:
             print("Errore, peso settato al massimo per precauzione")
@@ -125,10 +124,9 @@ def calcolo_peso(V3Vector, VulnerabilityID):
     return peso
 
 
-
-
 #temporary main code
 VulnerabilityID = "CVE-2023-50495"
 V3Vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
 V3Score = 6.5
 peso = calcolo_peso(V3Vector, VulnerabilityID)
+print(peso)
