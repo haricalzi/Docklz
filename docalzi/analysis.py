@@ -2,8 +2,6 @@ import ssvc
 from RPA.Browser.Selenium import Selenium
 import json
 
-import json
-
 
 # funzione che estrae cve e relative informazioni da un json
 def estrai_CVE_da_JSON(json_file):
