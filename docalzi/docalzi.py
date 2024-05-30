@@ -34,28 +34,35 @@ def main():
                         controllo_comando_installato("git")
                 docker_bench_security(path_ris, report_pdf)
                 save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
+
         elif(args.immagine_base):
                 #base  
-                path_ris = mkdir_results(args.path_risultati)
+                path_ris, nome_pdf = mkdir_results(args.path_risultati)
+                report_pdf = create_pdf(f"REPORT {nome_pdf}")
                 if(args.install):
                         controllo_comando_installato("wget")
                         controllo_comando_installato("trivy") 
-                docker_inspect(path_ris, args.immagine_base)
-                trivy_image(path_ris, args.immagine_base)
+                docker_inspect(path_ris, args.immagine_base, report_pdf)
+                trivy_image(path_ris, args.immagine_base, report_pdf)
+                save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
+
         elif(args.immagine_full):
                 #full   
-                path_ris = mkdir_results(args.path_risultati)
+                path_ris, nome_pdf = mkdir_results(args.path_risultati)
+                report_pdf = create_pdf(f"REPORT {nome_pdf}")
                 if(args.path_github):
                         git_clone_sourcecode(args.path_github)
                 if(args.install):
                         controllo_comando_installato("wget")
                         controllo_comando_installato("trivy")
                         controllo_comando_installato("semgrep") 
-                docker_bench_security(path_ris)
-                docker_inspect(path_ris, args.immagine_full)
-                trivy_image(path_ris, args.immagine_full)
-                trivy_fs(path_ris)
-                semgrep_scan(path_ris)
+                docker_bench_security(path_ris, report_pdf)
+                docker_inspect(path_ris, args.immagine_full, report_pdf)
+                trivy_image(path_ris, args.immagine_full, report_pdf)
+                trivy_fs(path_ris, report_pdf)
+                semgrep_scan(path_ris, report_pdf)
+                save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
+
         else:
                 sys.exit(-1)
 

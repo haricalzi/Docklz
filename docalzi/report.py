@@ -19,7 +19,7 @@ def add_data_report(pdf, data):
     pdf.ln(1)
 
 # Funzione che permette di aggiungere un titolo ad un paragrafo
-def add_titoletto(pdf, titoletto):
+def add_titoletto_report(pdf, titoletto):
     pdf.set_font("Arial", 'B', 14)
     pdf.cell(0, 10, titoletto, 0, 1, 'L')
     pdf.ln(1)
