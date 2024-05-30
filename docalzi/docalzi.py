@@ -1,6 +1,7 @@
 import argparse, sys, os
 from .functions import *
 from .check_and_install import *
+from .report import *
 
 def main():
         #creo il parser
@@ -27,10 +28,12 @@ def main():
                 print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
         elif(args.light):
                 #light 
-                path_ris = mkdir_results(args.path_risultati)
+                path_ris, nome_pdf = mkdir_results(args.path_risultati)
+                report_pdf = create_pdf(f"REPORT {nome_pdf}")
                 if(args.install):
                         controllo_comando_installato("git")
-                docker_bench_security(path_ris)
+                docker_bench_security(path_ris, report_pdf)
+                save_report(report_pdf, path_ris)
         elif(args.immagine_base):
                 #base  
                 path_ris = mkdir_results(args.path_risultati)

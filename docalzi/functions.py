@@ -4,7 +4,7 @@ from .check_and_install import *
 from .report import *
 
 #funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
-def docker_bench_security(path_ris):
+def docker_bench_security(path_ris, report_pdf):
     print("----------------------------------------------------------------")
     try:
         print("\nInstallo il Docker Bench of Security\n")
@@ -18,7 +18,9 @@ def docker_bench_security(path_ris):
         os.system(f"sudo ./docker-bench-security.sh > {path_ris}/{nome_file}")
         os.chdir("..")
         os.system("sudo rm -rf docker-bench-security")
-        print(f"\nAnalisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}\n")
+        testo = f"Analisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
+        print(f"\n{testo}\n")
+        add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
 
@@ -98,7 +100,7 @@ def mkdir_results(path):
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
     os.chdir(actual)
-    return f"{tosave}/{nome_dir}/{nome_sottodir}"
+    return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_dir}/{nome_sottodir}.pdf"
 
 
 #funzione che permette di effettuare un clone da una repository GitHub
