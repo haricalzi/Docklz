@@ -1,7 +1,7 @@
 from fpdf import FPDF
 
 # Funzione che permette di creare il report PDF
-def create_pdf(title):
+def create_pdf(title, path_ris):
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
@@ -9,6 +9,8 @@ def create_pdf(title):
     pdf.set_font("Arial", '', 18)
     pdf.cell(0, 10, title, 0, 1, 'C')
     pdf.ln(10)
+    testo = f"I risultati grezzi di ogni scansione sono salvati all'interno della directory {path_ris}"
+    add_data_report(pdf, testo)
     return pdf
 
 

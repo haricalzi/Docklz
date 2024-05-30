@@ -87,7 +87,7 @@ def docker_bench_security(path_ris, report_pdf):
         os.system(f"sudo ./docker-bench-security.sh > {path_ris}/{nome_file}")
         os.chdir("..")
         os.system("sudo rm -rf docker-bench-security")
-        esito = f"Analisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
+        esito = f"Analisi della configurazione di Docker completata, trovi i risultati grezzi nel file {nome_file}"
         print(f"\nAnalisi completata\n")
         add_titoletto_report(report_pdf, "Docker Bench of Security")
         add_data_report(report_pdf, esito)
@@ -104,7 +104,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
     try:
         os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
+        esito = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati grezzi nel file {nome_file}"
         add_titoletto_report(report_pdf, "Docker CLI")
         add_data_report(report_pdf, esito)
     except Exception as e:
@@ -120,7 +120,7 @@ def trivy_image(path_ris ,immagine, report_pdf):
     try:
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
+        esito = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nel file {nome_file}"
         add_titoletto_report(report_pdf, "Trivy image")
         add_data_report(report_pdf, esito)
     except Exception as e:
@@ -136,7 +136,7 @@ def trivy_fs(path_ris, report_pdf):
     try:
         os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi della directory con Trivy completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
+        esito = f"Analisi della directory con Trivy completata, trovi i risultati grezzi nel file {nome_file}"
         add_titoletto_report(report_pdf, "Trivy fs")
         add_data_report(report_pdf, esito)
     except Exception as e:
@@ -152,7 +152,7 @@ def semgrep_scan(path_ris, report_pdf):
     try:
         os.system(f"semgrep scan > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
+        esito = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati grezzi nel file {nome_file}"
         add_titoletto_report(report_pdf, "Semgrep")
         add_data_report(report_pdf, esito)
     except Exception as e:

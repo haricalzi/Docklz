@@ -29,7 +29,7 @@ def main():
         elif(args.light):
                 #light 
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
-                report_pdf = create_pdf(f"REPORT {nome_pdf}")
+                report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
                 if(args.install):
                         controllo_comando_installato("git")
                 docker_bench_security(path_ris, report_pdf)
@@ -38,7 +38,7 @@ def main():
         elif(args.immagine_base):
                 #base  
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
-                report_pdf = create_pdf(f"REPORT {nome_pdf}")
+                report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
                 if(args.install):
                         controllo_comando_installato("wget")
                         controllo_comando_installato("trivy") 
@@ -49,7 +49,7 @@ def main():
         elif(args.immagine_full):
                 #full   
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
-                report_pdf = create_pdf(f"REPORT {nome_pdf}")
+                report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
                 if(args.path_github):
                         git_clone_sourcecode(args.path_github)
                 if(args.install):
