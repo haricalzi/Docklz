@@ -100,7 +100,7 @@ def mkdir_results(path):
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
     os.chdir(actual)
-    return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}.pdf"
+    return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"
 
 
 #funzione che permette di effettuare un clone da una repository GitHub

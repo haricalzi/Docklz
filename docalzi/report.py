@@ -15,7 +15,7 @@ def create_pdf(title):
 
 # Funzione che permette di aggiungere dei dati al report
 def add_data_report(pdf, data):
-    pdf.multi_cell(0, 10, data)
+    pdf.multi_cell(0, 8, data)
     pdf.ln()
 
 
