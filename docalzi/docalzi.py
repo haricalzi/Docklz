@@ -33,7 +33,7 @@ def main():
                 if(args.install):
                         controllo_comando_installato("git")
                 docker_bench_security(path_ris, report_pdf)
-                save_report(report_pdf, path_ris)
+                save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
         elif(args.immagine_base):
                 #base  
                 path_ris = mkdir_results(args.path_risultati)

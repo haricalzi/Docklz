@@ -100,7 +100,7 @@ def mkdir_results(path):
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
     os.chdir(actual)
-    return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_dir}/{nome_sottodir}.pdf"
+    return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}.pdf"
 
 
 #funzione che permette di effettuare un clone da una repository GitHub
@@ -117,7 +117,7 @@ def git_clone_sourcecode(path_git):
 def data_ora():
     try:
         attuale = datetime.now()
-        return f"results__{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
+        return f"{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
     except Exception as e:
         print(f"Errore durante la generazione di data ed ora: {e}")
         return None
