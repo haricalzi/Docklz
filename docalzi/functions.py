@@ -20,6 +20,7 @@ def docker_bench_security(path_ris, report_pdf):
         os.system("sudo rm -rf docker-bench-security")
         testo = f"Analisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
         print(f"\n{testo}\n")
+        add_titoletto(report_pdf, "Docker Bench of Security")
         add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
