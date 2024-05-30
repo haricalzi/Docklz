@@ -4,13 +4,13 @@ from .check_and_install import *
 from .report import *
 
 
-#funzione che crea la cartella per i risultati
+# funzione che crea la cartella per i risultati
 def mkdir_results(path):
     actual = os.getcwd()
     os.chdir(path)
     tosave = os.getcwd() 
     nome_dir = "results"
-    print("----------------------------------------------------------------")
+    print("\n----------------------------------------------------------------")
     if not os.path.exists(nome_dir):
         try:
             os.mkdir(nome_dir)
@@ -33,7 +33,7 @@ def mkdir_results(path):
     return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"
 
 
-#funzione che permette di effettuare un clone da una repository GitHub
+# funzione che permette di effettuare un clone da una repository GitHub
 def git_clone_sourcecode(path_git):
     print("----------------------------------------------------------------")
     try:
@@ -43,7 +43,7 @@ def git_clone_sourcecode(path_git):
         print(f"Errore durante l'esecuzione di git clone: {str(e)}")
 
 
-#funzione che gestisce data e ora per creare file unici ed evitare sovrascrittura
+# funzione che gestisce data e ora per creare file unici ed evitare sovrascrittura
 def data_ora():
     try:
         attuale = datetime.now()
@@ -53,7 +53,7 @@ def data_ora():
         return None
 
 
-#funzione che stampa un messaggio iniziale
+# funzione che stampa un messaggio iniziale
 def stampa_iniziale():
     print("\n\n--------------------------------------------------")
     print("-------------------- DOCALZI ---------------------")
@@ -65,14 +65,14 @@ def stampa_iniziale():
     print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
 
 
-#funzione che stampa il menù di help
+# funzione che stampa il menù di help
 def stampa_help():
     print("\n\n---------------------------------------------------")
     print("-------------- 'docalzi -h' per help --------------")
     print("---------------------------------------------------\n\n")
 
 
-#funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
+# funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
 def docker_bench_security(path_ris, report_pdf):
     print("----------------------------------------------------------------")
     try:
@@ -88,21 +88,20 @@ def docker_bench_security(path_ris, report_pdf):
         os.chdir("..")
         os.system("sudo rm -rf docker-bench-security")
         esito = f"Analisi della configurazione di Docker completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
-        print(f"\n{esito}\n")
+        print(f"\nAnalisi completata\n")
         add_titoletto_report(report_pdf, "Docker Bench of Security")
         add_data_report(report_pdf, esito)
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
 
 
-#funzione che ispeziona un'immagine Docker tramite Docker CLI
+# funzione che ispeziona un'immagine Docker tramite Docker CLI
 def docker_inspect(path_ris, immagine, report_pdf):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     print("\nAnalisi in corso, attendere...\n")
     nome_file = "docker_inspect.json"
     try:
-        
         os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
         esito = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati grezzi in {path_ris} nel file {nome_file}"
@@ -112,7 +111,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
 
 
-#funzione che ispeziona un'immagine Docker tramite trivy
+# funzione che ispeziona un'immagine Docker tramite trivy
 def trivy_image(path_ris ,immagine, report_pdf):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
@@ -128,7 +127,7 @@ def trivy_image(path_ris ,immagine, report_pdf):
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
 
 
-#funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
+# funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
 def trivy_fs(path_ris, report_pdf):
     print("----------------------------------------------------------------")
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations \n")
@@ -144,7 +143,7 @@ def trivy_fs(path_ris, report_pdf):
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")   
 
 
-#funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
+# funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris, report_pdf):
     print("----------------------------------------------------------------")
     print("\nSemgrep: analisi del codice sorgente dell'applicazione\n")
