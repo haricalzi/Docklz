@@ -37,4 +37,4 @@ def add_link_report(pdf, text, url):
 # Funzione che permette di salvare il PDF del report
 def save_report(pdf, path_to_save):
     pdf.output(path_to_save)
-    print(f"Report delle scansioni generato correttamente: {path_to_save}")
+    print(f"\nReport delle scansioni generato correttamente: {path_to_save}")

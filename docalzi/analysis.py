@@ -1,6 +1,39 @@
 import ssvc
 from RPA.Browser.Selenium import Selenium
 import json
+from contextlib import redirect_stdout, redirect_stderr
+import io
+
+def exploitability(VulnerabilityID): 
+    anno = VulnerabilityID[4:8]
+    url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
+    browser = Selenium()
+    options = {
+            "arguments": ["--headless"]
+        }
+    exploit_calc = None  # Inizializza a None per gestire il caso di errore
+
+    try:
+        with io.StringIO() as stdout, io.StringIO() as stderr:
+            with redirect_stdout(stdout), redirect_stderr(stderr):
+                browser.open_available_browser(url, options=options)
+                browser.wait_until_element_is_visible("tag:body", timeout=20)
+
+                search_text1 = "No PoCs found on GitHub currently"
+                search_text2 = "No PoCs from references"
+                page_source = browser.get_source()
+
+                if search_text1 in page_source and search_text2 in page_source:
+                    exploit_calc='none'
+                else:
+                    exploit_calc='poc'
+    except Exception as e:
+        print(f"Si è verificato un errore: {e}")
+    finally:
+        browser.close_all_browsers()
+
+    return exploit_calc
+
 
 
 # funzione che estrae cve e relative informazioni dal json generato da trivy image
@@ -73,23 +106,26 @@ def analisi_CVE(vulnerabilities_list):
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
-    browser = Selenium()
+    browser = Selenium(executable_path=None)
     options = {
             "arguments": ["--headless"]
         }
+    exploit_calc = "poc"
+
     try:
+        with io.StringIO() as stdout, io.StringIO() as stderr:
+            with redirect_stdout(stdout), redirect_stderr(stderr):
+                browser.open_available_browser(url, options=options)
+                browser.wait_until_element_is_visible("tag:body", timeout=20)
 
-        browser.open_available_browser(url, options=options)
-        browser.wait_until_element_is_visible("tag:body", timeout=20)
+                search_text1 = "No PoCs found on GitHub currently"
+                search_text2 = "No PoCs from references"
+                page_source = browser.get_source()
 
-        search_text1 = "No PoCs found on GitHub currently"
-        search_text2 = "No PoCs from references"
-        page_source = browser.get_source()
-
-        if search_text1 in page_source and search_text2 in page_source:
-            exploit_calc='none'
-        else:
-            exploit_calc='poc'
+                if search_text1 in page_source and search_text2 in page_source:
+                    exploit_calc='none'
+                else:
+                    exploit_calc='poc'
     except Exception as e:
         print(f"Si è verificato un errore: {e}")
     finally:
@@ -186,7 +222,7 @@ def calcolo_peso(V3Vector, VulnerabilityID):
             peso = 3
         case _:
             print("Errore, peso settato al massimo per precauzione")
-            peso = 4
+            peso = 3
     
     return peso
 
@@ -198,12 +234,21 @@ def ordina_prepara_trivy_image(json_file):
             vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
             #ordinamento decrescente per peso
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
-            testo = "Ecco i CVE a cui è possibilmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=4, min=0], un parametro calcolato che stima la rilevanza dei CVE nel progetto\n-------------------"
+            testo = "\nEcco i CVE a cui è possibilmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
             #testo per report
             for vulnerability in vulnerabilities_list_sorted:
-                testo += f"VulnerabilityID: {vulnerability['VulnerabilityID']}\n"
+                testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
                 testo += f"Title: {vulnerability['Title']}\n"
-                testo += f"V3Score: {vulnerability['V3Score']}\n"
+                match vulnerability['Peso']:
+                    case 3:
+                        peso = "3 - Agire immediatamente"
+                    case 2:
+                        peso = "2 - Monitorare e pianificare l'intervento"
+                    case 1:
+                        peso = "1 - Monitorare la vulnerabilità"
+                    case 0:
+                        peso = "0 - Situazione sotto controllo"
+
                 testo += f"Peso: {vulnerability['Peso']}\n"
                 testo += "-------------------"
         else:
@@ -219,9 +264,10 @@ def estrai_da_JSON_Docker_inspect(json_file):
         data = json.load(file)
 
     if 'RepoTags' in data:
-        repotags = data['RepoTags']
+        #repotags = data['RepoTags']
+        repotags = "POLLO"
     else:
-        repotags = "!!!ERRORE!!!"
+        repotags = "ERRORE"
 
     return repotags
 

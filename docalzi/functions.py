@@ -134,13 +134,13 @@ def trivy_image(path_ris ,immagine, report_pdf):
         os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file2}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
-    print(f"\nAnalisi completata\n")
     #report pdf
     add_titoletto_report(report_pdf, "Trivy image")
     testo = f"Analisi dell'immagine con trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
     add_data_report(report_pdf, testo)
     testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
     add_data_report(report_pdf, testo)
+    print(f"\nAnalisi completata\n")
 
 
 # funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
