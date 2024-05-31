@@ -73,7 +73,6 @@ def analisi_CVE(vulnerabilities_list):
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
-    print(url)
     browser = Selenium()
     options = {
             "arguments": ["--headless"]
@@ -81,7 +80,6 @@ def exploitability(VulnerabilityID):
     try:
 
         browser.open_available_browser(url, options=options)
-
         browser.wait_until_element_is_visible("tag:body", timeout=20)
 
         search_text1 = "No PoCs found on GitHub currently"
