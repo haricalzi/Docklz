@@ -128,12 +128,14 @@ def trivy_image(path_ris ,immagine, report_pdf):
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
     print("\nAnalisi in corso, attendere...\n")
     nome_file = "trivy_image.json"
+    nome_file2 = "trivy_image.txt"
     try:
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
+        os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file2}")
         print(f"\nAnalisi completata\n")
         #report
         add_titoletto_report(report_pdf, "Trivy image")
-        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nel file {nome_file}"
+        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
         add_data_report(report_pdf, testo)
         testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
         add_data_report(report_pdf, testo)
@@ -147,11 +149,16 @@ def trivy_fs(path_ris, report_pdf):
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations \n")
     print("\nAnalisi in corso, attendere...\n")
     nome_file = "trivy_fs.json"
+    nome_file2 = "trivy_fs.txt"
     try:
         os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
+        os.system(f"sudo trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file2}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi della directory con Trivy completata, trovi i risultati grezzi nel file {nome_file}"
+        #report
+        esito = f"Analisi della directory con Trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
         add_titoletto_report(report_pdf, "Trivy fs")
+        add_data_report(report_pdf, esito)
+        testo = estrai_da_JSON_trivy_image({path_ris}/{nome_file})
         add_data_report(report_pdf, esito)
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")   
