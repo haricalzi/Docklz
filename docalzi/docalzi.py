@@ -56,11 +56,11 @@ def main():
                         controllo_comando_installato("wget")
                         controllo_comando_installato("trivy")
                         controllo_comando_installato("semgrep") 
-                #docker_bench_security(path_ris, report_pdf)
+                docker_bench_security(path_ris, report_pdf)
                 docker_inspect(path_ris, args.immagine_full, report_pdf)
-                #trivy_image(path_ris, args.immagine_full, report_pdf)
-                #trivy_fs(path_ris, report_pdf)
-                #semgrep_scan(path_ris, report_pdf)
+                trivy_image(path_ris, args.immagine_full, report_pdf)
+                trivy_fs(path_ris, report_pdf)
+                semgrep_scan(path_ris, report_pdf)
                 save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
 
         else:
