@@ -13,36 +13,38 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
 
     #itera sulle vulnerabilità
     for result in data['Results']:
-        for vulnerability in result['Vulnerabilities']:
-            #estrazione dei dati
-            vulnerability_id = vulnerability.get('VulnerabilityID', '')
-            title = vulnerability.get('Title', '')
-            description = vulnerability.get('Description', '')
-            severity = vulnerability.get('Severity', '')
-            
-            #verifica se ci sono dati CVSS specifici per Red Hat
-            if 'redhat' in vulnerability.get('CVSS', {}):
-                redhat_cvss = vulnerability['CVSS']['redhat']
-                v3vector = redhat_cvss.get('V3Vector', '')
-                v3score = redhat_cvss.get('V3Score', '')
-            else:
-                #altrimenti, utilizza i dati CVSS standard
-                v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
-                v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
-            
-            #valori di default se non presenti i precedenti
-            v3vector = v3vector if v3vector else '-1'
-            v3score = v3score if v3score else '-1'
+        if 'Vulnerabilities' in result:
+            for vulnerability in result['Vulnerabilities']:
+                #estrazione dei dati
+                vulnerability_id = vulnerability.get('VulnerabilityID', '')
+                title = vulnerability.get('Title', '')
+                description = vulnerability.get('Description', '')
+                severity = vulnerability.get('Severity', '')
+                
+                #verifica se ci sono dati CVSS specifici per Red Hat
+                if 'redhat' in vulnerability.get('CVSS', {}):
+                    redhat_cvss = vulnerability['CVSS']['redhat']
+                    v3vector = redhat_cvss.get('V3Vector', '')
+                    v3score = redhat_cvss.get('V3Score', '')
+                else:
+                    #altrimenti, utilizza i dati CVSS standard
+                    v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
+                    v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
+                
+                #valori di default se non presenti i precedenti
+                v3vector = v3vector if v3vector else '-1'
+                v3score = v3score if v3score else '-1'
 
-            #aggiunge il dizionario alla lista
-            vulnerabilities_list.append({
-                'VulnerabilityID': vulnerability_id,
-                'Title': title,
-                'Description': description,
-                'Severity': severity,
-                'V3Vector': v3vector,
-                'V3Score': v3score
-            })
+                #aggiunge il dizionario alla lista
+                vulnerabilities_list.append({
+                    'VulnerabilityID': vulnerability_id,
+                    'Title': title,
+                    'Description': description,
+                    'Severity': severity,
+                    'V3Vector': v3vector,
+                    'V3Score': v3score
+                })
+        
     
     return vulnerabilities_list
 
@@ -194,17 +196,20 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 #funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
 def ordina_prepara_trivy_image(json_file):
         vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
-        vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
-        #ordinamento decrescente per peso
-        vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
-        testo = "Ecco i CVE a cui è possibilmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=4, min=0], un parametro calcolato che stima la rilevanza dei CVE nel progetto\n-------------------"
-        #testo per report
-        for vulnerability in vulnerabilities_list_sorted:
-            testo += f"VulnerabilityID: {vulnerability['VulnerabilityID']}\n"
-            testo += f"Title: {vulnerability['Title']}\n"
-            testo += f"V3Score: {vulnerability['V3Score']}\n"
-            testo += f"Peso: {vulnerability['Peso']}\n"
-            testo += "-------------------"
+        if vulnerabilities_list:
+            vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
+            #ordinamento decrescente per peso
+            vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
+            testo = "Ecco i CVE a cui è possibilmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=4, min=0], un parametro calcolato che stima la rilevanza dei CVE nel progetto\n-------------------"
+            #testo per report
+            for vulnerability in vulnerabilities_list_sorted:
+                testo += f"VulnerabilityID: {vulnerability['VulnerabilityID']}\n"
+                testo += f"Title: {vulnerability['Title']}\n"
+                testo += f"V3Score: {vulnerability['V3Score']}\n"
+                testo += f"Peso: {vulnerability['Peso']}\n"
+                testo += "-------------------"
+        else:
+            testo = "L'immagine non è risultata vulnerabile a nessun CVE"
 
         return testo
 
@@ -239,7 +244,7 @@ def estrai_titoli(data, testo):
     if isinstance(data, dict):
         for key, value in data.items():
             if key == 'Title':
-                testo += f"{value}\n"
+                testo += f"- {value}\n"
             else:
                 testo = estrai_titoli(value, testo)
     elif isinstance(data, list):
