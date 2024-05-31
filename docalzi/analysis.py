@@ -215,11 +215,16 @@ def estrai_da_JSON_Docker_inspect(json_file):
     with open(json_file, 'r') as file:
         data = json.load(file)
 
-    return data['RepoTags']
+    if 'RepoTags' in data:
+        repotags = data['RepoTags']
+    else:
+        repotags = "!!!ERRORE!!!"
+
+    return repotags
 
 
 # Funzione che estrae le eventuali problematiche rilevate nel JSON prodotto da Trivy fs
-def estrai_da_JSON_trivy_image(json_file):
+def estrai_da_JSON_trivy_fs(json_file):
     testo = "Ecco le principali problematiche rilevate:\n"
 
     with open(json_file, 'r') as file:

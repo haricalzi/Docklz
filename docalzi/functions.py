@@ -110,16 +110,16 @@ def docker_inspect(path_ris, immagine, report_pdf):
     nome_file = "docker_inspect.json"
     try:
         os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
-        print(f"\nAnalisi completata\n")
-        #report pdf
-        add_titoletto_report(report_pdf, "Docker CLI")
-        testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}"
-        add_data_report(report_pdf, testo)
-        nome_immagine = estrai_CVE_da_JSON_Trivy_image(f"{path_ris}/{nome_file}")
-        testo = f"L'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. Porre l'attenzione sulle variabili d’ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
-        add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
+    print(f"\nAnalisi completata\n")
+    #report pdf
+    add_titoletto_report(report_pdf, "Docker CLI")
+    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}"
+    add_data_report(report_pdf, testo)
+    nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
+    testo = f"L'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. Porre l'attenzione sulle variabili d’ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
+    add_data_report(report_pdf, testo)
 
 
 # funzione che ispeziona un'immagine Docker tramite trivy
@@ -132,15 +132,15 @@ def trivy_image(path_ris ,immagine, report_pdf):
     try:
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file2}")
-        print(f"\nAnalisi completata\n")
-        #report pdf
-        add_titoletto_report(report_pdf, "Trivy image")
-        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
-        add_data_report(report_pdf, testo)
-        testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
-        add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
+    print(f"\nAnalisi completata\n")
+    #report pdf
+    add_titoletto_report(report_pdf, "Trivy image")
+    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
+    add_data_report(report_pdf, testo)
+    testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
+    add_data_report(report_pdf, testo)
 
 
 # funzione che ispeziona, tramite trivy, una directory alla ricerca di vulnerabilità, secrets, misconfigurations
@@ -153,15 +153,15 @@ def trivy_fs(path_ris, report_pdf):
     try:
         os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         os.system(f"sudo trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file2}")
-        print(f"\nAnalisi completata\n")
-        #report pdf
-        testo = f"Analisi della directory con Trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
-        add_titoletto_report(report_pdf, "Trivy fs")
-        add_data_report(report_pdf, testo)
-        testo = estrai_da_JSON_trivy_image({path_ris}/{nome_file})
-        add_data_report(report_pdf, testo)
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")   
+        print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")  
+    print(f"\nAnalisi completata\n")
+    #report pdf
+    testo = f"Analisi della directory con Trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
+    add_titoletto_report(report_pdf, "Trivy fs")
+    add_data_report(report_pdf, testo)
+    testo = estrai_da_JSON_trivy_fs(f"{path_ris}/{nome_file}")
+    add_data_report(report_pdf, testo) 
 
 
 # funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
@@ -172,10 +172,10 @@ def semgrep_scan(path_ris, report_pdf):
     nome_file = "semgrep_scan.txt"
     try:
         os.system(f"semgrep scan > {path_ris}/{nome_file}")
-        print(f"\nAnalisi completata\n")
-        #report pdf
-        esito = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati grezzi nel file {nome_file}"
-        add_titoletto_report(report_pdf, "Semgrep")
-        add_data_report(report_pdf, esito)
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}") 
+        print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}")
+    print(f"\nAnalisi completata\n")
+    #report pdf
+    esito = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati nel file {nome_file}"
+    add_titoletto_report(report_pdf, "Semgrep")
+    add_data_report(report_pdf, esito)
