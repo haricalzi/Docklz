@@ -109,7 +109,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
     print("\nAnalisi in corso, attendere...\n")
     nome_file = "docker_inspect.json"
     try:
-        os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
+        os.system(f"sudo docker image inspect -f json {immagine} > {path_ris}/{nome_file}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
     print(f"\nAnalisi completata\n")
@@ -118,7 +118,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
     testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}"
     add_data_report(report_pdf, testo)
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
-    testo = f"L'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. Porre l'attenzione sulle variabili d’ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
+    testo = f"L'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
     add_data_report(report_pdf, testo)
 
 
@@ -126,7 +126,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
 def trivy_image(path_ris ,immagine, report_pdf):
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
-    print("\nAnalisi in corso, attendere...\n")
+    print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")
     nome_file = "trivy_image.json"
     nome_file2 = "trivy_image.txt"
     try:

@@ -271,9 +271,8 @@ def estrai_da_JSON_Docker_inspect(json_file):
     with open(json_file, 'r') as file:
         data = json.load(file)
 
-    if 'RepoTags' in data:
-        #repotags = data['RepoTags']
-        repotags = "POLLO"
+    if 'RepoTags' in data[0]:
+        repotags = data[0]['RepoTags'][0].replace("[","").replace("]","")
     else:
         repotags = "ERRORE"
 
