@@ -2,14 +2,6 @@ import ssvc
 from RPA.Browser.Selenium import Selenium
 import json
 
-# funzione che estrae il nome dell'immagine dal json generato da docker inspect
-def estrai_da_JSON_Docker_inspect(json_file):
-
-    with open(json_file, 'r') as file:
-        data = json.load(file)
-
-    return data['RepoTags']
-
 
 # funzione che estrae cve e relative informazioni dal json generato da trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
@@ -211,7 +203,44 @@ def ordina_prepara_trivy_image(json_file):
             testo += f"VulnerabilityID: {vulnerability['VulnerabilityID']}\n"
             testo += f"Title: {vulnerability['Title']}\n"
             testo += f"V3Score: {vulnerability['V3Score']}\n"
-            testo += f"P"
+            testo += f"Peso: {vulnerability['Peso']}\n"
             testo += "-------------------"
 
         return testo
+
+
+# funzione che estrae il nome dell'immagine dal json generato da docker inspect
+def estrai_da_JSON_Docker_inspect(json_file):
+
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+
+    return data['RepoTags']
+
+
+# Funzione che estrae le eventuali problematiche rilevate nel JSON prodotto da Trivy fs
+def estrai_da_JSON_trivy_image(json_file):
+    testo = "Ecco le principali problematiche rilevate:\n"
+
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+    
+    testo = estrai_titoli(data, testo)
+
+    return testo
+
+# Funzione che estrae i titoli dato il contenuto di un JSON
+def estrai_titoli(data, testo):
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key == 'Title':
+                testo += f"{value}\n"
+            else:
+                testo = estrai_titoli(value, testo)
+    elif isinstance(data, list):
+        for element in data:
+            testo = estrai_titoli(element, testo)
+
+    return testo
+        
+            
