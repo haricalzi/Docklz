@@ -4,7 +4,7 @@ import json
 
 
 # funzione che estrae cve e relative informazioni da un json
-def estrai_CVE_da_JSON(json_file):
+def estrai_CVE_da_JSON_Trivy_image(json_file):
     # Lista per salvare i dati estratti
     vulnerabilities_list = []
 
@@ -193,7 +193,7 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
 
 #temporary main code
-vulnerabilities_list = estrai_CVE_da_JSON("../results/results__29-5-2024__16-39-53/trivy_image.json")
+vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image("../results/results__29-5-2024__16-39-53/trivy_image.json")
 
 vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
 
