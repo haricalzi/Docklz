@@ -197,3 +197,21 @@ def calcolo_peso(V3Vector, VulnerabilityID):
             peso = 4
     
     return peso
+
+
+#funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
+def ordina_prepara_trivy_image(json_file):
+        vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
+        vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
+        #ordinamento decrescente per peso
+        vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
+        testo = "Ecco i CVE a cui è possibilmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=4, min=0], un parametro calcolato che stima la rilevanza dei CVE nel progetto\n-------------------"
+        #testo per report
+        for vulnerability in vulnerabilities_list_sorted:
+            testo += f"VulnerabilityID: {vulnerability['VulnerabilityID']}\n"
+            testo += f"Title: {vulnerability['Title']}\n"
+            testo += f"V3Score: {vulnerability['V3Score']}\n"
+            testo += f"P"
+            testo += "-------------------"
+
+        return testo

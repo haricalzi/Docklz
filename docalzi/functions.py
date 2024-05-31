@@ -134,9 +134,8 @@ def trivy_image(path_ris ,immagine, report_pdf):
         #report
         add_titoletto_report(report_pdf, "Trivy image")
         testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nel file {nome_file}"
-        vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(f"{path_ris}/{nome_file}")
-        vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
-        
+        add_data_report(report_pdf, testo)
+        testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
         add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
