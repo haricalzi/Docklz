@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from .check_and_install import *
+from .analysis import *
 from .report import *
 
 
@@ -92,7 +93,7 @@ def docker_bench_security(path_ris, report_pdf):
         add_titoletto_report(report_pdf, "Docker Bench of Security")
         testo = f"Analisi della configurazione di Docker completata, trovi i risultati nel file {nome_file}. Per ogni voce ci sono 2 possibili esiti rilevanti:\n-PASS: tutto ok\n-WARN: c'è un problema, controllare e sistemare\nQuesti test si basano sul CIS Docker Benchmark v1.6.0."
         add_data_report(report_pdf, testo)
-        testo = "Clicca qui per registrati per scaricarlo"
+        testo = "Clicca qui per registrarti e scaricarlo"
         url = "https://www.cisecurity.org/benchmark/docker"
         add_link_report(report_pdf, testo, url)
         testo = "Ulteriori consigli e spiegazioni sono presenti all'interno del documento"
@@ -110,9 +111,13 @@ def docker_inspect(path_ris, immagine, report_pdf):
     try:
         os.system(f"sudo docker image inspect {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati grezzi nel file {nome_file}"
+        #report pdf
         add_titoletto_report(report_pdf, "Docker CLI")
-        add_data_report(report_pdf, esito)
+        testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati grezzi nel file {nome_file}"
+        add_data_report(report_pdf, testo)
+        nome_immagine = estrai_CVE_da_JSON_Trivy_image(f"{path_ris}/{nome_file}")
+        testo = f"L'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. Porre l'attenzione sulle variabili d’ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
+        add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
 
@@ -126,9 +131,13 @@ def trivy_image(path_ris ,immagine, report_pdf):
     try:
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         print(f"\nAnalisi completata\n")
-        esito = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nel file {nome_file}"
+        #report
         add_titoletto_report(report_pdf, "Trivy image")
-        add_data_report(report_pdf, esito)
+        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nel file {nome_file}"
+        vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(f"{path_ris}/{nome_file}")
+        vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
+        
+        add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
 

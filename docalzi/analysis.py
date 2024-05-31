@@ -2,40 +2,47 @@ import ssvc
 from RPA.Browser.Selenium import Selenium
 import json
 
+# funzione che estrae il nome dell'immagine dal json generato da docker inspect
+def estrai_da_JSON_Docker_inspect(json_file):
 
-# funzione che estrae cve e relative informazioni da un json
-def estrai_CVE_da_JSON_Trivy_image(json_file):
-    # Lista per salvare i dati estratti
-    vulnerabilities_list = []
-
-    # Legge il file JSON
     with open(json_file, 'r') as file:
         data = json.load(file)
 
-    # Itera sulle vulnerabilità nel JSON
+    return data['RepoTags']
+
+
+# funzione che estrae cve e relative informazioni dal json generato da trivy image
+def estrai_CVE_da_JSON_Trivy_image(json_file):
+    #lista per salvare i dati estratti
+    vulnerabilities_list = []
+
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+
+    #itera sulle vulnerabilità
     for result in data['Results']:
         for vulnerability in result['Vulnerabilities']:
-            # Estrazione dei dati desiderati
+            #estrazione dei dati
             vulnerability_id = vulnerability.get('VulnerabilityID', '')
             title = vulnerability.get('Title', '')
             description = vulnerability.get('Description', '')
             severity = vulnerability.get('Severity', '')
             
-            # Verifica se ci sono dati CVSS specifici per Red Hat
+            #verifica se ci sono dati CVSS specifici per Red Hat
             if 'redhat' in vulnerability.get('CVSS', {}):
                 redhat_cvss = vulnerability['CVSS']['redhat']
                 v3vector = redhat_cvss.get('V3Vector', '')
                 v3score = redhat_cvss.get('V3Score', '')
             else:
-                # Altrimenti, utilizza i dati CVSS standard
+                #altrimenti, utilizza i dati CVSS standard
                 v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
                 v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
             
-            # Imposta i valori di default se non presenti
+            #valori di default se non presenti i precedenti
             v3vector = v3vector if v3vector else '-1'
             v3score = v3score if v3score else '-1'
 
-            # Aggiunge il dizionario alla lista
+            #aggiunge il dizionario alla lista
             vulnerabilities_list.append({
                 'VulnerabilityID': vulnerability_id,
                 'Title': title,
@@ -190,20 +197,3 @@ def calcolo_peso(V3Vector, VulnerabilityID):
             peso = 4
     
     return peso
-
-
-#temporary main code
-vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image("../results/results__29-5-2024__16-39-53/trivy_image.json")
-
-vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
-
-# Stampa i dati estratti per verificare
-for vulnerability in vulnerabilities_list_peso:
-    print(f"VulnerabilityID: {vulnerability['VulnerabilityID']}")
-    print(f"Title: {vulnerability['Title']}")
-    print(f"Description: {vulnerability['Description']}")
-    print(f"Severity: {vulnerability['Severity']}")
-    print(f"V3Vector: {vulnerability['V3Vector']}")
-    print(f"V3Score: {vulnerability['V3Score']}")
-    print(f"Peso: {vulnerability['Peso']}")
-    print("------")
