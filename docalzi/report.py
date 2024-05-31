@@ -26,15 +26,15 @@ def add_titoletto_report(pdf, titoletto):
     pdf.cell(0, 10, titoletto, 0, 1, 'L')
 
 
-# Funzione che permette di salvare il PDF del report
-def save_report(pdf, path_to_save):
-    pdf.output(path_to_save)
-    print(f"Report delle scansioni generato correttamente: {path_to_save}")
-
-
 # Funzione che permette di aggiungere un link ad un paragrafo nel report
 def add_link_report(pdf, text, url):
     pdf.set_text_color(0, 0, 255)
     pdf.set_font("Arial", 'U', 10)
     pdf.cell(0, 5, text, 0, 1, 'L', link=url)
     pdf.set_text_color(0, 0, 0)
+
+
+# Funzione che permette di salvare il PDF del report
+def save_report(pdf, path_to_save):
+    pdf.output(path_to_save)
+    print(f"Report delle scansioni generato correttamente: {path_to_save}")
