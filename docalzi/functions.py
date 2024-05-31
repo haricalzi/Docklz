@@ -92,11 +92,11 @@ def docker_bench_security(path_ris, report_pdf):
         add_titoletto_report(report_pdf, "Docker Bench of Security")
         testo = f"Analisi della configurazione di Docker completata, trovi i risultati nel file {nome_file}. Per ogni voce ci sono 2 possibili esiti rilevanti:\n-PASS: tutto ok\n-WARN: c'è un problema, controllare e sistemare\nQuesti test si basano sul CIS Docker Benchmark v1.6.0."
         add_data_report(report_pdf, testo)
-        testo = "Clicca qui e registrati per scaricarlo"
+        testo = "Clicca qui per registrati per scaricarlo"
         url = "https://www.cisecurity.org/benchmark/docker"
+        add_link_report(report_pdf, testo, url)
         testo = "Ulteriori consigli e spiegazioni sono presenti all'interno del documento"
         add_data_report(report_pdf, testo)
-        add_link_report(report_pdf, testo, url)
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
 
