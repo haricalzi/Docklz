@@ -62,7 +62,6 @@ def main():
                 trivy_fs(path_ris, report_pdf)
                 semgrep_scan(path_ris, report_pdf)
                 save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
-
         else:
                 sys.exit(-1)
 
