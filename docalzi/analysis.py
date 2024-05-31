@@ -234,11 +234,12 @@ def ordina_prepara_trivy_image(json_file):
             vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
             #ordinamento decrescente per peso
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
-            testo = "\nEcco i CVE a cui è possibilmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
             #testo per report
+            if (len(vulnerabilities_list_sorted) < 100):
+                testo = f"\nEcco i {len(vulnerabilities_list_sorted)} CVE a cui è potenzialmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
+            else:
+                testo = f"\nEcco alcuni tra i {len(vulnerabilities_list_sorted)} CVE a cui è potenzialmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
             for vulnerability in vulnerabilities_list_sorted:
-                testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
-                testo += f"Title: {vulnerability['Title']}\n"
                 match vulnerability['Peso']:
                     case 3:
                         peso = "3 - Agire immediatamente"
@@ -248,9 +249,16 @@ def ordina_prepara_trivy_image(json_file):
                         peso = "1 - Monitorare la vulnerabilità"
                     case 0:
                         peso = "0 - Situazione sotto controllo"
-
-                testo += f"Peso: {peso}\n"
-                testo += "-------------------"
+                if (len(vulnerabilities_list_sorted) < 100):
+                    testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
+                    testo += f"Title: {vulnerability['Title']}\n"
+                    testo += f"Peso: {peso}\n"
+                    testo += "-------------------"
+                elif (vulnerability['Peso'] in [2, 3]):
+                    testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
+                    testo += f"Title: {vulnerability['Title']}\n"
+                    testo += f"Peso: {peso}\n"
+                    testo += "-------------------"
         else:
             testo = "L'immagine non è risultata vulnerabile a nessun CVE"
 
