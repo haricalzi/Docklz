@@ -31,7 +31,7 @@ def add_titoletto_report(pdf, titoletto):
 # Funzione che permette di salvare il PDF del report
 def save_report(pdf, path_to_save):
     pdf.output(path_to_save)
-    print("")
+    print(f"Report delle scansioni generato correttamente: {path_to_save}")
 
 
 # Funzione che permette di aggiungere un link ad un paragrafo nel report
