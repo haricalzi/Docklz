@@ -106,7 +106,7 @@ def analisi_CVE(vulnerabilities_list):
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
-    browser = Selenium(executable_path=None)
+    browser = Selenium()
     options = {
             "arguments": ["--headless"]
         }
@@ -249,7 +249,7 @@ def ordina_prepara_trivy_image(json_file):
                     case 0:
                         peso = "0 - Situazione sotto controllo"
 
-                testo += f"Peso: {vulnerability['Peso']}\n"
+                testo += f"Peso: {peso}\n"
                 testo += "-------------------"
         else:
             testo = "L'immagine non è risultata vulnerabile a nessun CVE"
