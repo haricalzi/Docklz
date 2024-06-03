@@ -221,7 +221,7 @@ def ordina_prepara_trivy_image(json_file):
                     testo += f"Peso: {peso}\n"
                     testo += "-------------------"
         else:
-            testo = "L'immagine non è risultata vulnerabile a nessun CVE"
+            testo = "\nL'immagine non è risultata vulnerabile a nessun CVE"
 
         return testo
 
@@ -242,7 +242,7 @@ def estrai_da_JSON_Docker_inspect(json_file):
 
 # Funzione che estrae le eventuali problematiche rilevate nel JSON prodotto da Trivy fs
 def estrai_da_JSON_trivy_fs(json_file):
-    testo = "Ecco le principali problematiche rilevate:\n"
+    testo = "\nEcco le principali problematiche rilevate:\n"
 
     with open(json_file, 'r') as file:
         data = json.load(file)
@@ -250,7 +250,7 @@ def estrai_da_JSON_trivy_fs(json_file):
     if 'Title' in data:
         testo = estrai_titoli(data, testo)
     else:
-        testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
+        testo = "\nNon è stata rilevata alcuna problematica tramite questa analisi"
     return testo
 
 
@@ -275,9 +275,9 @@ def estrai_da_semgrep(txt_file):
     titoli = []
     with open(txt_file, 'r') as file:
         if (os.path.getsize(txt_file) == 0):
-            testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
+            testo = "\nNon è stata rilevata alcuna problematica tramite questa analisi"
         else:
-            testo = "Ecco le principali problematiche rilevate:\n"
+            testo = "\nEcco le principali problematiche rilevate:\n"
             for line in file:
                 line = line.strip()
                 if line.startswith('❯❯❱'):

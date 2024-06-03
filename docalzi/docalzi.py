@@ -23,6 +23,9 @@ def main():
         stampa_iniziale()
         if not (args.light or args.immagine_base or args.immagine_full):
                 stampa_help()
+        
+        if(args.path_github):
+                git_clone_sourcecode(args.path_github)
 
         #controllo di non aver specificato più modalità di scansione
         if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
@@ -51,8 +54,6 @@ def main():
                 #full   
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
                 report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
-                if(args.path_github):
-                        git_clone_sourcecode(args.path_github)
                 if(args.install):
                         controllo_comando_installato("wget")
                         controllo_comando_installato("trivy")
