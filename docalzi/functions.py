@@ -91,7 +91,7 @@ def docker_bench_security(path_ris, report_pdf):
         print(f"\nAnalisi completata\n")
         #report pdf
         add_titoletto_report(report_pdf, "Docker Bench of Security")
-        testo = f"Analisi della configurazione di Docker completata, trovi i risultati nel file {nome_file}. Per ogni voce ci sono 2 possibili esiti rilevanti:\n-PASS: tutto ok\n-WARN: c'è un problema, controllare e sistemare\nQuesti test si basano sul CIS Docker Benchmark v1.6.0."
+        testo = f"Analisi della configurazione di Docker completata, trovi i risultati nel file {nome_file}\n\nPer ogni voce ci sono 2 possibili esiti rilevanti:\n-PASS: tutto ok\n-WARN: c'è un problema, controllare e sistemare\nQuesti test si basano sul CIS Docker Benchmark v1.6.0."
         add_data_report(report_pdf, testo)
         testo = "Clicca qui per registrarti e scaricarlo"
         url = "https://www.cisecurity.org/benchmark/docker"
@@ -115,7 +115,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
     print(f"\nAnalisi completata\n")
     #report pdf
     add_titoletto_report(report_pdf, "Docker CLI")
-    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}"
+    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}\n"
     add_data_report(report_pdf, testo)
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
     testo = f"L'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
@@ -136,7 +136,7 @@ def trivy_image(path_ris ,immagine, report_pdf):
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
     #report pdf
     add_titoletto_report(report_pdf, "Trivy image")
-    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
+    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}\n"
     add_data_report(report_pdf, testo)
     testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
     add_data_report(report_pdf, testo)
@@ -157,7 +157,7 @@ def trivy_fs(path_ris, report_pdf):
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")  
     print(f"\nAnalisi completata\n")
     #report pdf
-    testo = f"Analisi della directory con Trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
+    testo = f"Analisi della directory con Trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}\n"
     add_titoletto_report(report_pdf, "Trivy fs")
     add_data_report(report_pdf, testo)
     testo = estrai_da_JSON_trivy_fs(f"{path_ris}/{nome_file}")
@@ -176,7 +176,7 @@ def semgrep_scan(path_ris, report_pdf):
         print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}")
     print(f"\nAnalisi completata\n")
     #report pdf
-    testo = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati nel file {nome_file}"
+    testo = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati nel file {nome_file}\n"
     add_titoletto_report(report_pdf, "Semgrep")
     add_data_report(report_pdf, testo)
     testo = estrai_da_semgrep(f"{path_ris}/{nome_file}")
