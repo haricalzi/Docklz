@@ -1,65 +1,27 @@
-import ssvc
+import ssvc, json, io, os
 from RPA.Browser.Selenium import Selenium
-import json
 from contextlib import redirect_stdout, redirect_stderr
-import io
-def exploitability(VulnerabilityID): 
-    anno = VulnerabilityID[4:8]
-    url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
-    browser = Selenium()
-    options = {
-            "arguments": ["--headless"]
-        }
-    exploit_calc = None  # Inizializza a None per gestire il caso di errore
 
-    try:
-        with io.StringIO() as stdout, io.StringIO() as stderr:
-            with redirect_stdout(stdout), redirect_stderr(stderr):
-                browser.open_available_browser(url, options=options)
-                browser.wait_until_element_is_visible("tag:body", timeout=20)
-
-                search_text1 = "No PoCs found on GitHub currently"
-                search_text2 = "No PoCs from references"
-                page_source = browser.get_source()
-
-                if search_text1 in page_source and search_text2 in page_source:
-                    exploit_calc='none'
-                else:
-                    exploit_calc='poc'
-    except Exception as e:
-        print(f"Si è verificato un errore: {e}")
-    finally:
-        browser.close_all_browsers()
-
-    return exploit_calc
-
-
-
-# funzione che estrae cve e relative informazioni dal json generato da trivy image
+# Funzione che estrae cve e relative informazioni dal json generato da trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
-    #lista per salvare i dati estratti
     vulnerabilities_list = []
 
     with open(json_file, 'r') as file:
         data = json.load(file)
 
-    #itera sulle vulnerabilità
     for result in data['Results']:
         if 'Vulnerabilities' in result:
             for vulnerability in result['Vulnerabilities']:
-                #estrazione dei dati
                 vulnerability_id = vulnerability.get('VulnerabilityID', '')
                 title = vulnerability.get('Title', '')
                 description = vulnerability.get('Description', '')
                 severity = vulnerability.get('Severity', '')
-                
-                #verifica se ci sono dati CVSS specifici per Red Hat
+
                 if 'redhat' in vulnerability.get('CVSS', {}):
                     redhat_cvss = vulnerability['CVSS']['redhat']
                     v3vector = redhat_cvss.get('V3Vector', '')
                     v3score = redhat_cvss.get('V3Score', '')
                 else:
-                    #altrimenti, utilizza i dati CVSS standard
                     v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
                     v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
                 
@@ -81,7 +43,7 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
     return vulnerabilities_list
 
 
-# funzione che analizza le info di un CVE e ne calcola il peso
+# Funzione che analizza le info di un CVE e ne calcola il peso
 def analisi_CVE(vulnerabilities_list):
     new_vulnerabilities_list = []
     threshold = 20
@@ -101,7 +63,7 @@ def analisi_CVE(vulnerabilities_list):
     return new_vulnerabilities_list
 
 
-# funzione che calcola l'expoitability di un CVE
+# Funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
@@ -109,7 +71,7 @@ def exploitability(VulnerabilityID):
     options = {
             "arguments": ["--headless"]
         }
-    exploit_calc = "poc"
+    exploit_calc = None
 
     try:
         with io.StringIO() as stdout, io.StringIO() as stderr:
@@ -133,7 +95,7 @@ def exploitability(VulnerabilityID):
     return exploit_calc
 
 
-# funzione che calcola l'automatibility di un CVE
+# Funzione che calcola l'automatibility di un CVE
 def automatibility(V3Vector):
     ui = V3Vector[27]
 
@@ -145,7 +107,7 @@ def automatibility(V3Vector):
     return automation_calc
 
 
-# funzione che calcola il technical impact di un CVE
+# Funzione che calcola il technical impact di un CVE
 def technical_impact(V3Vector):
     confidentiality = V3Vector[35]
     integrity = V3Vector[39]
@@ -175,7 +137,7 @@ def technical_impact(V3Vector):
     return ti_calc
 
 
-# funzione che calcola il mission wellbeing di un CVE
+# Funzione che calcola il mission wellbeing di un CVE
 def mission_wellbeing(V3Vector):
     # mission prevalence (minimal, support, essential), rilevanza dell'oggetto vulnerabile all'interno del progetto, default = essential (livello massimo)
     mp = "essential" 
@@ -198,7 +160,7 @@ def mission_wellbeing(V3Vector):
     return mw_calc
 
 
-# funzione che calcola il peso da associare ad ogni CVE
+# Funzione che calcola il peso da associare ad ogni CVE
 def calcolo_peso(V3Vector, VulnerabilityID):
     decision = ssvc.Decision(
         exploitation = exploitability(VulnerabilityID),     # none, poc, (active)   --> from trickest on github
@@ -226,7 +188,7 @@ def calcolo_peso(V3Vector, VulnerabilityID):
     return peso
 
 
-#funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
+# Funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
 def ordina_prepara_trivy_image(json_file):
         vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
         if vulnerabilities_list:
@@ -264,7 +226,7 @@ def ordina_prepara_trivy_image(json_file):
         return testo
 
 
-# funzione che estrae il nome dell'immagine dal json generato da docker inspect
+# Funzione che estrae il nome dell'immagine dal json generato da docker inspect
 def estrai_da_JSON_Docker_inspect(json_file):
 
     with open(json_file, 'r') as file:
@@ -291,6 +253,7 @@ def estrai_da_JSON_trivy_fs(json_file):
         testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
     return testo
 
+
 # Funzione che estrae i titoli dato il contenuto di un JSON
 def estrai_titoli(data, testo):
     
@@ -306,4 +269,31 @@ def estrai_titoli(data, testo):
         
     return testo
         
-            
+
+# Funzione che estrae le eventuali problematiche rilevate nel txt prodotto da Semgrep
+def estrai_da_semgrep(txt_file):
+    titoli = []
+    with open(txt_file, 'r') as file:
+        if (os.path.getsize(txt_file) == 0):
+            testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
+        else:
+            testo = "Ecco le principali problematiche rilevate:\n"
+            for line in file:
+                line = line.strip()
+                if line.startswith('❯❯❱'):
+                    titolo = line[4:]
+                elif line.startswith('❯❱'):
+                    titolo = line[3:]
+                elif line.startswith('❯'):
+                    titolo = line[1:]
+                elif line.startswith('❱'):
+                    titolo = line[1:]
+                else:
+                    continue
+
+                titolo = titolo.replace('.', ' ').replace('-', ' ')
+                if titolo not in titoli:
+                    titoli.append(titolo)
+                    testo += f"- {titolo}\n"
+                
+    return testo
