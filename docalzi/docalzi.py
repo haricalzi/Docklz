@@ -2,6 +2,7 @@ import argparse, sys, os
 from .functions import *
 from .check_and_install import *
 from .report import *
+os.system("clear")
 
 def main():
         #creo il parser

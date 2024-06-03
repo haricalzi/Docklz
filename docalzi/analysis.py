@@ -3,7 +3,6 @@ from RPA.Browser.Selenium import Selenium
 import json
 from contextlib import redirect_stdout, redirect_stderr
 import io
-
 def exploitability(VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
@@ -285,13 +284,16 @@ def estrai_da_JSON_trivy_fs(json_file):
 
     with open(json_file, 'r') as file:
         data = json.load(file)
-    
-    testo = estrai_titoli(data, testo)
 
+    if 'Title' in data:
+        testo = estrai_titoli(data, testo)
+    else:
+        testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
     return testo
 
 # Funzione che estrae i titoli dato il contenuto di un JSON
 def estrai_titoli(data, testo):
+    
     if isinstance(data, dict):
         for key, value in data.items():
             if key == 'Title':
@@ -301,7 +303,7 @@ def estrai_titoli(data, testo):
     elif isinstance(data, list):
         for element in data:
             testo = estrai_titoli(element, testo)
-
+        
     return testo
         
             
