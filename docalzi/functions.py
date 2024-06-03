@@ -172,7 +172,7 @@ def semgrep_scan(path_ris, report_pdf):
     print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")
     nome_file = "semgrep_scan.txt"
     try:
-        os.system(f"semgrep scan > {path_ris}/{nome_file}")
+        os.system(f"semgrep scan --severity=WARNING --severity=ERROR > {path_ris}/{nome_file}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}")
     print(f"\nAnalisi completata\n")
