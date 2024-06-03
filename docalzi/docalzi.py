@@ -21,7 +21,7 @@ def main():
 
         #se passo il comando senza parametri stampo anche l'help, altrimenti solo il menù iniziale
         stampa_iniziale()
-        if not (args.light or args.immagine_base or args.immagine_full):
+        if not (args.light or args.immagine_base or args.immagine_full or args.path_github):
                 stampa_help()
         
         if(args.path_github):

@@ -36,7 +36,7 @@ def mkdir_results(path):
 
 # Funzione che permette di effettuare un clone da una repository GitHub
 def git_clone_sourcecode(path_git):
-    print("----------------------------------------------------------------")
+    print("----------------------------------------------------------------\n")
     try:
         os.system(f"git clone {path_git}")
         print("\ngit clone effettuato correttamente")
@@ -61,13 +61,14 @@ def stampa_iniziale():
     print("--------------------------------------------------")
     print("----- SECURITY ANALISYS OF DOCKER CONTAINERS -----")
     print("--------------------------------------------------\n\n")
-    print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
-    print("\nNB 2: prerequisiti: wget, curl, pip, trivy, semgrep")
-    print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
+    
 
 
 # Funzione che stampa il menù di help
 def stampa_help():
+    print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
+    print("\nNB 2: prerequisiti: wget, curl, pip, trivy, semgrep")
+    print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
     print("\n\n---------------------------------------------------")
     print("-------------- 'docalzi -h' per help --------------")
     print("---------------------------------------------------\n\n")
