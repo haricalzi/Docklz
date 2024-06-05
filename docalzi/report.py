@@ -1,4 +1,5 @@
 from fpdf import FPDF
+import matplotlib.pyplot as plt
 
 # Funzione che permette di creare il report PDF
 def create_pdf(title, path_ris):
@@ -38,3 +39,22 @@ def add_link_report(pdf, text, url):
 def save_report(pdf, path_to_save):
     pdf.output(path_to_save)
     print(f"\nReport delle scansioni generato correttamente: {path_to_save}")
+
+# Funzione che permette di creare un grafico a torta
+def make_graph(pdf, peso3, peso2, peso1, peso0):
+    labels = ['Peso 3', 'Peso 2', 'peso 1', 'Peso 0']
+    sizes = [peso3, peso2, peso1, peso0]
+    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    explode = (0, 0, 0, 0)  # 'esplode' il primo pezzo
+    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
+    plt.axis('equal')
+    nome_grafico = 'CVE_peso_grafico.png'
+    plt.savefig(nome_grafico)
+    plt.close()
+
+    return nome_grafico
+
+
+# Funzione che permette di inserire un'immagine nel report
+def add_image_report(pdf, image_file):
+     pdf.image(image_file, x=10, y=30, w=100)

@@ -1,6 +1,7 @@
 import ssvc, json, io, os
 from RPA.Browser.Selenium import Selenium
 from contextlib import redirect_stdout, redirect_stderr
+from .report import *
 
 # Funzione che estrae cve e relative informazioni dal json generato da trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
@@ -204,12 +205,17 @@ def ordina_prepara_trivy_image(json_file):
                 match vulnerability['Peso']:
                     case 3:
                         peso = "3 - Agire immediatamente"
+                        peso3 += 1
                     case 2:
                         peso = "2 - Monitorare e pianificare l'intervento"
+                        peso2 += 1
                     case 1:
                         peso = "1 - Monitorare la vulnerabilità"
+                        peso1 += 1
                     case 0:
                         peso = "0 - Situazione sotto controllo"
+                        peso0 += 1
+                image_file = make_graph(peso3, peso2, peso1, peso0)
                 if (len(vulnerabilities_list_sorted) < 100):
                     testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
                     testo += f"Title: {vulnerability['Title']}\n"
@@ -223,7 +229,7 @@ def ordina_prepara_trivy_image(json_file):
         else:
             testo = "\nL'immagine non è risultata vulnerabile a nessun CVE"
 
-        return testo
+        return testo, image_file
 
 
 # Funzione che estrae il nome dell'immagine dal json generato da docker inspect

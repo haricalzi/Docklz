@@ -141,7 +141,8 @@ def trivy_image(path_ris ,immagine, report_pdf):
     add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
     testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
     add_data_report(report_pdf, testo)
-    testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
+    testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
+    add_image_report(report_pdf, image_file)
     add_data_report(report_pdf, testo)
     print(f"\nAnalisi completata\n")
 
