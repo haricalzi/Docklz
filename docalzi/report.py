@@ -47,9 +47,8 @@ def make_graph(peso3, peso2, peso1, peso0):
     values = [peso3, peso2, peso1, peso0]
     colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
     bars = plt.bar(labels, values, color=colors)
-    plt.xlabel('Categorie')
-    plt.ylabel('Valori')
-    plt.title('Grafico a Colonne')
+    plt.xlabel('Categorie di peso')
+    plt.ylabel('Numero di CVE')
     for bar in bars:
         height = bar.get_height()
         plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height}', ha='center', va='bottom')
@@ -62,4 +61,9 @@ def make_graph(peso3, peso2, peso1, peso0):
 
 # Funzione che permette di inserire un'immagine nel report
 def add_image_report(pdf, image_file):
-     pdf.image(image_file, x=10, y=30, w=100)
+    y = pdf.get_y()
+    page_width = pdf.w - 2 * pdf.l_margin
+    image_width = 150
+    x = (page_width - image_width) / 2 + pdf.l_margin
+    pdf.image(image_file, x=x, y=y, w=image_width)
+    pdf.set_y(y + image_width + 5)
