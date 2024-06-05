@@ -117,11 +117,9 @@ def docker_inspect(path_ris, immagine, report_pdf):
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
     print(f"\nAnalisi completata\n")
     #report pdf
-    add_titoletto_report(report_pdf, "Docker CLI")
-    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}"
-    add_data_report(report_pdf, testo)
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
-    testo = f"\nL'immagine analizzata è \"{nome_immagine}\". Il file sopracitato contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
+    add_titoletto_report(report_pdf, f"Analisi dell'immagine {nome_immagine}")
+    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}.\n Esso contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
     add_data_report(report_pdf, testo)
 
 
@@ -132,14 +130,16 @@ def trivy_image(path_ris ,immagine, report_pdf):
     print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")
     nome_file = "trivy_image.json"
     nome_file2 = "trivy_image.txt"
+    nome_file3 = "docker_inspect.json"
     try:
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file2}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
     #report pdf
-    add_titoletto_report(report_pdf, "Trivy image")
-    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
+    nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
+    add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
+    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
     add_data_report(report_pdf, testo)
     testo = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
     add_data_report(report_pdf, testo)
