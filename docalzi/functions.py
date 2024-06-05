@@ -165,8 +165,8 @@ def trivy_fs(path_ris, report_pdf):
         print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")  
     print(f"\nAnalisi completata\n")
     #report pdf
-    testo = f"Analisi della directory con Trivy completata, trovi i risultati nei file {nome_file2} e {nome_file}"
-    add_titoletto_report(report_pdf, "Trivy fs")
+    add_titoletto_report(report_pdf, "Analisi del codice sorgente")
+    testo = f"L'analisi del codice sorgente è stata eseguita sfruttando due tool different, Trivy e Semgrep.\n\nTrovi i risultati dell'analisi con Trivy nei file {nome_file2} e {nome_file}"
     add_data_report(report_pdf, testo)
     testo = estrai_da_JSON_trivy_fs(f"{path_ris}/{nome_file}")
     add_data_report(report_pdf, testo) 
@@ -184,8 +184,7 @@ def semgrep_scan(path_ris, report_pdf):
         print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}")
     print(f"\nAnalisi completata\n")
     #report pdf
-    testo = f"Analisi del codice sorgente con Semgrep completata, trovi i risultati nel file {nome_file}"
-    add_titoletto_report(report_pdf, "Semgrep")
+    testo = f"\n-------------------\nTrovi i risultati dell'analisi con Semgrep nel file {nome_file}"
     add_data_report(report_pdf, testo)
     testo = estrai_da_semgrep(f"{path_ris}/{nome_file}")
     add_data_report(report_pdf, testo) 

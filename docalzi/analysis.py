@@ -252,15 +252,15 @@ def estrai_da_JSON_Docker_inspect(json_file):
 
 # Funzione che estrae le eventuali problematiche rilevate nel JSON prodotto da Trivy fs
 def estrai_da_JSON_trivy_fs(json_file):
-    testo = "\nEcco le principali problematiche rilevate:\n"
+    testo = "\nEcco le principali problematiche rilevate da Trivy:"
 
     with open(json_file, 'r') as file:
         data = json.load(file)
 
     if 'Title' in data:
-        testo = estrai_titoli(data, testo)
+        testo = f"\n{estrai_titoli(data, testo)}"
     else:
-        testo = "\nNon è stata rilevata alcuna problematica tramite questa analisi"
+        testo = " non è stata rilevata alcuna problematica tramite questa analisi"
     return testo
 
 
@@ -285,7 +285,7 @@ def estrai_da_semgrep(txt_file):
     titoli = []
     with open(txt_file, 'r') as file:
         if (os.path.getsize(txt_file) == 0):
-            testo = "\nNon è stata rilevata alcuna problematica tramite questa analisi"
+            testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
         else:
             testo = "\nEcco le principali problematiche rilevate:\n"
             for line in file:
