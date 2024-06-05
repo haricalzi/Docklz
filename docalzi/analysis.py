@@ -100,9 +100,9 @@ def automatibility(V3Vector):
     ui = V3Vector[27]
 
     if(ui == 'N'):
-        automation_calc = 'no'
-    else:
         automation_calc = 'yes'
+    else:
+        automation_calc = 'no'
     
     return automation_calc
 
