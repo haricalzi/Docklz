@@ -119,7 +119,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
     #report pdf
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
     add_titoletto_report(report_pdf, f"Analisi dell'immagine {nome_immagine}")
-    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}.\n Esso contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro"
+    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}.\nEsso contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro."
     add_data_report(report_pdf, testo)
 
 

@@ -45,7 +45,7 @@ def save_report(pdf, path_to_save):
 def make_graph(peso3, peso2, peso1, peso0):
     labels = ['Peso 3', 'Peso 2', 'peso 1', 'Peso 0']
     values = [peso3, peso2, peso1, peso0]
-    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    colors = ['lightcoral', 'gold', 'lightskyblue', 'yellowgreen']
     bars = plt.bar(labels, values, color=colors)
     plt.xlabel('Categorie di peso')
     plt.ylabel('Numero di CVE')
