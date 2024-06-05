@@ -297,3 +297,16 @@ def estrai_da_semgrep(txt_file):
                     testo += f"- {titolo}\n"
                 
     return testo
+
+
+# Funzione che estrae il numero di problematiche dal docker bench of security
+def estrai_da_dockerbenchsec(txt_file):
+    with open(txt_file, 'r') as file:
+        content = file.read()
+        warn_count = content.count("[WARN]")
+    if (warn_count == 0):
+        testo = "\nNon sono stati rilevati problemi nella configurazione di Docker"
+    else:
+        testo = f"\nSono stati rilevati {warn_count} problemi nella configurazione di Docker.\nControllare nel file le voci con esito WARN e confrontare con il CIS Docker Benchmark v1.6.0\n"
+
+    return testo

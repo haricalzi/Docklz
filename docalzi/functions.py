@@ -91,13 +91,15 @@ def docker_bench_security(path_ris, report_pdf):
         os.system("sudo rm -rf docker-bench-security")
         print(f"\nAnalisi completata\n")
         #report pdf
-        add_titoletto_report(report_pdf, "Docker Bench of Security")
-        testo = f"Analisi della configurazione di Docker completata, trovi i risultati nel file {nome_file}\n\nPer ogni voce ci sono 2 possibili esiti rilevanti:\n-PASS: tutto ok\n-WARN: c'è un problema, controllare e sistemare\nQuesti test si basano sul CIS Docker Benchmark v1.6.0."
+        add_titoletto_report(report_pdf, "Configurazione di Docker")
+        testo = f"Analisi della configurazione di Docker presente nel sistema completata, trovi i risultati nel file {nome_file}"
         add_data_report(report_pdf, testo)
-        testo = "Clicca qui per registrarti e scaricarlo"
+        testo = estrai_da_dockerbenchsec(nome_file)
+        add_data_report(report_pdf, testo)
+        testo = "Clicca qui per registrarti e scaricare il documento"
         url = "https://www.cisecurity.org/benchmark/docker"
         add_link_report(report_pdf, testo, url)
-        testo = "Ulteriori consigli e spiegazioni sono presenti all'interno del documento"
+        testo = "Ulteriori consigli e spiegazioni sono presenti al suo interno"
         add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
