@@ -191,6 +191,10 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
 # Funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
 def ordina_prepara_trivy_image(json_file):
+        peso3 = 0
+        peso2 = 0
+        peso1 = 0
+        peso0 = 0
         vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
         if vulnerabilities_list:
             vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)

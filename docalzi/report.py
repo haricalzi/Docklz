@@ -42,7 +42,7 @@ def save_report(pdf, path_to_save):
 
 
 # Funzione che permette di creare un grafico a colonne
-def make_graph(pdf, peso3, peso2, peso1, peso0):
+def make_graph(peso3, peso2, peso1, peso0):
     labels = ['Peso 3', 'Peso 2', 'peso 1', 'Peso 0']
     values = [peso3, peso2, peso1, peso0]
     colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']

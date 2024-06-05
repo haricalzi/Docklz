@@ -94,7 +94,7 @@ def docker_bench_security(path_ris, report_pdf):
         add_titoletto_report(report_pdf, "Configurazione di Docker")
         testo = f"Analisi della configurazione di Docker presente nel sistema completata, trovi i risultati nel file {nome_file}"
         add_data_report(report_pdf, testo)
-        testo = estrai_da_dockerbenchsec(nome_file)
+        testo = estrai_da_dockerbenchsec(f"{path_ris}/{nome_file}")
         add_data_report(report_pdf, testo)
         testo = "Clicca qui per registrarti e scaricare il documento"
         url = "https://www.cisecurity.org/benchmark/docker"
