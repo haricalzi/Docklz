@@ -258,9 +258,9 @@ def estrai_da_JSON_trivy_fs(json_file):
         data = json.load(file)
 
     if 'Title' in data:
-        testo = f"\n{estrai_titoli(data, testo)}"
+        testo += f"\n{estrai_titoli(data, testo)}"
     else:
-        testo = " non è stata rilevata alcuna problematica tramite questa analisi"
+        testo += " non è stata rilevata alcuna problematica tramite questa analisi"
     return testo
 
 
@@ -287,7 +287,7 @@ def estrai_da_semgrep(txt_file):
         if (os.path.getsize(txt_file) == 0):
             testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
         else:
-            testo = "\nEcco le principali problematiche rilevate:\n"
+            testo = "Ecco le principali problematiche rilevate:\n"
             for line in file:
                 line = line.strip()
                 if line.startswith('❯❯❱'):
