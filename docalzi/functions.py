@@ -139,10 +139,16 @@ def trivy_image(path_ris ,immagine, report_pdf):
     #report pdf
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
     add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
-    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
+    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}\n"
     add_data_report(report_pdf, testo)
     testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
+    allegato_pdf = create_pdf("Elenco CVE con peso", path_ris)
+    add_data_report(allegato_pdf, testo)
+    save_report(report_pdf, f"{path_ris}/Allegato_CVE.pdf")
+    testo = f"Ecco un grafico che illustra i CVE analizzati, dividendoli in base al peso.\n"
+    add_data_report(report_pdf, testo)
     add_image_report(report_pdf, image_file)
+    testo = f"Ulteriori informazioni disponibili nell'allegato \"Allegato_CVE.pdf\"\n"
     add_data_report(report_pdf, testo)
     print(f"\nAnalisi completata\n")
 

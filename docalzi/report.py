@@ -40,14 +40,19 @@ def save_report(pdf, path_to_save):
     pdf.output(path_to_save)
     print(f"\nReport delle scansioni generato correttamente: {path_to_save}")
 
-# Funzione che permette di creare un grafico a torta
+
+# Funzione che permette di creare un grafico a colonne
 def make_graph(pdf, peso3, peso2, peso1, peso0):
     labels = ['Peso 3', 'Peso 2', 'peso 1', 'Peso 0']
-    sizes = [peso3, peso2, peso1, peso0]
+    values = [peso3, peso2, peso1, peso0]
     colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
-    explode = (0, 0, 0, 0)  # 'esplode' il primo pezzo
-    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
-    plt.axis('equal')
+    bars = plt.bar(labels, values, color=colors)
+    plt.xlabel('Categorie')
+    plt.ylabel('Valori')
+    plt.title('Grafico a Colonne')
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height}', ha='center', va='bottom')
     nome_grafico = 'CVE_peso_grafico.png'
     plt.savefig(nome_grafico)
     plt.close()
