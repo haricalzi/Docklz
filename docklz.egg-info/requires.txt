@@ -1,6 +1,0 @@
-argparse
-datetime
-rpaframework[selenium]
-matplotlib
-ssvc
-setuptools
