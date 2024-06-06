@@ -7,7 +7,7 @@ from .report import *
 
 # Funzione che crea la cartella per i risultati
 def mkdir_results(path):
-    
+
     actual = os.getcwd()
     os.chdir(path)
     tosave = os.getcwd() 
@@ -31,7 +31,9 @@ def mkdir_results(path):
             print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni\n")
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
+            os.chdir(actual)
             return None
+        
     os.chdir(actual)
 
     return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"

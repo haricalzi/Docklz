@@ -6,7 +6,7 @@ from .report import *
 
 # Funzione che estrae CVE e relative informazioni dal json generato da trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
-    
+
     vulnerabilities_list = []
 
     with open(json_file, 'r') as file:
@@ -318,7 +318,7 @@ def estrai_da_semgrep(txt_file):
     return testo
 
 
-# Funzione che estrae il numero di problematiche dal docker bench of security
+# Funzione che estrae il numero di problematiche dal Docker Bench of Security
 def estrai_da_dockerbenchsec(txt_file):
 
     with open(txt_file, 'r') as file:

@@ -67,7 +67,7 @@ def make_graph(peso3, peso2, peso1, peso0):
 
 # Funzione che permette di inserire un'immagine nel report
 def add_image_report(pdf, image_file):
-    
+
     y = pdf.get_y()
     page_width = pdf.w - 2 * pdf.l_margin
     image_width = 150
