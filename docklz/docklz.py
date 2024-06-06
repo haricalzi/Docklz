@@ -24,6 +24,7 @@ def main():
         if not (args.light or args.immagine_base or args.immagine_full or args.path_github):
                 stampa_help()
         
+        #controllo se devo clonare da GitHub
         if(args.path_github):
                 git_clone_sourcecode(args.path_github)
 
