@@ -1,4 +1,4 @@
-import ssvc, json, io, os
+import ssvc, json, io, os, sys
 from RPA.Browser.Selenium import Selenium
 from contextlib import redirect_stdout, redirect_stderr
 from .report import *
@@ -93,6 +93,7 @@ def exploitability(VulnerabilityID):
                     exploit_calc='poc'
     except Exception as e:
         print(f"Si è verificato un errore: {e}")
+        sys.exit(-1)
     finally:
         browser.close_all_browsers()
 

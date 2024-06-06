@@ -1,4 +1,4 @@
-import os
+import os, sys
 from datetime import datetime
 from .check_and_install import *
 from .analysis import *
@@ -20,7 +20,7 @@ def mkdir_results(path):
             print(f"\nCreo una cartella chiamata \"{nome_dir}\" all'interno di quella attuale, contenente i risultati delle varie scansioni")
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_dir}\": {e}")
-            return None   
+            sys.exit(-1) 
     
     nome_sottodir = data_ora()
 
@@ -32,8 +32,8 @@ def mkdir_results(path):
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             os.chdir(actual)
-            return None
-        
+            sys.exit(-1)
+
     os.chdir(actual)
 
     return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"
@@ -48,6 +48,7 @@ def git_clone_sourcecode(path_git):
         print("\ngit clone effettuato correttamente")
     except Exception as e:
         print(f"Errore durante l'esecuzione di git clone: {str(e)}")
+        sys.exit(-1)
 
 
 # Funzione che gestisce data e ora per creare file e cartelle univoche ed evitare sovrascritture
@@ -58,7 +59,7 @@ def data_ora():
         return f"{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
     except Exception as e:
         print(f"Errore durante la generazione di data ed ora: {e}")
-        return None
+        sys.exit(-1)
 
 
 # Funzione che stampa il messaggio iniziale
@@ -110,6 +111,7 @@ def docker_bench_security(path_ris, report_pdf):
         add_data_report(report_pdf, testo)
     except Exception as e:
         print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
+        sys.exit(-1)
 
 
 # Funzione che ispeziona un'immagine Docker tramite Docker CLI
@@ -123,6 +125,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
         os.system(f"sudo docker image inspect -f json {immagine} > {path_ris}/{nome_file}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
+        sys.exit(-1)
     print(f"\nAnalisi completata\n")
     #report pdf
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
@@ -145,6 +148,7 @@ def trivy_image(path_ris ,immagine, report_pdf):
         os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file2}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
+        sys.exit(-1)
     #report pdf
     nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
     add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
@@ -172,7 +176,8 @@ def trivy_fs(path_ris, report_pdf):
         os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         os.system(f"sudo trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file2}")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")  
+        print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")
+        sys.exit(-1)
     print(f"\nAnalisi completata\n")
     #report pdf
     add_titoletto_report(report_pdf, "Analisi del codice sorgente")
@@ -193,6 +198,7 @@ def semgrep_scan(path_ris, report_pdf):
         os.system(f"semgrep scan --severity=WARNING --severity=ERROR > {path_ris}/{nome_file}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}")
+        sys.exit(-1)
     print(f"\nAnalisi completata\n")
     #report pdf
     testo = f"\n-------------------\n\nTrovi i risultati dell'analisi con Semgrep nel file {nome_file}"
