@@ -12,9 +12,9 @@ def main():
 
         #aggiungo le opzioni
         parser.add_argument('-light', action="store_true", help='LIGHT: analisi della configurazione di Docker presente sul sistema')
-        parser.add_argument('-base', action="store", dest="immagine_base", help='BASE: analisi di un\'immagine Docker, specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con docker images)')
+        parser.add_argument('-base', action="store", dest="immagine_base", help='BASE: analisi di un\'immagine Docker, specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con "docker images")')
         parser.add_argument('-full', action="store", dest="immagine_full", help='FULL: analisi completa di un progetto Docker (immagine + container + source code), specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con "docker images")')
-        parser.add_argument('-path', action="store", dest="path_risultati", default=".", help='Permette di specificare il path assoluto/relativo di dove creare la cartella dei risultati. Di default viene considerato quello attuale')
+        parser.add_argument('-path', action="store", dest="path_risultati", default=".", help='Permette di specificare il path assoluto/relativo in cui creare la cartella dei risultati. Di default viene considerato quello attuale')
         parser.add_argument('-git', action="store", dest="path_github", help='Permette di specificare il path di GitHub da cui scaricare il source code (repository GitHub --> pulsante Code verde --> HTTPS). Opzionale, non utilizzare se è già presente il source code')
         parser.add_argument('-install', action="store_true", help='Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati')
 

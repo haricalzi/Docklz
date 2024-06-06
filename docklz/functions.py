@@ -75,12 +75,9 @@ def stampa_iniziale():
 # Funzione che stampa il menù di help
 def stampa_help():
 
-    print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
-    print("\nNB 2: prerequisiti: wget, curl, pip, trivy, semgrep")
-    print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
-    print("\n\n---------------------------------------------------")
-    print("-------------- 'docklz -h' per help --------------")
-    print("---------------------------------------------------\n\n")
+    print("--------------------------------------------------")
+    print("------------ 'docklz -h' -->  help ---------------")
+    print("--------------------------------------------------\n\n")
 
 
 # Funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
