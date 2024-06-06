@@ -328,6 +328,6 @@ def estrai_da_dockerbenchsec(txt_file):
     if (warn_count == 0):
         testo = "Non sono stati rilevati problemi nella configurazione di Docker"
     else:
-        testo = f"Sono stati rilevati {warn_count} problemi nella configurazione di Docker.\nControllare nel file le voci con esito WARN e confrontare con il CIS Docker Benchmark v1.6.0\n"
+        testo = f"Sono stati rilevati {warn_count} problemi nella configurazione di Docker.\nControllare nel file le voci con esito WARN e confrontare con il CIS Docker Benchmark v1.6.0"
 
     return testo

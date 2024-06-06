@@ -9,7 +9,8 @@ def create_pdf(title, path_ris):
     pdf.add_page()
     pdf.set_title(title)
     pdf.set_font("helvetica", '', 18)
-    pdf.cell(0, 10, title, 0, 1, 'C')
+    pdf.multi_cell(0, 10, title, align='C')
+    #pdf.cell(0, 10, title, 0, 1, 'C')
     pdf.ln(10)
     testo = f"I risultati grezzi di ogni scansione sono salvati all'interno della directory {path_ris}"
     add_data_report(pdf, testo)
@@ -19,8 +20,13 @@ def create_pdf(title, path_ris):
 # Funzione che permette di aggiungere dei dati al report
 def add_data_report(pdf, data):
 
-    pdf.set_font("helvetica", '', 10)
-    pdf.multi_cell(0, 5, data, align='L')
+    try:
+        pdf.set_font("helvetica", '', 10)
+        pdf.multi_cell(0, 5, data, align='L')
+        pdf.ln(1)
+    except Exception as e:
+        print(f"Errore durante l'aggiunta dei dati al report: {str(e)}")
+        print(f"Testo problematico: {data}")
 
 
 # Funzione che permette di aggiungere un titolo ad un paragrafo nel report
@@ -42,8 +48,9 @@ def add_link_report(pdf, text, url):
 # Funzione che permette di salvare il PDF del report
 def save_report(pdf, path_to_save):
 
+    print("----------------------------------------------------------------")
     pdf.output(path_to_save)
-    print(f"\nReport delle scansioni generato correttamente: {path_to_save}")
+    print(f"\nReport delle scansioni generato correttamente: {path_to_save}\n")
 
 
 # Funzione che permette di creare un grafico a colonne
