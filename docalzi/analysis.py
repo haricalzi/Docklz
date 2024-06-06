@@ -256,9 +256,9 @@ def estrai_da_JSON_trivy_fs(json_file):
         data = json.load(file)
 
     if 'Title' in data:
-        testo += f"Ecco le principali problematiche rilevate da Trivy:\n{estrai_titoli(data, testo)}"
+        testo = f"Ecco le principali problematiche rilevate da Trivy:\n{estrai_titoli(data, testo)}"
     else:
-        testo += "Non è stata rilevata alcuna problematica tramite questa analisi"
+        testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
     return testo
 
 
