@@ -1,7 +1,7 @@
 # Analisi di immagini e container Docker
 Strumento che effettua analisi di sicurezza relative ad'immagini e container Docker in modo automatizzato.
 
-Questo strumento si basa su alcuni tool già esistenti, come [Docker Bench of Security](https://github.com/docker/docker-bench-security), [Trivy](https://github.com/aquasecurity/trivy), [Semgrep](https://github.com/semgrep/semgrep).
+Docklz si basa su alcuni tool già esistenti, come [Docker Bench of Security](https://github.com/docker/docker-bench-security), [Trivy](https://github.com/aquasecurity/trivy), [Semgrep](https://github.com/semgrep/semgrep).
 
 ### Note importanti
 - si presuppone che sul sistema siano già stati installati e configurati correttamente **Docker** e **Python (>=3.11)**
