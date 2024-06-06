@@ -11,6 +11,7 @@ setup(
         'rpaframework[selenium]',
         'matplotlib',
         'ssvc',
+        'setuptools',
     ],
     entry_points={
         'console_scripts': [
