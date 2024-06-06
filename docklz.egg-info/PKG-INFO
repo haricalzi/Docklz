@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: docklz
+Version: 1.0.0
+Requires-Dist: argparse
+Requires-Dist: datetime
+Requires-Dist: rpaframework[selenium]
+Requires-Dist: matplotlib
+Requires-Dist: ssvc

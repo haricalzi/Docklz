@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='docalzi',
+    name='docklz',
     version='1.0.0',
     packages=find_packages(),
     install_requires=[
@@ -13,7 +13,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'docalzi = docalzi.docalzi:main',
+            'docklz = docklz.docklz:main',
         ],
     },
 )

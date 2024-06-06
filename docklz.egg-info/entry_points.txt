@@ -1,0 +1,2 @@
+[console_scripts]
+docklz = docklz.docklz:main

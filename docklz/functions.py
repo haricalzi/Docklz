@@ -57,7 +57,7 @@ def data_ora():
 # Funzione che stampa il messaggio iniziale
 def stampa_iniziale():
     print("\n\n--------------------------------------------------")
-    print("-------------------- DOCALZI ---------------------")
+    print("-------------------- DOCKLZ ----------------------")
     print("--------------------------------------------------")
     print("----- SECURITY ANALISYS OF DOCKER CONTAINERS -----")
     print("--------------------------------------------------\n\n")
@@ -70,7 +70,7 @@ def stampa_help():
     print("\nNB 2: prerequisiti: wget, curl, pip, trivy, semgrep")
     print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
     print("\n\n---------------------------------------------------")
-    print("-------------- 'docalzi -h' per help --------------")
+    print("-------------- 'docklz -h' per help --------------")
     print("---------------------------------------------------\n\n")
 
 
