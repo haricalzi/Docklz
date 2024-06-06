@@ -67,7 +67,8 @@ def main():
                 save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
         else:
                 sys.exit(-1)
-
+        
+        os.system("sudo rm -rf CVE_peso_grafico.png")
         print("----------------------------------------------------------------")
 
 
