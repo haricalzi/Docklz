@@ -8,7 +8,7 @@ def create_pdf(title, path_ris):
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
     pdf.set_title(title)
-    pdf.set_font("Arial", '', 18)
+    pdf.set_font("helvetica", '', 18)
     pdf.cell(0, 10, title, 0, 1, 'C')
     pdf.ln(10)
     testo = f"I risultati grezzi di ogni scansione sono salvati all'interno della directory {path_ris}"
@@ -19,14 +19,14 @@ def create_pdf(title, path_ris):
 # Funzione che permette di aggiungere dei dati al report
 def add_data_report(pdf, data):
 
-    pdf.set_font("Arial", '', 10)
+    pdf.set_font("helvetica", '', 10)
     pdf.multi_cell(0, 5, data, align='L')
 
 
 # Funzione che permette di aggiungere un titolo ad un paragrafo nel report
 def add_titoletto_report(pdf, titoletto):
 
-    pdf.set_font("Arial", 'B', 14)
+    pdf.set_font("helvetica", 'B', 14)
     pdf.cell(0, 10, titoletto, 0, 1, 'L')
 
 
@@ -34,7 +34,7 @@ def add_titoletto_report(pdf, titoletto):
 def add_link_report(pdf, text, url):
 
     pdf.set_text_color(0, 0, 255)
-    pdf.set_font("Arial", 'U', 10)
+    pdf.set_font("helvetica", 'U', 10)
     pdf.cell(0, 5, text, 0, 1, 'L', link=url)
     pdf.set_text_color(0, 0, 0)
 
