@@ -7,11 +7,13 @@ from .report import *
 
 # Funzione che crea la cartella per i risultati
 def mkdir_results(path):
+    
     actual = os.getcwd()
     os.chdir(path)
     tosave = os.getcwd() 
     nome_dir = "results"
     print("\n----------------------------------------------------------------")
+
     if not os.path.exists(nome_dir):
         try:
             os.mkdir(nome_dir)
@@ -31,11 +33,13 @@ def mkdir_results(path):
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             return None
     os.chdir(actual)
+
     return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"
 
 
-# Funzione che permette di effettuare un clone da una repository GitHub
+# Funzione che clona una repository da GitHub
 def git_clone_sourcecode(path_git):
+
     print("----------------------------------------------------------------\n")
     try:
         os.system(f"git clone {path_git}")
@@ -44,8 +48,9 @@ def git_clone_sourcecode(path_git):
         print(f"Errore durante l'esecuzione di git clone: {str(e)}")
 
 
-# Funzione che gestisce data e ora per creare file unici ed evitare sovrascrittura
+# Funzione che gestisce data e ora per creare file e cartelle univoche ed evitare sovrascritture
 def data_ora():
+
     try:
         attuale = datetime.now()
         return f"{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
@@ -56,6 +61,7 @@ def data_ora():
 
 # Funzione che stampa il messaggio iniziale
 def stampa_iniziale():
+
     print("\n\n--------------------------------------------------")
     print("-------------------- DOCKLZ ----------------------")
     print("--------------------------------------------------")
@@ -66,6 +72,7 @@ def stampa_iniziale():
 
 # Funzione che stampa il menù di help
 def stampa_help():
+
     print("NB 1: si presuppone che sul sistema sia già stato installato e configurato correttamente Docker")
     print("\nNB 2: prerequisiti: wget, curl, pip, trivy, semgrep")
     print("\nNB 3: potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di sudo per essere eseguiti")
@@ -76,6 +83,7 @@ def stampa_help():
 
 # Funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
 def docker_bench_security(path_ris, report_pdf):
+
     print("----------------------------------------------------------------")
     try:
         print("\nInstallo il Docker Bench of Security\n")
@@ -107,6 +115,7 @@ def docker_bench_security(path_ris, report_pdf):
 
 # Funzione che ispeziona un'immagine Docker tramite Docker CLI
 def docker_inspect(path_ris, immagine, report_pdf):
+
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
     print("\nAnalisi in corso, attendere...\n")
@@ -125,6 +134,7 @@ def docker_inspect(path_ris, immagine, report_pdf):
 
 # Funzione che ispeziona un'immagine Docker tramite trivy
 def trivy_image(path_ris ,immagine, report_pdf):
+
     print("----------------------------------------------------------------")
     print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
     print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")
@@ -153,6 +163,7 @@ def trivy_image(path_ris ,immagine, report_pdf):
 
 # Funzione che ispeziona tramite trivy una directory alla ricerca di vulnerabilità, secrets, misconfigurations
 def trivy_fs(path_ris, report_pdf):
+
     print("----------------------------------------------------------------")
     print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations")
     print("\nAnalisi in corso, attendere...\n")
@@ -174,6 +185,7 @@ def trivy_fs(path_ris, report_pdf):
 
 # Funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
 def semgrep_scan(path_ris, report_pdf):
+
     print("----------------------------------------------------------------")
     print("\nSemgrep: analisi del codice sorgente dell'applicazione\n")
     print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")

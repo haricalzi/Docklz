@@ -2,6 +2,8 @@ import argparse, sys, os
 from .functions import *
 from .check_and_install import *
 from .report import *
+
+
 os.system("clear")
 
 def main():
@@ -31,6 +33,7 @@ def main():
         #controllo di non aver specificato più modalità di scansione
         if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
                 print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
+        #eseguo l'opzione specificata
         elif(args.light):
                 #light 
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
@@ -70,7 +73,6 @@ def main():
         
         os.system("sudo rm -rf CVE_peso_grafico.png")
         print("----------------------------------------------------------------")
-
 
 if __name__ == "__main__":
     main()

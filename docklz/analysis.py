@@ -3,8 +3,10 @@ from RPA.Browser.Selenium import Selenium
 from contextlib import redirect_stdout, redirect_stderr
 from .report import *
 
-# Funzione che estrae cve e relative informazioni dal json generato da trivy image
+
+# Funzione che estrae CVE e relative informazioni dal json generato da trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
+    
     vulnerabilities_list = []
 
     with open(json_file, 'r') as file:
@@ -40,12 +42,12 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
                     'V3Score': v3score
                 })
         
-    
     return vulnerabilities_list
 
 
 # Funzione che analizza le info di un CVE e ne calcola il peso
 def analisi_CVE(vulnerabilities_list):
+
     new_vulnerabilities_list = []
     threshold = 20
 
@@ -66,6 +68,7 @@ def analisi_CVE(vulnerabilities_list):
 
 # Funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
+
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
     browser = Selenium()
@@ -98,6 +101,7 @@ def exploitability(VulnerabilityID):
 
 # Funzione che calcola l'automatibility di un CVE
 def automatibility(V3Vector):
+
     ui = V3Vector[27]
 
     if(ui == 'N'):
@@ -110,6 +114,7 @@ def automatibility(V3Vector):
 
 # Funzione che calcola il technical impact di un CVE
 def technical_impact(V3Vector):
+
     confidentiality = V3Vector[35]
     integrity = V3Vector[39]
     availability = V3Vector[43]
@@ -140,9 +145,10 @@ def technical_impact(V3Vector):
 
 # Funzione che calcola il mission wellbeing di un CVE
 def mission_wellbeing(V3Vector):
+
     # mission prevalence (minimal, support, essential), rilevanza dell'oggetto vulnerabile all'interno del progetto, default = essential (livello massimo)
     mp = "essential" 
-    # impatto dei sistemi compromessi sull'uomo, default = irreversible (livello massimo)
+    # pubblic well-being impact (minimal, material, irrevesible), impatto dei sistemi compromessi sull'uomo, default = irreversible (livello massimo)
     pwbi = "irreversible"
 
     mw_calc = 'high'
@@ -163,11 +169,12 @@ def mission_wellbeing(V3Vector):
 
 # Funzione che calcola il peso da associare ad ogni CVE
 def calcolo_peso(V3Vector, VulnerabilityID):
+
     decision = ssvc.Decision(
         exploitation = exploitability(VulnerabilityID),     # none, poc, (active)   --> from trickest on github
         automatable = automatibility(V3Vector),             # yes, no               --> from V3Vector, human interaction field
         technical_impact = technical_impact(V3Vector),      # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
-        mission_wellbeing = mission_wellbeing(V3Vector),    # low, medium, high
+        mission_wellbeing = mission_wellbeing(V3Vector),    # low, medium, high     --> default ad high
     )
 
     outcome = decision.evaluate()
@@ -191,6 +198,7 @@ def calcolo_peso(V3Vector, VulnerabilityID):
 
 # Funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
 def ordina_prepara_trivy_image(json_file):
+        
         peso3 = 0
         peso2 = 0
         peso1 = 0
@@ -252,6 +260,7 @@ def estrai_da_JSON_Docker_inspect(json_file):
 
 # Funzione che estrae le eventuali problematiche rilevate nel JSON prodotto da Trivy fs
 def estrai_da_JSON_trivy_fs(json_file):
+
     with open(json_file, 'r') as file:
         data = json.load(file)
 
@@ -262,7 +271,7 @@ def estrai_da_JSON_trivy_fs(json_file):
     return testo
 
 
-# Funzione che estrae i titoli dato il contenuto di un JSON
+# Funzione che estrae i titoli dato il contenuto di un JSON in modo ricorsivo
 def estrai_titoli(data, testo):
     
     if isinstance(data, dict):
@@ -280,7 +289,9 @@ def estrai_titoli(data, testo):
 
 # Funzione che estrae le eventuali problematiche rilevate nel txt prodotto da Semgrep
 def estrai_da_semgrep(txt_file):
+
     titoli = []
+
     with open(txt_file, 'r') as file:
         if (os.path.getsize(txt_file) == 0):
             testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
@@ -309,6 +320,7 @@ def estrai_da_semgrep(txt_file):
 
 # Funzione che estrae il numero di problematiche dal docker bench of security
 def estrai_da_dockerbenchsec(txt_file):
+
     with open(txt_file, 'r') as file:
         content = file.read()
         warn_count = content.count("[WARN]")

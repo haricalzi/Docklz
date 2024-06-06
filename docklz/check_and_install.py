@@ -1,7 +1,9 @@
 import os
 
+
 # Funzione controlla se un comando è già installato, in caso contrario lo installa (passargli il nome del comando)
 def controllo_comando_installato(comando):
+
     comandi_base = ["wget", "curl", "git"]
     if (comando in comandi_base):
         controllo_base(comando)
@@ -13,6 +15,7 @@ def controllo_comando_installato(comando):
 
 # Funzione che gestisce il controllo di comandi base come wget, curl, git 
 def controllo_base(comando):
+
     try:
         #estraggo il nome del pacchetto se esiste, read per leggere popen
         nome = os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $2 }}'").read()
@@ -25,6 +28,7 @@ def controllo_base(comando):
 
 # Funzione che gestisce il controllo avanzato specifico per trivy
 def controllo_trivy():
+
     comando = "trivy"
     try:
         #estraggo il nome del pacchetto se esiste, read per leggere popen
@@ -43,6 +47,7 @@ def controllo_trivy():
 
 # Funzione che gestisce il controllo avanzato specifico per semgrep
 def controllo_semgrep():
+    
     comando = "semgrep"
     try:
         #estraggo il nome del pacchetto se esiste, read per leggere popen
