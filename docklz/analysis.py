@@ -4,68 +4,6 @@ from contextlib import redirect_stdout, redirect_stderr
 from .report import *
 
 
-# Funzione che estrae CVE e relative informazioni dal json generato da trivy image
-def estrai_CVE_da_JSON_Trivy_image(json_file):
-
-    vulnerabilities_list = []
-
-    with open(json_file, 'r') as file:
-        data = json.load(file)
-
-    for result in data['Results']:
-        if 'Vulnerabilities' in result:
-            for vulnerability in result['Vulnerabilities']:
-                vulnerability_id = vulnerability.get('VulnerabilityID', '')
-                title = vulnerability.get('Title', '')
-                description = vulnerability.get('Description', '')
-                severity = vulnerability.get('Severity', '')
-
-                if 'redhat' in vulnerability.get('CVSS', {}):
-                    redhat_cvss = vulnerability['CVSS']['redhat']
-                    v3vector = redhat_cvss.get('V3Vector', '')
-                    v3score = redhat_cvss.get('V3Score', '')
-                else:
-                    v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
-                    v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
-                
-                #valori di default se non presenti i precedenti
-                v3vector = v3vector if v3vector else '-1'
-                v3score = v3score if v3score else '-1'
-
-                #aggiunge il dizionario alla lista
-                vulnerabilities_list.append({
-                    'VulnerabilityID': vulnerability_id,
-                    'Title': title,
-                    'Description': description,
-                    'Severity': severity,
-                    'V3Vector': v3vector,
-                    'V3Score': v3score
-                })
-        
-    return vulnerabilities_list
-
-
-# Funzione che analizza le info di un CVE e ne calcola il peso
-def analisi_CVE(vulnerabilities_list):
-
-    new_vulnerabilities_list = []
-    threshold = 20
-
-    for vulnerability in vulnerabilities_list:
-        if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
-            if len(vulnerabilities_list) < threshold or vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
-                peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
-            else:
-                peso = 1
-        else:
-            peso = 0
-            
-        vulnerability['Peso'] = peso
-        new_vulnerabilities_list.append(vulnerability)
-    
-    return new_vulnerabilities_list
-
-
 # Funzione che calcola l'expoitability di un CVE
 def exploitability(VulnerabilityID): 
 
@@ -196,6 +134,67 @@ def calcolo_peso(V3Vector, VulnerabilityID):
     
     return peso
 
+
+# Funzione che estrae CVE e relative informazioni dal json generato da trivy image
+def estrai_CVE_da_JSON_Trivy_image(json_file):
+
+    vulnerabilities_list = []
+
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+
+    for result in data['Results']:
+        if 'Vulnerabilities' in result:
+            for vulnerability in result['Vulnerabilities']:
+                vulnerability_id = vulnerability.get('VulnerabilityID', '')
+                title = vulnerability.get('Title', '')
+                description = vulnerability.get('Description', '')
+                severity = vulnerability.get('Severity', '')
+
+                if 'redhat' in vulnerability.get('CVSS', {}):
+                    redhat_cvss = vulnerability['CVSS']['redhat']
+                    v3vector = redhat_cvss.get('V3Vector', '')
+                    v3score = redhat_cvss.get('V3Score', '')
+                else:
+                    v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
+                    v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
+                
+                #valori di default se non presenti i precedenti
+                v3vector = v3vector if v3vector else '-1'
+                v3score = v3score if v3score else '-1'
+
+                #aggiunge il dizionario alla lista
+                vulnerabilities_list.append({
+                    'VulnerabilityID': vulnerability_id,
+                    'Title': title,
+                    'Description': description,
+                    'Severity': severity,
+                    'V3Vector': v3vector,
+                    'V3Score': v3score
+                })
+        
+    return vulnerabilities_list
+
+
+# Funzione che analizza le info di un CVE e ne calcola il peso
+def analisi_CVE(vulnerabilities_list):
+
+    new_vulnerabilities_list = []
+    threshold = 20
+
+    for vulnerability in vulnerabilities_list:
+        if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
+            if len(vulnerabilities_list) < threshold or vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
+                peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
+            else:
+                peso = 1
+        else:
+            peso = 0
+            
+        vulnerability['Peso'] = peso
+        new_vulnerabilities_list.append(vulnerability)
+    
+    return new_vulnerabilities_list
 
 # Funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
 def ordina_prepara_trivy_image(json_file):
