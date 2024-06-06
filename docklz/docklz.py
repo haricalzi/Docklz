@@ -3,7 +3,7 @@ from .functions import *
 from .check_and_install import *
 from .report import *
 os.system("clear")
-
+#test
 def main():
         #creo il parser
         parser = argparse.ArgumentParser(description='Analisi di immagini e container Docker')
