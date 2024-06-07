@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 
 # Funzione controlla se un comando è già installato, in caso contrario lo installa
@@ -12,7 +12,6 @@ def controllo_comando_installato(comando):
     else:
         controllo_semgrep() 
 
-
 # Funzione che gestisce il controllo di comandi base come wget, curl, git 
 def controllo_base(comando):
 
@@ -24,13 +23,14 @@ def controllo_base(comando):
             os.system(f"sudo apt -y install {comando}")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}")
+        sys.exit(-1)
 
 
 # Funzione che gestisce il controllo avanzato specifico per trivy
 def controllo_trivy():
 
-    comando = "trivy"
     try:
+        comando = "trivy"
         #estraggo il nome del pacchetto se esiste, read per leggere popen
         nome = os.popen(f"dpkg -l | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $2 }}'").read()
         #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 3, cut taglia al punto e mi stampa la colonna 1 o 2
@@ -43,13 +43,14 @@ def controllo_trivy():
             os.system("rm -f trivy_0.50.1_Linux-64bit.deb")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}")   
+        sys.exit(-1)
 
 
 # Funzione che gestisce il controllo avanzato specifico per semgrep
 def controllo_semgrep():
 
-    comando = "semgrep"
     try:
+        comando = "semgrep"
         #estraggo il nome del pacchetto se esiste, read per leggere popen
         nome = os.popen(f"pip list | grep -E '(^|\s){comando}($|\s)' | awk '{{ print $1 }}'").read()
         #estraggo i numeri delle versioni, read per leggere popen e int per convertire in int e confrontare dopo. Awk stampa la colonna 2, cut taglia al punto e mi stampa la colonna 1 o 2
@@ -59,4 +60,5 @@ def controllo_semgrep():
             print(f"\n{comando} non installato o non aggiornato, procedo con l'installazione dell'ultima versione...\n")
             os.system("python3 -m pip install semgrep")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}") 
+        print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}")
+        sys.exit(-1)

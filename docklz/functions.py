@@ -91,6 +91,7 @@ def docker_bench_security(path_ris, report_pdf):
         os.chdir("docker-bench-security")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione del Docker Bench for Security: {str(e)}")
+        sys.exit(-1)
     nome_file = "DockerBenchmarkSecurity.txt"
     try:
         print("\nAnalisi della configurazione di Docker in corso...")
@@ -128,11 +129,14 @@ def docker_inspect(path_ris, immagine, report_pdf):
         sys.exit(-1)
     print(f"\nAnalisi completata\n")
     #report pdf
-    nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
-    add_titoletto_report(report_pdf, f"Analisi dell'immagine {nome_immagine}")
-    testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}.\nEsso contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro."
-    add_data_report(report_pdf, testo)
-
+    try:
+        nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
+        add_titoletto_report(report_pdf, f"Analisi dell'immagine {nome_immagine}")
+        testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}.\nEsso contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro."
+        add_data_report(report_pdf, testo)
+    except Exception as e:
+        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        sys.exit(-1)
 
 # Funzione che ispeziona un'immagine Docker tramite trivy
 def trivy_image(path_ris ,immagine, report_pdf):
@@ -149,20 +153,23 @@ def trivy_image(path_ris ,immagine, report_pdf):
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
         sys.exit(-1)
-    #report pdf
-    nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
-    add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
-    testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}\n"
-    add_data_report(report_pdf, testo)
-    testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
-    allegato_pdf = create_pdf("Elenco CVE con peso", path_ris)
-    add_data_report(allegato_pdf, testo)
-    save_report(allegato_pdf, f"{path_ris}/Allegato_CVE.pdf")
-    testo = f"Ecco un grafico che illustra i CVE analizzati, dividendoli in base al peso. Ulteriori informazioni disponibili nell'allegato \"Allegato_CVE.pdf\"\n"
-    add_data_report(report_pdf, testo)
-    add_image_report(report_pdf, image_file)
     print(f"\nAnalisi completata\n")
-
+    #report pdf
+    try:
+        nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
+        add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
+        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}\n"
+        add_data_report(report_pdf, testo)
+        testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
+        allegato_pdf = create_pdf("Elenco CVE con peso", path_ris)
+        add_data_report(allegato_pdf, testo)
+        save_report(allegato_pdf, f"{path_ris}/Allegato_CVE.pdf")
+        testo = f"Ecco un grafico che illustra i CVE analizzati, dividendoli in base al peso. Ulteriori informazioni disponibili nell'allegato \"Allegato_CVE.pdf\"\n"
+        add_data_report(report_pdf, testo)
+        add_image_report(report_pdf, image_file) 
+    except Exception as e:
+        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        sys.exit(-1)
 
 # Funzione che ispeziona tramite trivy una directory alla ricerca di vulnerabilità, secrets, misconfigurations
 def trivy_fs(path_ris, report_pdf):
@@ -180,11 +187,15 @@ def trivy_fs(path_ris, report_pdf):
         sys.exit(-1)
     print(f"\nAnalisi completata\n")
     #report pdf
-    add_titoletto_report(report_pdf, "Analisi del codice sorgente")
-    testo = f"L'analisi del codice sorgente è stata eseguita sfruttando due tool differenti, Trivy e Semgrep.\n\nTrovi i risultati dell'analisi con Trivy nei file {nome_file2} e {nome_file}"
-    add_data_report(report_pdf, testo)
-    testo = estrai_da_JSON_trivy_fs(f"{path_ris}/{nome_file}")
-    add_data_report(report_pdf, testo) 
+    try:
+        add_titoletto_report(report_pdf, "Analisi del codice sorgente")
+        testo = f"L'analisi del codice sorgente è stata eseguita sfruttando due tool differenti, Trivy e Semgrep.\n\nTrovi i risultati dell'analisi con Trivy nei file {nome_file2} e {nome_file}"
+        add_data_report(report_pdf, testo)
+        testo = estrai_da_JSON_trivy_fs(f"{path_ris}/{nome_file}")
+        add_data_report(report_pdf, testo)
+    except Exception as e:
+        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        sys.exit(-1)
 
 
 # Funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
@@ -201,7 +212,11 @@ def semgrep_scan(path_ris, report_pdf):
         sys.exit(-1)
     print(f"\nAnalisi completata\n")
     #report pdf
-    testo = f"\n-------------------\n\nTrovi i risultati dell'analisi con Semgrep nel file {nome_file}"
-    add_data_report(report_pdf, testo)
-    testo = estrai_da_semgrep(f"{path_ris}/{nome_file}")
-    add_data_report(report_pdf, testo) 
+    try:
+        testo = f"\n-------------------\n\nTrovi i risultati dell'analisi con Semgrep nel file {nome_file}"
+        add_data_report(report_pdf, testo)
+        testo = estrai_da_semgrep(f"{path_ris}/{nome_file}")
+        add_data_report(report_pdf, testo)
+    except Exception as e:
+        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        sys.exit(-1)
