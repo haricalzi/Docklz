@@ -58,14 +58,18 @@ def add_link_report(pdf, text, url):
         sys.exit(-1)
 
 # Funzione che permette di salvare il PDF del report
-def save_report(pdf, path_to_save):
+def save_pdf(pdf, path_to_save, type):
 
     try:
         print("----------------------------------------------------------------")
         pdf.output(path_to_save)
-        print(f"\nReport delle scansioni generato correttamente: {path_to_save}\n")
+        match type:
+            case "report":
+                print(f"\nReport delle scansioni generato correttamente: {path_to_save}\n")
+            case "allegato":
+                print(f"\Allegato relativo ai CVE generato correttamente: {path_to_save}\n")
     except Exception as e:
-        print(f"Si è verificato un errore durante il salvataggio del report: {str(e)}")
+        print(f"Si è verificato un errore durante il salvataggio del file: {str(e)}")
         sys.exit(-1)
 
 

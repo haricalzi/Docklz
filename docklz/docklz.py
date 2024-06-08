@@ -41,7 +41,7 @@ def main():
                 if(args.install):
                         controllo_comando_installato("git")
                 docker_bench_security(path_ris, report_pdf)
-                save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
+                save_pdf(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf", "report")
 
         elif(args.immagine_base):
                 #base  
@@ -52,7 +52,7 @@ def main():
                         controllo_comando_installato("trivy") 
                 docker_inspect(path_ris, args.immagine_base, report_pdf)
                 trivy_image(path_ris, args.immagine_base, report_pdf)
-                save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
+                save_pdf(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf", "report")
 
         elif(args.immagine_full):
                 #full   
@@ -67,7 +67,7 @@ def main():
                 trivy_image(path_ris, args.immagine_full, report_pdf)
                 trivy_fs(path_ris, report_pdf)
                 semgrep_scan(path_ris, report_pdf)
-                save_report(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf")
+                save_pdf(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf", "report")
         else:
                 sys.exit(-1)
         

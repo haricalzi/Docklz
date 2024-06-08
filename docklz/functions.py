@@ -162,7 +162,7 @@ def trivy_image(path_ris ,immagine, report_pdf):
         testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
         allegato_pdf = create_pdf("Elenco CVE con peso", path_ris)
         add_data_report(allegato_pdf, testo)
-        save_report(allegato_pdf, f"{path_ris}/Allegato_CVE.pdf")
+        save_pdf(allegato_pdf, f"{path_ris}/Allegato_CVE.pdf", "allegato")
         testo = f"Ecco un grafico che illustra i CVE analizzati, dividendoli in base al peso. Ulteriori informazioni disponibili nell'allegato \"Allegato_CVE.pdf\"\n"
         add_data_report(report_pdf, testo)
         add_image_report(report_pdf, image_file)
