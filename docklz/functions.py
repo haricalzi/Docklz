@@ -153,12 +153,11 @@ def trivy_image(path_ris ,immagine, report_pdf):
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
         sys.exit(-1)
-    print(f"\nAnalisi completata\n")
     #report pdf
     try:
         nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
         add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
-        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}\n"
+        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
         add_data_report(report_pdf, testo)
         testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
         allegato_pdf = create_pdf("Elenco CVE con peso", path_ris)
@@ -166,7 +165,8 @@ def trivy_image(path_ris ,immagine, report_pdf):
         save_report(allegato_pdf, f"{path_ris}/Allegato_CVE.pdf")
         testo = f"Ecco un grafico che illustra i CVE analizzati, dividendoli in base al peso. Ulteriori informazioni disponibili nell'allegato \"Allegato_CVE.pdf\"\n"
         add_data_report(report_pdf, testo)
-        add_image_report(report_pdf, image_file) 
+        add_image_report(report_pdf, image_file)
+        print(f"\nAnalisi completata\n")
     except Exception as e:
         print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
         sys.exit(-1)

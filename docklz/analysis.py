@@ -262,10 +262,7 @@ def ordina_prepara_trivy_image(json_file):
             #ordinamento decrescente per peso
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
             #testo per report
-            if (len(vulnerabilities_list_sorted) < 100):
-                testo = f"\nEcco i {len(vulnerabilities_list_sorted)} CVE a cui è potenzialmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
-            else:
-                testo = f"\nEcco i CVE più rilevanti tra i {len(vulnerabilities_list_sorted)} a cui è potenzialmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
+            testo = f"\nEcco i {len(vulnerabilities_list_sorted)} CVE a cui è potenzialmente vulnerabile l'immagine analizzata, ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
             for vulnerability in vulnerabilities_list_sorted:
                 match vulnerability['Peso']:
                     case 3:
