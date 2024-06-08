@@ -67,7 +67,7 @@ def save_pdf(pdf, path_to_save, type):
             case "report":
                 print(f"\nReport delle scansioni generato correttamente: {path_to_save}\n")
             case "allegato":
-                print(f"\Allegato relativo ai CVE generato correttamente: {path_to_save}\n")
+                print(f"\nAllegato relativo ai CVE generato correttamente: {path_to_save}\n")
     except Exception as e:
         print(f"Si è verificato un errore durante il salvataggio del file: {str(e)}")
         sys.exit(-1)
