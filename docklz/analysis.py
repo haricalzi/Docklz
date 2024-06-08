@@ -190,26 +190,60 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
         print(f"Si è verificato un errore durante l'estrazione dei CVE dal JSON di Trivy image: {str(e)}")
         sys.exit(-1)
 
+
 # Funzione che analizza le info di un CVE e ne calcola il peso
 def analisi_CVE(vulnerabilities_list):
 
     try:
         new_vulnerabilities_list = []
-        threshold = 20
+        max_vulnerabilities = 20
 
-        for vulnerability in vulnerabilities_list:
-            if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
-                if len(vulnerabilities_list) < threshold or vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
+        total_vulnerabilities = len(vulnerabilities_list)
+
+        if total_vulnerabilities <= max_vulnerabilities:
+            #analizza tutte le vulnerabilità se sono meno di 20
+            for vulnerability in vulnerabilities_list:
+                if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
                     peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
                 else:
-                    peso = 1
-            else:
-                peso = 0
-                
-            vulnerability['Peso'] = peso
-            new_vulnerabilities_list.append(vulnerability)
-        
+                    peso = 0
+
+                vulnerability['Peso'] = peso
+                new_vulnerabilities_list.append(vulnerability)
+        else:
+            #se ci sono più di 20 vulnerabilità seleziono le vulnerabilità critiche e di alto livello (ed eventualmente altre) fino a 20
+            critical_vulnerabilities = [vulnerability for vulnerability in vulnerabilities_list if vulnerability['Severity'] == "CRITICAL"]
+            high_vulnerabilities = [vulnerability for vulnerability in vulnerabilities_list if vulnerability['Severity'] == "HIGH"]
+            other_vulnerabilities = [vulnerability for vulnerability in vulnerabilities_list if vulnerability['Severity'] not in ["CRITICAL", "HIGH"]]
+
+            vulnerabilities_to_analyze = critical_vulnerabilities[:max_vulnerabilities]
+
+            if len(vulnerabilities_to_analyze) < max_vulnerabilities:
+                vulnerabilities_to_analyze += high_vulnerabilities[:max_vulnerabilities - len(vulnerabilities_to_analyze)]
+
+            if len(vulnerabilities_to_analyze) < max_vulnerabilities:
+                other_vulnerabilities.sort(key=lambda x: float(x['V3Score']), reverse=True)
+                vulnerabilities_to_analyze += other_vulnerabilities[:max_vulnerabilities - len(vulnerabilities_to_analyze)]
+            #assegno i pesi
+            for vulnerability in vulnerabilities_list:
+                if vulnerability in vulnerabilities_to_analyze:
+                    if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
+                        peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
+                    else:
+                        peso = 0
+                else:
+                    if vulnerability['V3Vector'] == "-1" or vulnerability['V3Score'] == "-1":
+                        peso = 0
+                    elif vulnerability['Severity'] in ["CRITICAL", "HIGH"]:
+                        peso = 2
+                    else:
+                        peso = 1
+
+                vulnerability['Peso'] = peso
+                new_vulnerabilities_list.append(vulnerability)
+
         return new_vulnerabilities_list
+
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dei CVE: {str(e)}")
         sys.exit(-1)
