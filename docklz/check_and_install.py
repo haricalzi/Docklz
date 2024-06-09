@@ -12,6 +12,7 @@ def controllo_comando_installato(comando):
     else:
         controllo_semgrep() 
 
+
 # Funzione che gestisce il controllo di comandi base come wget, curl, git 
 def controllo_base(comando):
 
