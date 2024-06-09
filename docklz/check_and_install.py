@@ -41,7 +41,7 @@ def controllo_trivy():
             print(f"\n{comando} non installato o non aggiornato, procedo con l'installazione / aggiornamento ...\n")
             os.system("wget https://github.com/aquasecurity/trivy/releases/download/v0.50.1/trivy_0.50.1_Linux-64bit.deb")
             os.system("sudo dpkg -i trivy_0.50.1_Linux-64bit.deb")
-            os.system("rm -f trivy_0.50.1_Linux-64bit.deb")
+            os.system("sudo rm -f trivy_0.50.1_Linux-64bit.deb")
     except Exception as e:
         print(f"Si è verificato un errore durante l'installazione di {comando}: {str(e)}")   
         sys.exit(-1)
