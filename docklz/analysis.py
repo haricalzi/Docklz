@@ -382,7 +382,7 @@ def estrai_da_dockerbenchsec(txt_file):
     try:
         with open(txt_file, 'r') as file:
             content = file.read()
-            warn_count = content.count("[WARN]")
+        warn_count = content.count("[WARN]")
         if (warn_count == 0):
             testo = "Non sono stati rilevati problemi nella configurazione di Docker"
         else:
