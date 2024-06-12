@@ -9,6 +9,8 @@ setup(
         'argparse', 
         'datetime',
         'requests',
+        'aiohttp',
+        'asyncio',
         'matplotlib',
         'ssvc',
         'setuptools',
