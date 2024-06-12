@@ -1,23 +1,24 @@
-import ssvc, json, io, os, sys, requests
+import ssvc, json, io, os, sys, requests, aiohttp, asyncio
 from contextlib import redirect_stdout, redirect_stderr
 from .report import *
 
 
 # Funzione che calcola l'expoitability di un CVE
-def exploitability(VulnerabilityID): 
-
+async def exploitability(session, semaphore, VulnerabilityID): 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
 
-    try:
-        response = requests.get(url)
-        print(f"Analisi {VulnerabilityID} in corso")
-        if response.status_code == 404:
-            exploit_calc='none'
-        else:
-            exploit_calc='poc'
-    except requests.exceptions.RequestException as e:
-        print(f"Errore durante la richiesta: {e}")
+    async with semaphore:
+        try:
+            async with session.get(url) as response:
+                print(f"Analisi {VulnerabilityID} in corso")
+                if response.status == 404:
+                    exploit_calc = 'none'
+                else:
+                    exploit_calc = 'poc'
+        except aiohttp.ClientError as e:
+            print(f"Errore durante la richiesta: {e}")
+            exploit_calc = 'none'
 
     return exploit_calc
 
@@ -98,14 +99,15 @@ def mission_wellbeing(V3Vector):
 
 
 # Funzione che calcola il peso da associare ad ogni CVE
-def calcolo_peso(V3Vector, VulnerabilityID):
-
+async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
     try:
+        exploit = await exploitability(session, semaphore, VulnerabilityID)
+
         decision = ssvc.Decision(
-            exploitation = exploitability(VulnerabilityID),     # none, poc, (active)   --> from trickest on github
-            automatable = automatibility(V3Vector),             # yes, no               --> from V3Vector, human interaction field
-            technical_impact = technical_impact(V3Vector),      # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
-            mission_wellbeing = mission_wellbeing(V3Vector),    # low, medium, high     --> default ad high
+            exploitation=exploit,                           # none, poc, (active)   --> from trickest on github
+            automatable=automatibility(V3Vector),           # yes, no               --> from V3Vector, human interaction field
+            technical_impact=technical_impact(V3Vector),    # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
+            mission_wellbeing=mission_wellbeing(V3Vector),  # low, medium, high     --> default ad high
         )
 
         outcome = decision.evaluate()
@@ -176,24 +178,30 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
 
 
 # Funzione che analizza le info di un CVE e ne calcola il peso
-def analisi_CVE(vulnerabilities_list):
-
+async def analisi_CVE(vulnerabilities_list):
     try:
         new_vulnerabilities_list = []
-        for vulnerability in vulnerabilities_list:
-            if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
-                peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
-            else:
-                peso = 0
+        semaphore = asyncio.Semaphore(4) #limite connessioni in simultanea
+        async with aiohttp.ClientSession() as session:
+            tasks = []
+            for vulnerability in vulnerabilities_list:
+                if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
+                    tasks.append(calcolo_peso(session, semaphore, vulnerability['V3Vector'], vulnerability['VulnerabilityID']))
+                else:
+                    tasks.append(asyncio.sleep(0, result=0))
 
-            vulnerability['Peso'] = peso
-            new_vulnerabilities_list.append(vulnerability)
+            pesi = await asyncio.gather(*tasks)
+
+            for vulnerability, peso in zip(vulnerabilities_list, pesi):
+                vulnerability['Peso'] = peso
+                new_vulnerabilities_list.append(vulnerability)
+            print("\nAnalisi CVE completata\n") 
 
         return new_vulnerabilities_list
-
     except Exception as e:
         print(f"Si è verificato un errore durante l'analisi dei CVE: {str(e)}")
         sys.exit(-1)
+
 
 # Funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
 def ordina_prepara_trivy_image(json_file):
@@ -205,7 +213,7 @@ def ordina_prepara_trivy_image(json_file):
         peso0 = 0
         vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
         if vulnerabilities_list:
-            vulnerabilities_list_peso = analisi_CVE(vulnerabilities_list)
+            vulnerabilities_list_peso = asyncio.run(analisi_CVE(vulnerabilities_list))
             #ordinamento decrescente per peso
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
             #testo per report
