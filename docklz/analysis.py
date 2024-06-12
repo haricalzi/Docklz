@@ -23,9 +23,10 @@ def exploitability(VulnerabilityID):
 
                 search_text1 = "No PoCs found on GitHub currently"
                 search_text2 = "No PoCs from references"
+                search_text3 = "page not found"
                 page_source = browser.get_source()
 
-                if search_text1 in page_source and search_text2 in page_source:
+                if (search_text1 in page_source and search_text2 in page_source) or search_text3 in page_source:
                     exploit_calc='none'
                 else:
                     exploit_calc='poc'
