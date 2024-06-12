@@ -1,5 +1,4 @@
-import ssvc, json, io, os, sys
-from RPA.Browser.Selenium import Selenium
+import ssvc, json, io, os, sys, requests
 from contextlib import redirect_stdout, redirect_stderr
 from .report import *
 
@@ -9,32 +8,16 @@ def exploitability(VulnerabilityID):
 
     anno = VulnerabilityID[4:8]
     url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
-    browser = Selenium()
-    options = {
-            "arguments": ["--headless"]
-        }
-    exploit_calc = None
 
     try:
-        with io.StringIO() as stdout, io.StringIO() as stderr:
-            with redirect_stdout(stdout), redirect_stderr(stderr):
-                browser.open_available_browser(url, options=options)
-                browser.wait_until_element_is_visible("tag:body", timeout=20)
-
-                search_text1 = "No PoCs found on GitHub currently"
-                search_text2 = "No PoCs from references"
-                search_text3 = "page not found"
-                page_source = browser.get_source()
-
-                if (search_text1 in page_source and search_text2 in page_source) or search_text3 in page_source:
-                    exploit_calc='none'
-                else:
-                    exploit_calc='poc'
-    except Exception as e:
-        print(f"Si è verificato un errore durante il calcolo dell'exploitability di un CVE: {e}")
-        sys.exit(-1)
-    finally:
-        browser.close_all_browsers()
+        response = requests.get(url)
+        print(f"Analisi {VulnerabilityID} in corso")
+        if response.status_code == 404:
+            exploit_calc='none'
+        else:
+            exploit_calc='poc'
+    except requests.exceptions.RequestException as e:
+        print(f"Errore durante la richiesta: {e}")
 
     return exploit_calc
 
@@ -197,51 +180,14 @@ def analisi_CVE(vulnerabilities_list):
 
     try:
         new_vulnerabilities_list = []
-        max_vulnerabilities = 20
+        for vulnerability in vulnerabilities_list:
+            if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
+                peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
+            else:
+                peso = 0
 
-        total_vulnerabilities = len(vulnerabilities_list)
-
-        if total_vulnerabilities <= max_vulnerabilities:
-            #analizza tutte le vulnerabilità se sono meno di 20
-            for vulnerability in vulnerabilities_list:
-                if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
-                    peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
-                else:
-                    peso = 0
-
-                vulnerability['Peso'] = peso
-                new_vulnerabilities_list.append(vulnerability)
-        else:
-            #se ci sono più di 20 vulnerabilità seleziono le vulnerabilità critiche e di alto livello (ed eventualmente altre) fino a 20
-            critical_vulnerabilities = [vulnerability for vulnerability in vulnerabilities_list if vulnerability['Severity'] == "CRITICAL"]
-            high_vulnerabilities = [vulnerability for vulnerability in vulnerabilities_list if vulnerability['Severity'] == "HIGH"]
-            other_vulnerabilities = [vulnerability for vulnerability in vulnerabilities_list if vulnerability['Severity'] not in ["CRITICAL", "HIGH"]]
-
-            vulnerabilities_to_analyze = critical_vulnerabilities[:max_vulnerabilities]
-
-            if len(vulnerabilities_to_analyze) < max_vulnerabilities:
-                vulnerabilities_to_analyze += high_vulnerabilities[:max_vulnerabilities - len(vulnerabilities_to_analyze)]
-
-            if len(vulnerabilities_to_analyze) < max_vulnerabilities:
-                other_vulnerabilities.sort(key=lambda x: float(x['V3Score']), reverse=True)
-                vulnerabilities_to_analyze += other_vulnerabilities[:max_vulnerabilities - len(vulnerabilities_to_analyze)]
-            #assegno i pesi
-            for vulnerability in vulnerabilities_list:
-                if vulnerability in vulnerabilities_to_analyze:
-                    if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
-                        peso = calcolo_peso(vulnerability['V3Vector'], vulnerability['VulnerabilityID'])
-                    else:
-                        peso = 0
-                else:
-                    if vulnerability['V3Vector'] == "-1" or vulnerability['V3Score'] == "-1":
-                        peso = 0
-                    elif vulnerability['Severity'] == "CRITICAL":
-                        peso = 2
-                    else:
-                        peso = 1
-
-                vulnerability['Peso'] = peso
-                new_vulnerabilities_list.append(vulnerability)
+            vulnerability['Peso'] = peso
+            new_vulnerabilities_list.append(vulnerability)
 
         return new_vulnerabilities_list
 
@@ -263,7 +209,7 @@ def ordina_prepara_trivy_image(json_file):
             #ordinamento decrescente per peso
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
             #testo per report
-            testo = f"\nL'immagine analizzata è risultata potenzialmente vulenrabile a {len(vulnerabilities_list_sorted)} CVE. Vengono ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
+            testo = f"\nL'immagine analizzata è risultata potenzialmente vulnerabile a {len(vulnerabilities_list_sorted)} CVE. Vengono ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
             for vulnerability in vulnerabilities_list_sorted:
                 match vulnerability['Peso']:
                     case 3:

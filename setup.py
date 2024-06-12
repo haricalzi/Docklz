@@ -8,7 +8,7 @@ setup(
     install_requires=[
         'argparse', 
         'datetime',
-        'rpaframework[selenium]',
+        'requests',
         'matplotlib',
         'ssvc',
         'setuptools',
