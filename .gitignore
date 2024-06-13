@@ -1,7 +1,0 @@
-results/*
-docklz/__pycache__/*
-__pycache__/*
-test.py
-docker-bench-security/*
-docklz.egg-info/
-build/
