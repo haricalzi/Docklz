@@ -4,7 +4,7 @@ Strumento che effettua analisi di sicurezza relative a immagini e container Dock
 Docklz si basa su alcuni tool già esistenti, come [Docker Bench of Security](https://github.com/docker/docker-bench-security), [Trivy](https://github.com/aquasecurity/trivy), [Semgrep](https://github.com/semgrep/semgrep).
 
 ### Note importanti
-- si presuppone che sul sistema siano già stati installati e configurati correttamente **Docker** e **Python (>=3.11)**
+- prerequisito: sul sistema devono essere installati e configurati correttamente **Docker** e **Python (>=3.11)**
 - potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di **sudo** per essere eseguiti
 - a seconda della tipologia di analisi scelta possono essere necessari alcuni comandi (*wget*, *curl*, *pip*, *trivy*, *semgrep*), i quali possono essere installati automaticamente tramite un'opzione, vedi sezione *Opzioni di Docklz*:
 
