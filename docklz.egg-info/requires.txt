@@ -1,6 +1,0 @@
-argparse
-datetime
-requests
-matplotlib
-ssvc
-setuptools
