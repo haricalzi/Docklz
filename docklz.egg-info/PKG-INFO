@@ -4,7 +4,8 @@ Version: 1.0.0
 Requires-Python: >=3.11
 Requires-Dist: argparse
 Requires-Dist: datetime
-Requires-Dist: requests
+Requires-Dist: aiohttp
+Requires-Dist: asyncio
 Requires-Dist: matplotlib
 Requires-Dist: ssvc
 Requires-Dist: setuptools

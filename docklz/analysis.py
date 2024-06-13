@@ -1,5 +1,4 @@
-import ssvc, json, io, os, sys, requests, aiohttp, asyncio
-from contextlib import redirect_stdout, redirect_stderr
+import ssvc, json, os, sys, aiohttp, asyncio
 from .report import *
 
 
@@ -217,7 +216,7 @@ def ordina_prepara_trivy_image(json_file):
             #ordinamento decrescente per peso
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
             #testo per report
-            testo = f"\nL'immagine analizzata è risultata potenzialmente vulnerabile a {len(vulnerabilities_list_sorted)} CVE. Vengono ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE\n\n-------------------"
+            testo = f"\nL'immagine analizzata è risultata potenzialmente vulnerabile a {len(vulnerabilities_list_sorted)} CVE. Vengono ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE ed indica quanto è urgente effettuare delle azioni di mitigazione\n\n-------------------"
             for vulnerability in vulnerabilities_list_sorted:
                 match vulnerability['Peso']:
                     case 3:

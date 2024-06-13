@@ -1,5 +1,4 @@
-import ssvc, json, io, os, sys, requests, aiohttp, asyncio
-from contextlib import redirect_stdout, redirect_stderr
+import ssvc, json, os, sys, aiohttp, asyncio
 from .report import *
 
 
@@ -195,7 +194,7 @@ async def analisi_CVE(vulnerabilities_list):
             for vulnerability, peso in zip(vulnerabilities_list, pesi):
                 vulnerability['Peso'] = peso
                 new_vulnerabilities_list.append(vulnerability)
-            print("Analisi CVE completata") 
+            print("\nAnalisi CVE completata\n") 
 
         return new_vulnerabilities_list
     except Exception as e:

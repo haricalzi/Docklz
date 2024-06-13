@@ -8,7 +8,6 @@ setup(
     install_requires=[
         'argparse', 
         'datetime',
-        'requests',
         'aiohttp',
         'asyncio',
         'matplotlib',
