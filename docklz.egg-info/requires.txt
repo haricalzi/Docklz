@@ -1,7 +1,0 @@
-argparse
-datetime
-aiohttp
-asyncio
-matplotlib
-ssvc
-setuptools
