@@ -1,0 +1,354 @@
+
+lightstreamer:latest (ubuntu 22.04)
+===================================
+Total: 88 (UNKNOWN: 0, LOW: 79, MEDIUM: 9, HIGH: 0, CRITICAL: 0)
+
+┌───────────────────────────┬──────────────────┬──────────┬──────────┬──────────────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│          Library          │  Vulnerability   │ Severity │  Status  │    Installed Version     │ Fixed Version │                            Title                             │
+├───────────────────────────┼──────────────────┼──────────┼──────────┼──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ binutils                  │ CVE-2017-13716   │ LOW      │ affected │ 2.38-4ubuntu2.6          │               │ binutils: Memory leak with the C++ symbol demangler routine  │
+│                           │                  │          │          │                          │               │ in libiberty                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-13716                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2018-20657   │          │          │                          │               │ libiberty: Memory leak in demangle_template function         │
+│                           │                  │          │          │                          │               │ resulting in a denial of service...                          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2018-20657                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2019-1010204 │          │          │                          │               │ binutils: Improper Input Validation, Signed/Unsigned         │
+│                           │                  │          │          │                          │               │ Comparison, Out-of-bounds Read in gold/fileread.cc and       │
+│                           │                  │          │          │                          │               │ elfcpp/elfcpp_file.h...                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2019-1010204                 │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-27943   │          │          │                          │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-48064   │          │          │                          │               │ binutils: excessive memory consumption in                    │
+│                           │                  │          │          │                          │               │ _bfd_dwarf2_find_nearest_line_with_alt() in dwarf2.c         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-48064                   │
+├───────────────────────────┼──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ binutils-common           │ CVE-2017-13716   │          │          │                          │               │ binutils: Memory leak with the C++ symbol demangler routine  │
+│                           │                  │          │          │                          │               │ in libiberty                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-13716                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2018-20657   │          │          │                          │               │ libiberty: Memory leak in demangle_template function         │
+│                           │                  │          │          │                          │               │ resulting in a denial of service...                          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2018-20657                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2019-1010204 │          │          │                          │               │ binutils: Improper Input Validation, Signed/Unsigned         │
+│                           │                  │          │          │                          │               │ Comparison, Out-of-bounds Read in gold/fileread.cc and       │
+│                           │                  │          │          │                          │               │ elfcpp/elfcpp_file.h...                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2019-1010204                 │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-27943   │          │          │                          │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-48064   │          │          │                          │               │ binutils: excessive memory consumption in                    │
+│                           │                  │          │          │                          │               │ _bfd_dwarf2_find_nearest_line_with_alt() in dwarf2.c         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-48064                   │
+├───────────────────────────┼──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ binutils-x86-64-linux-gnu │ CVE-2017-13716   │          │          │                          │               │ binutils: Memory leak with the C++ symbol demangler routine  │
+│                           │                  │          │          │                          │               │ in libiberty                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-13716                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2018-20657   │          │          │                          │               │ libiberty: Memory leak in demangle_template function         │
+│                           │                  │          │          │                          │               │ resulting in a denial of service...                          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2018-20657                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2019-1010204 │          │          │                          │               │ binutils: Improper Input Validation, Signed/Unsigned         │
+│                           │                  │          │          │                          │               │ Comparison, Out-of-bounds Read in gold/fileread.cc and       │
+│                           │                  │          │          │                          │               │ elfcpp/elfcpp_file.h...                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2019-1010204                 │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-27943   │          │          │                          │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-48064   │          │          │                          │               │ binutils: excessive memory consumption in                    │
+│                           │                  │          │          │                          │               │ _bfd_dwarf2_find_nearest_line_with_alt() in dwarf2.c         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-48064                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ coreutils                 │ CVE-2016-2781    │          │          │ 8.32-4.1ubuntu1.2        │               │ coreutils: Non-privileged session can escape to the parent   │
+│                           │                  │          │          │                          │               │ session in chroot                                            │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2016-2781                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ dirmngr                   │ CVE-2022-3219    │          │          │ 2.2.27-3ubuntu2.1        │               │ gnupg: denial of service issue (resource consumption) using  │
+│                           │                  │          │          │                          │               │ compressed packets                                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-3219                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ gcc-12-base               │ CVE-2022-27943   │          │          │ 12.3.0-1ubuntu1~22.04    │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ gnupg                     │ CVE-2022-3219    │          │          │ 2.2.27-3ubuntu2.1        │               │ gnupg: denial of service issue (resource consumption) using  │
+│                           │                  │          │          │                          │               │ compressed packets                                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-3219                    │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gnupg-l10n                │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gnupg-utils               │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpg                       │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpg-agent                 │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpg-wks-client            │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpg-wks-server            │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpgconf                   │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpgsm                     │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ gpgv                      │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libbinutils               │ CVE-2017-13716   │          │          │ 2.38-4ubuntu2.6          │               │ binutils: Memory leak with the C++ symbol demangler routine  │
+│                           │                  │          │          │                          │               │ in libiberty                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-13716                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2018-20657   │          │          │                          │               │ libiberty: Memory leak in demangle_template function         │
+│                           │                  │          │          │                          │               │ resulting in a denial of service...                          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2018-20657                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2019-1010204 │          │          │                          │               │ binutils: Improper Input Validation, Signed/Unsigned         │
+│                           │                  │          │          │                          │               │ Comparison, Out-of-bounds Read in gold/fileread.cc and       │
+│                           │                  │          │          │                          │               │ elfcpp/elfcpp_file.h...                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2019-1010204                 │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-27943   │          │          │                          │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-48064   │          │          │                          │               │ binutils: excessive memory consumption in                    │
+│                           │                  │          │          │                          │               │ _bfd_dwarf2_find_nearest_line_with_alt() in dwarf2.c         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-48064                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libc-bin                  │ CVE-2016-20013   │          │          │ 2.35-0ubuntu3.8          │               │ sha256crypt and sha512crypt through 0.6 allow attackers to   │
+│                           │                  │          │          │                          │               │ cause a denial of...                                         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2016-20013                   │
+├───────────────────────────┤                  │          │          │                          ├───────────────┤                                                              │
+│ libc6                     │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+│                           │                  │          │          │                          │               │                                                              │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libctf-nobfd0             │ CVE-2017-13716   │          │          │ 2.38-4ubuntu2.6          │               │ binutils: Memory leak with the C++ symbol demangler routine  │
+│                           │                  │          │          │                          │               │ in libiberty                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-13716                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2018-20657   │          │          │                          │               │ libiberty: Memory leak in demangle_template function         │
+│                           │                  │          │          │                          │               │ resulting in a denial of service...                          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2018-20657                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2019-1010204 │          │          │                          │               │ binutils: Improper Input Validation, Signed/Unsigned         │
+│                           │                  │          │          │                          │               │ Comparison, Out-of-bounds Read in gold/fileread.cc and       │
+│                           │                  │          │          │                          │               │ elfcpp/elfcpp_file.h...                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2019-1010204                 │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-27943   │          │          │                          │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-48064   │          │          │                          │               │ binutils: excessive memory consumption in                    │
+│                           │                  │          │          │                          │               │ _bfd_dwarf2_find_nearest_line_with_alt() in dwarf2.c         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-48064                   │
+├───────────────────────────┼──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ libctf0                   │ CVE-2017-13716   │          │          │                          │               │ binutils: Memory leak with the C++ symbol demangler routine  │
+│                           │                  │          │          │                          │               │ in libiberty                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-13716                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2018-20657   │          │          │                          │               │ libiberty: Memory leak in demangle_template function         │
+│                           │                  │          │          │                          │               │ resulting in a denial of service...                          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2018-20657                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2019-1010204 │          │          │                          │               │ binutils: Improper Input Validation, Signed/Unsigned         │
+│                           │                  │          │          │                          │               │ Comparison, Out-of-bounds Read in gold/fileread.cc and       │
+│                           │                  │          │          │                          │               │ elfcpp/elfcpp_file.h...                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2019-1010204                 │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-27943   │          │          │                          │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2022-48064   │          │          │                          │               │ binutils: excessive memory consumption in                    │
+│                           │                  │          │          │                          │               │ _bfd_dwarf2_find_nearest_line_with_alt() in dwarf2.c         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-48064                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libgcc-s1                 │ CVE-2022-27943   │          │          │ 12.3.0-1ubuntu1~22.04    │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+├───────────────────────────┼──────────────────┼──────────┤          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libgcrypt20               │ CVE-2024-2236    │ MEDIUM   │          │ 1.9.4-3ubuntu3           │               │ libgcrypt: vulnerable to Marvin Attack                       │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-2236                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libgssapi-krb5-2          │ CVE-2024-26462   │          │          │ 1.19.2-2ubuntu0.3        │               │ krb5: Memory leak at /krb5/src/kdc/ndr.c                     │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26462                   │
+│                           ├──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26458   │ LOW      │          │                          │               │ krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c            │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26458                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26461   │          │          │                          │               │ krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c    │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26461                   │
+├───────────────────────────┼──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ libk5crypto3              │ CVE-2024-26462   │ MEDIUM   │          │                          │               │ krb5: Memory leak at /krb5/src/kdc/ndr.c                     │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26462                   │
+│                           ├──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26458   │ LOW      │          │                          │               │ krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c            │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26458                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26461   │          │          │                          │               │ krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c    │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26461                   │
+├───────────────────────────┼──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ libkrb5-3                 │ CVE-2024-26462   │ MEDIUM   │          │                          │               │ krb5: Memory leak at /krb5/src/kdc/ndr.c                     │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26462                   │
+│                           ├──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26458   │ LOW      │          │                          │               │ krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c            │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26458                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26461   │          │          │                          │               │ krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c    │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26461                   │
+├───────────────────────────┼──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ libkrb5support0           │ CVE-2024-26462   │ MEDIUM   │          │                          │               │ krb5: Memory leak at /krb5/src/kdc/ndr.c                     │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26462                   │
+│                           ├──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26458   │ LOW      │          │                          │               │ krb5: Memory leak at /krb5/src/lib/rpc/pmap_rmt.c            │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26458                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-26461   │          │          │                          │               │ krb5: Memory leak at /krb5/src/lib/gssapi/krb5/k5sealv3.c    │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-26461                   │
+├───────────────────────────┼──────────────────┼──────────┤          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ liblzma5                  │ CVE-2020-22916   │ MEDIUM   │          │ 5.2.5-2ubuntu1           │               │ Denial of service via decompression of crafted file          │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2020-22916                   │
+├───────────────────────────┼──────────────────┼──────────┤          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libncurses6               │ CVE-2023-45918   │ LOW      │          │ 6.3-2ubuntu0.1           │               │ ncurses 6.4-20230610 has a NULL pointer dereference in       │
+│                           │                  │          │          │                          │               │ tgetstr in tinf ......                                       │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-45918                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2023-50495   │          │          │                          │               │ ncurses: segmentation fault via _nc_wrap_entry()             │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-50495                   │
+├───────────────────────────┼──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ libncursesw6              │ CVE-2023-45918   │          │          │                          │               │ ncurses 6.4-20230610 has a NULL pointer dereference in       │
+│                           │                  │          │          │                          │               │ tgetstr in tinf ......                                       │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-45918                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2023-50495   │          │          │                          │               │ ncurses: segmentation fault via _nc_wrap_entry()             │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-50495                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libpcre3                  │ CVE-2017-11164   │          │          │ 2:8.39-13ubuntu0.22.04.1 │               │ pcre: OP_KETRMAX feature in the match function in            │
+│                           │                  │          │          │                          │               │ pcre_exec.c                                                  │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2017-11164                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libpng16-16               │ CVE-2022-3857    │          │          │ 1.6.37-3build5           │               │ libpng: Null pointer dereference leads to segmentation fault │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-3857                    │
+├───────────────────────────┼──────────────────┼──────────┤          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libssl3                   │ CVE-2022-40735   │ MEDIUM   │          │ 3.0.2-0ubuntu1.15        │               │ The Diffie-Hellman Key Agreement Protocol allows use of long │
+│                           │                  │          │          │                          │               │ exponents that arguably...                                   │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-40735                   │
+│                           ├──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-2511    │ LOW      │          │                          │               │ openssl: Unbounded memory growth with session handling in    │
+│                           │                  │          │          │                          │               │ TLSv1.3                                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-2511                    │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-4603    │          │          │                          │               │ openssl: Excessive time spent checking DSA keys and          │
+│                           │                  │          │          │                          │               │ parameters                                                   │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-4603                    │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-4741    │          │          │                          │               │ openssl: Use After Free with SSL_free_buffers                │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-4741                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libstdc++6                │ CVE-2022-27943   │          │          │ 12.3.0-1ubuntu1~22.04    │               │ binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows   │
+│                           │                  │          │          │                          │               │ stack exhaustion in demangle_const                           │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-27943                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libsystemd0               │ CVE-2023-7008    │          │          │ 249.11-0ubuntu3.12       │               │ systemd-resolved: Unsigned name response in signed zone is   │
+│                           │                  │          │          │                          │               │ not refused when DNSSEC=yes...                               │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-7008                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libtinfo6                 │ CVE-2023-45918   │          │          │ 6.3-2ubuntu0.1           │               │ ncurses 6.4-20230610 has a NULL pointer dereference in       │
+│                           │                  │          │          │                          │               │ tgetstr in tinf ......                                       │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-45918                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2023-50495   │          │          │                          │               │ ncurses: segmentation fault via _nc_wrap_entry()             │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-50495                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libudev1                  │ CVE-2023-7008    │          │          │ 249.11-0ubuntu3.12       │               │ systemd-resolved: Unsigned name response in signed zone is   │
+│                           │                  │          │          │                          │               │ not refused when DNSSEC=yes...                               │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-7008                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libzstd1                  │ CVE-2022-4899    │          │          │ 1.4.8+dfsg-3build1       │               │ zstd: mysql: buffer overrun in util.c                        │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-4899                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ locales                   │ CVE-2016-20013   │          │          │ 2.35-0ubuntu3.8          │               │ sha256crypt and sha512crypt through 0.6 allow attackers to   │
+│                           │                  │          │          │                          │               │ cause a denial of...                                         │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2016-20013                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ login                     │ CVE-2023-29383   │          │          │ 1:4.8.1-2ubuntu2.2       │               │ shadow: Improper input validation in shadow-utils package    │
+│                           │                  │          │          │                          │               │ utility chfn                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-29383                   │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ ncurses-base              │ CVE-2023-45918   │          │          │ 6.3-2ubuntu0.1           │               │ ncurses 6.4-20230610 has a NULL pointer dereference in       │
+│                           │                  │          │          │                          │               │ tgetstr in tinf ......                                       │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-45918                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2023-50495   │          │          │                          │               │ ncurses: segmentation fault via _nc_wrap_entry()             │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-50495                   │
+├───────────────────────────┼──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│ ncurses-bin               │ CVE-2023-45918   │          │          │                          │               │ ncurses 6.4-20230610 has a NULL pointer dereference in       │
+│                           │                  │          │          │                          │               │ tgetstr in tinf ......                                       │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-45918                   │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2023-50495   │          │          │                          │               │ ncurses: segmentation fault via _nc_wrap_entry()             │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-50495                   │
+├───────────────────────────┼──────────────────┼──────────┤          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ openssl                   │ CVE-2022-40735   │ MEDIUM   │          │ 3.0.2-0ubuntu1.15        │               │ The Diffie-Hellman Key Agreement Protocol allows use of long │
+│                           │                  │          │          │                          │               │ exponents that arguably...                                   │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2022-40735                   │
+│                           ├──────────────────┼──────────┤          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-2511    │ LOW      │          │                          │               │ openssl: Unbounded memory growth with session handling in    │
+│                           │                  │          │          │                          │               │ TLSv1.3                                                      │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-2511                    │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-4603    │          │          │                          │               │ openssl: Excessive time spent checking DSA keys and          │
+│                           │                  │          │          │                          │               │ parameters                                                   │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-4603                    │
+│                           ├──────────────────┤          │          │                          ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                           │ CVE-2024-4741    │          │          │                          │               │ openssl: Use After Free with SSL_free_buffers                │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2024-4741                    │
+├───────────────────────────┼──────────────────┤          │          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ passwd                    │ CVE-2023-29383   │          │          │ 1:4.8.1-2ubuntu2.2       │               │ shadow: Improper input validation in shadow-utils package    │
+│                           │                  │          │          │                          │               │ utility chfn                                                 │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2023-29383                   │
+├───────────────────────────┼──────────────────┼──────────┤          ├──────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ wget                      │ CVE-2021-31879   │ MEDIUM   │          │ 1.21.2-2ubuntu1          │               │ wget: authorization header disclosure on redirect            │
+│                           │                  │          │          │                          │               │ https://avd.aquasec.com/nvd/cve-2021-31879                   │
+└───────────────────────────┴──────────────────┴──────────┴──────────┴──────────────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘
+
+Java (jar)
+==========
+Total: 1 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 0, CRITICAL: 0)
+
+┌──────────────────────────────────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────┬─────────────────────────────────────────────────────────────┐
+│               Library                │ Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version │                            Title                            │
+├──────────────────────────────────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────┼─────────────────────────────────────────────────────────────┤
+│ io.netty:netty-codec-http            │ CVE-2024-29025 │ MEDIUM   │ fixed  │ 4.1.101.Final     │ 4.1.108.Final │ netty-codec-http: Allocation of Resources Without Limits or │
+│ (netty-codec-http-4.1.101.Final.jar) │                │          │        │                   │               │ Throttling                                                  │
+│                                      │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-29025                  │
+└──────────────────────────────────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴─────────────────────────────────────────────────────────────┘

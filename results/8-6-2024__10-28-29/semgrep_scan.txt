@@ -1,0 +1,137 @@
+                    
+                    
+┌──────────────────┐
+│ 28 Code Findings │
+└──────────────────┘
+                                                                       
+  [36m[22m[24m  Docklz/results/7-6-2024__0-11-59/docker_inspect.json[0m
+   ❯❯❱ generic.secrets.security.detected-sonarqube-docs-api-key.detected-sonarqube-docs-api-key
+          SonarQube Docs API Key detected
+          Details: https://sg.run/x10P   
+                                         
+            1┆ [{"Id":"sha256:b728f044f72f497b7d674e3af8e39b8909cc710685b1304fe45fc7034e4d53b1","RepoTags"
+               :["sonarqube:latest"],"RepoDigests":["sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b79
+               6561fb40f018e9e23516640e7553"],"Parent":"","Comment":"buildkit.dockerfile.v0","Created":"20
+               24-04-                                                                                     
+               30T09:04:46Z","DockerVersion":"","Author":"","Config":{"Hostname":"","Domainname":"","User"
+               :"sonarqube","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{
+               "9000/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/opt/java/openj
+               dk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","JAVA_HOME=/opt/java/o
+               penjdk","LANG=en_US.UTF-8","LANGUAGE=en_US:en","LC_ALL=en_US.UTF-8","JAVA_VERSION=jdk-     
+               17.0.11+9","DOCKER_RUNNING=true","SONARQUBE_HOME=/opt/sonarqube","SONAR_VERSION=10.5.1.9053
+               1","SQ_DATA_DIR=/opt/sonarqube/data","SQ_EXTENSIONS_DIR=/opt/sonarqube/extensions","SQ_LOGS
+               _DIR=/opt/sonarqube/logs","SQ_TEMP_DIR=/opt/sonarqube/temp"],"Cmd":null,"Image":"","Volumes
+               ":null,"WorkingDir":"/opt/sonarqube","Entrypoint":["/opt/sonarqube/docker/entrypoint.sh"],"
+               OnBuild":null,"Labels":{"org.opencontainers.image.ref.name":"ubuntu","org.opencontainers.im
+               age.url":"https://github.com/SonarSource/docker-sonarqube","org.opencontainers.image.versio
+               n":"22.04"},"StopSignal":"SIGINT"},"Architecture":"amd64","Os":"linux","Size":787150998,"Gr
+               aphDriver":{"Data":{"LowerDir":"/var/lib/docker/overlay2/d6ee50af4a7e127d968e30ed9e9ea5384b
+               a90e5602847626528ea2b4590a3b68/diff:/var/lib/docker/overlay2/af6008e0cb27b6239d3615658dc1f3
+               afa799cb22be5323c61ef242618937d234/diff:/var/lib/docker/overlay2/d7ed8265f39eee74f2544a7821
+               c3748210d039509875a41b95f3d7edc2ca50bd/diff:/var/lib/docker/overlay2/a62af0498f53401d38ad3f
+               cc2392cb6acca980fa2486b7795e318de97e595bba/diff:/var/lib/docker/overlay2/67d0ce74304194b6fd
+               b4dac68d7bfd06720bc911a76f875a55612c744d74a674/diff:/var/lib/docker/overlay2/4d85199d633532
+               5329c46e30347422e0d0cd3c06d82fe40ee7ad427a3e6447e0/diff:/var/lib/docker/overlay2/898db11e32
+               4f5dc759cefbb27d973513741f46b297988b76272b31b65062af57/diff","MergedDir":"/var/lib/docker/o
+               verlay2/bbe4f86ce71fe0dd2a713323614ca6ddef8982b21ac9135315b08fd8c6785692/merged","UpperDir"
+               :"/var/lib/docker/overlay2/bbe4f86ce71fe0dd2a713323614ca6ddef8982b21ac9135315b08fd8c6785692
+               /diff","WorkDir":"/var/lib/docker/overlay2/bbe4f86ce71fe0dd2a713323614ca6ddef8982b21ac91353
+               15b08fd8c6785692/work"},"Name":"overlay2"},"RootFS":{"Type":"layers","Layers":["sha256:629c
+               a62fb7c791374ce57626d6b8b62c76378be091a0daf1a60d32700b49add7","sha256:e7026e1c8e7ba12493993
+               ad845d665fcd59e19398ead098987d82dae0cc4fe6c","sha256:3cc8fb6d6ad5be00e0c22ae3766869a86fa2b1
+               ecdd8523dd89ccc180c427f223","sha256:a3c986443bdf312a794d9e4f24437b1657a587fdaa9f715f3ca0296
+               5f5ad9de5","sha256:62fe6e9a0e46d7c25428bf34176452d056a386d07b27581131f11630d1140345","sha25
+               6:6b5fa1922935744db8d43c5f7c24303b21af011ce0bb16515a8156f7acafaea1","sha256:728bbc3848ebb55
+               f9c9eb03e962fd14dc1aeb1ed28325fe90aaa53c663a6d377","sha256:5f70bf18a086007016e948b04aed3b82
+               103a36bea41755b6cddfaf10ace3c6ef"]},"Metadata":{"LastTagTime":"0001-01-01T00:00:00Z"}}]    
+                                                                    
+  [36m[22m[24m  Docklz/results/7-6-2024__0-11-59/semgrep_scan.txt[0m
+   ❯❯❱ generic.secrets.security.detected-sonarqube-docs-api-key.detected-sonarqube-docs-api-key
+          SonarQube Docs API Key detected
+          Details: https://sg.run/x10P   
+                                         
+           53┆ 53┆ 53┆ 26┆                                                                        
+               "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           55┆ 63┆ 26┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           57┆ 111┆ 26┆                                                                           
+               "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           60┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           62┆ 161┆ 63┆ 26┆                                                                       
+               "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           65┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           67┆ 173┆ 26┆                                                                           
+               "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           77┆ 26┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+          125┆ 26┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+          147┆ 182┆ SONAR_TOKEN:                                                             
+               ENCRYPTED[!b6fd814826c51e64ee61b0b6f3ae621551f6413383f7170f73580e2e141ac78c4b1
+                                                                    
+  [36m[22m[24m  Docklz/results/7-6-2024__0-11-59/trivy_image.json[0m
+   ❯❯❱ generic.secrets.security.detected-sonarqube-docs-api-key.detected-sonarqube-docs-api-key
+          SonarQube Docs API Key detected
+          Details: https://sg.run/x10P   
+                                         
+           26┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+                                                                    
+  [36m[22m[24m  Docklz/results/7-6-2024__0-16-54/semgrep_scan.txt[0m
+   ❯❯❱ generic.secrets.security.detected-sonarqube-docs-api-key.detected-sonarqube-docs-api-key
+          SonarQube Docs API Key detected
+          Details: https://sg.run/x10P   
+                                         
+           54┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           56┆ 55┆ 63┆ 26┆                                                                        
+               "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           59┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           61┆ 60┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           64┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           66┆ 65┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           69┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           71┆ 77┆ 26┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           73┆ 125┆ 26┆                                                                           
+               "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+           83┆ 26┆ "sonarqube@sha256:802aa4f65983d43e40f230db9bfcc7fa2b796561fb40f018e9e23516640e7553"
+            ⋮┆----------------------------------------
+          105┆ 182┆ SONAR_TOKEN:                                                             
+               ENCRYPTED[!b6fd814826c51e64ee61b0b6f3ae621551f6413383f7170f73580e2e141ac78c4b1
+                                         
+  [36m[22m[24m  ollama-js/src/index.ts[0m
+    ❯❱ javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
+          Detected possible user input going into a `path.join` or `path.resolve` function. This could   
+          possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files
+          stored in the file system. Instead, be sure to sanitize or validate user input first.          
+          Details: https://sg.run/OPqk                                                                   
+                                                                                                         
+           19┆ const fileBuffer = await promises.readFile(resolve(image))
+            ⋮┆----------------------------------------
+           65┆ return join(homedir(), inputPath.slice(1))
+            ⋮┆----------------------------------------
+           67┆ return resolve(mfDir, inputPath)
+            ⋮┆----------------------------------------
+           67┆ return resolve(mfDir, inputPath)
+                                                
+  [36m[22m[24m  sonarqube/.cirrus/.cirrus.yml[0m
+   ❯❯❱ generic.secrets.security.detected-sonarqube-docs-api-key.detected-sonarqube-docs-api-key
+          SonarQube Docs API Key detected
+          Details: https://sg.run/x10P   
+                                         
+          182┆ SONAR_TOKEN: ENCRYPTED[!b6fd814826c51e64ee61b0b6f3ae621551f6413383f7170f73580e2e141ac78c4b1
+               34b506f6288c74faa0dd564c05a29!]                                                            
+
