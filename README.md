@@ -24,7 +24,7 @@ Docklz si basa su alcuni tool già esistenti, come [Docker Bench of Security](ht
 |`-base [nome immagine]`|BASE: analisi di un'immagine Docker, specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
 |`-full [nome immagine]`|FULL: analisi completa di un progetto Docker (configurazione + immagine + source code), specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
 |`-pathris [path risultati]`|Permette di specificare il path assoluto/relativo in cui creare la cartella dei risultati. Di default viene considerato quello attuale|
-|`-git [path HHTPS GitHub / GitLab]`|Permette di specificare il path HTTPS di GitHub / GitLab da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code|
+|`-git [path HHTPS repository]`|Permette di specificare il path HTTPS di una repository (es. GitHub, GitLab) da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code|
 |`-install`|Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati. Opzionale|
 
 ### Esempi di utilizzo
