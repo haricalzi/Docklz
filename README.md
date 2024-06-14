@@ -21,10 +21,30 @@ Docklz si basa su alcuni tool già esistenti, come [Docker Bench of Security](ht
 |:---|:---|
 |`-h, --help`|Stampa il messaggio di help|
 |`-light`|LIGHT: analisi della configurazione di Docker presente sul sistema|
-|`-base [nome immagine]`| BASE: analisi di un'immagine Docker, specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
+|`-base [nome immagine]`|BASE: analisi di un'immagine Docker, specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
 |`-full [nome immagine]`|FULL: analisi completa di un progetto Docker (immagine + container + source code), specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
 |`-path [path risultati]`|Permette di specificare il path assoluto/relativo in cui creare la cartella dei risultati. Di default viene considerato quello attuale|
 |`-git [path HHTPS github]`|Permette di specificare il path di GitHub da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code|
+|`-install`|Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati. Opzionale|
+
+### Esempi di utilizzo
+|Esempio|Descrizione|
+|:---|:---|
+|`docklz -light`|Scansione LIGHT|
+|`docklz -base nginx:latest`|Scansione BASE specificando il nome completo dell'immagine|
+|`docklz -full a06`|Scansione FULL specificando i primi caratteri dell'IMAGE ID|
+|`docklz -base f77 -path dir/var `|Scansione BASE specificando il path dove salvare i risultati|
+|`docklz -full h99 -install -git https://github.com/quay/clair.git`|Scansione FULL specificando di installare i tool necessari e di clonare il source code dalla repository indicata|
+
+### Implementazioni future in programma
+|Elenco implementazioni|
+|:---|
+|AI all'interno della fase di analisi dei risultati|
+|Miglioramento del calcolo del technical impact|
+|Calcolo della mission prevalence|
+|Calcolo del pubblic well-being impact|
+|Ulteriore metrica per valutare i CVE|
+|Ottimizzazione del tempo di esecuzione|
 
 ### Sviluppatore
 Ideato e sviluppato da *Hari Calzi*, uno studente universitario.
