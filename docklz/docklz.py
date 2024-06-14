@@ -15,7 +15,7 @@ def main():
         parser.add_argument('-base', action="store", dest="immagine_base", help='BASE: analisi di un\'immagine Docker, specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con "docker images")')
         parser.add_argument('-full', action="store", dest="immagine_full", help='FULL: analisi completa di un progetto Docker (configurazione + immagine + source code), specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con "docker images")')
         parser.add_argument('-pathris', action="store", dest="path_risultati", default=".", help='Permette di specificare il path assoluto/relativo in cui creare la cartella dei risultati. Di default viene considerato quello attuale')
-        parser.add_argument('-git', action="store", dest="path_github", help='Permette di specificare il path di GitHub da cui scaricare il source code (repository GitHub --> pulsante Code verde --> HTTPS). Opzionale, non utilizzare se è già presente il source code')
+        parser.add_argument('-git', action="store", dest="path_git", help='Permette di specificare il path HTTPS di GitHub / GitLab da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code')
         parser.add_argument('-install', action="store_true", help='Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati')
 
         #parso gli argomenti passati da linea di comando
@@ -23,12 +23,12 @@ def main():
 
         #se passo il comando senza parametri stampo anche l'help, altrimenti solo il menù iniziale
         stampa_iniziale()
-        if not (args.light or args.immagine_base or args.immagine_full or args.path_github):
+        if not (args.light or args.immagine_base or args.immagine_full or args.path_git or args.install):
                 stampa_help()
         
-        #controllo se devo clonare da GitHub
-        if(args.path_github):
-                git_clone_sourcecode(args.path_github)
+        #controllo se devo clonare da GitHub / GitLab
+        if(args.path_gith):
+                git_clone_sourcecode(args.path_git)
 
         #controllo di non aver specificato più modalità di scansione
         if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
