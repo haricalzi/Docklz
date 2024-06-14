@@ -39,7 +39,7 @@ def mkdir_results(path):
     return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"
 
 
-# Funzione che clona una repository da GitHub
+# Funzione che clona una repository (path HTTPS)
 def git_clone_sourcecode(path_git):
 
     print("----------------------------------------------------------------\n")
