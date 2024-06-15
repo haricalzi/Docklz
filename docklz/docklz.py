@@ -27,7 +27,7 @@ def main():
                 stampa_help()
         
         #controllo se devo clonare da GitHub / GitLab
-        if(args.path_gith):
+        if(args.path_git):
                 git_clone_sourcecode(args.path_git)
 
         #controllo di non aver specificato più modalità di scansione
