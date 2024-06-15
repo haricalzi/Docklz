@@ -133,9 +133,8 @@ async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
 
 # Funzione che estrae CVE e relative informazioni dal json generato da trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
-    
     try:
-        vulnerabilities_list = []
+        vulnerabilities_dict = {}
 
         with open(json_file, 'r') as file:
             data = json.load(file)
@@ -144,33 +143,35 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
             if 'Vulnerabilities' in result:
                 for vulnerability in result['Vulnerabilities']:
                     vulnerability_id = vulnerability.get('VulnerabilityID', '')
-                    title = vulnerability.get('Title', '')
-                    description = vulnerability.get('Description', '')
-                    severity = vulnerability.get('Severity', '')
-
-                    if 'redhat' in vulnerability.get('CVSS', {}):
-                        redhat_cvss = vulnerability['CVSS']['redhat']
-                        v3vector = redhat_cvss.get('V3Vector', '')
-                        v3score = redhat_cvss.get('V3Score', '')
-                    else:
-                        v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
-                        v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
                     
-                    #valori di default se non presenti i precedenti
-                    v3vector = v3vector if v3vector else '-1'
-                    v3score = v3score if v3score else '-1'
+                    if vulnerability_id not in vulnerabilities_dict:
+                        title = vulnerability.get('Title', '')
+                        description = vulnerability.get('Description', '')
+                        severity = vulnerability.get('Severity', '')
 
-                    #aggiunge il dizionario alla lista
-                    vulnerabilities_list.append({
-                        'VulnerabilityID': vulnerability_id,
-                        'Title': title,
-                        'Description': description,
-                        'Severity': severity,
-                        'V3Vector': v3vector,
-                        'V3Score': v3score
-                    })
+                        if 'redhat' in vulnerability.get('CVSS', {}):
+                            redhat_cvss = vulnerability['CVSS']['redhat']
+                            v3vector = redhat_cvss.get('V3Vector', '')
+                            v3score = redhat_cvss.get('V3Score', '')
+                        else:
+                            v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
+                            v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
+
+                        # Valori di default se non presenti i precedenti
+                        v3vector = v3vector if v3vector else '-1'
+                        v3score = v3score if v3score else '-1'
+
+                        # Aggiunge il dizionario al dizionario delle vulnerabilità
+                        vulnerabilities_dict[vulnerability_id] = {
+                            'VulnerabilityID': vulnerability_id,
+                            'Title': title,
+                            'Description': description,
+                            'Severity': severity,
+                            'V3Vector': v3vector,
+                            'V3Score': v3score
+                        }
             
-        return vulnerabilities_list
+        return list(vulnerabilities_dict.values())
     except Exception as e:
         print(f"Si è verificato un errore durante l'estrazione dei CVE dal JSON di Trivy image: {str(e)}")
         sys.exit(-1)
