@@ -17,7 +17,7 @@ def mkdir_results(path):
     if not os.path.exists(nome_dir):
         try:
             os.mkdir(nome_dir)
-            print(f"\nCreo una cartella chiamata \"{nome_dir}\" all'interno di quella attuale, contenente i risultati delle varie scansioni")
+            print(f"\nCreo una cartella chiamata \"{nome_dir}\", contenente i risultati delle varie scansioni")
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_dir}\": {e}")
             sys.exit(-1) 
@@ -28,7 +28,7 @@ def mkdir_results(path):
         try:
             os.chdir(nome_dir)
             os.mkdir(nome_sottodir)
-            print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati delle scansioni\n")
+            print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati della scansione attuale\n")
         except OSError as e:
             print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
             os.chdir(actual)
