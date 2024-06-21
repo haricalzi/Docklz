@@ -37,7 +37,7 @@ Si basa su alcuni tool già esistenti, come [Docker Bench of Security](https://g
 |`docklz -full h99 -install -git https://github.com/quay/clair.git`|Scansione FULL specificando di installare i tool necessari e di clonare il source code dalla repository indicata|
 
 ### Implementazioni future in programma
-|Elenco implementazioni|
+|Elenco|
 |:---|
 |AI all'interno della fase di analisi dei risultati|
 |Miglioramento del calcolo del technical impact|
