@@ -1,4 +1,4 @@
-# Analisi statiche di immagini e container Docker
+# Analisi statica di immagini e container Docker
 Docklz è uno strumento che effettua analisi di sicurezza relative a immagini e container Docker in modo automatizzato.
 
 Si basa su alcuni tool già esistenti, come [Docker Bench of Security](https://github.com/docker/docker-bench-security), [Trivy](https://github.com/aquasecurity/trivy), [Semgrep](https://github.com/semgrep/semgrep).
