@@ -331,7 +331,7 @@ def estrai_da_semgrep(txt_file):
         sys.exit(-1)
 
 
-# Funzione che estrae il numero di problematiche dal Docker Bench of Security
+# Funzione che estrae il numero di problematiche dal Docker Bench for Security
 def estrai_da_dockerbenchsec(txt_file):
 
     try:
@@ -345,5 +345,5 @@ def estrai_da_dockerbenchsec(txt_file):
 
         return testo
     except Exception as e:
-        print(f"Si è verificato un errore durante l'estrazione del numero di problematiche dal Docker Bench of Security: {str(e)}")
+        print(f"Si è verificato un errore durante l'estrazione del numero di problematiche dal Docker Bench for Security: {str(e)}")
         sys.exit(-1)
