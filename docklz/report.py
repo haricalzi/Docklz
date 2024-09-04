@@ -92,7 +92,7 @@ def make_graph(peso3, peso2, peso1, peso0):
 
         return nome_grafico
     except Exception as e:
-        print(f"Si è verificato un errore durante la creazione del grafo: {str(e)}")
+        print(f"Si è verificato un errore durante la creazione del grafico: {str(e)}")
         sys.exit(-1)
 
 
