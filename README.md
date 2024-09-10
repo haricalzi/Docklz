@@ -10,7 +10,7 @@ Si basa su alcuni tool già esistenti, come [Docker Bench for Security](https://
 
 ### Setup ed utilizzo
 1. clonare la repository `git clone https://github.com/haricalzi/Docklz.git`
-2. utilizzare il comando `pip install docklz` per installare `docklz` all'interno del sistema
+2. utilizzare il comando `pip install Docklz` per installare `docklz` all'interno del sistema
 3. spostarsi nella directory da analizzare (in cui è presente il source code)
 4. utilizzare il comando `docklz` per eseguire la scansione
 5. nella cartella *results* è presente il **report** della scansione, oltre ai risultati grezzi di ogni tool
