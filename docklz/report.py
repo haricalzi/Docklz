@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 
 # Function to create the PDF report
-def create_pdf(title, path_ris):
+def create_pdf(title, path_res):
 
     try:
         pdf = FPDF()
@@ -14,8 +14,8 @@ def create_pdf(title, path_ris):
         pdf.multi_cell(0, 10, title, align='C')
         #pdf.cell(0, 10, title, 0, 1, 'C')
         pdf.ln(10)
-        testo = f"The raw results of each scan are saved in the directory {path_ris}"
-        add_data_report(pdf, testo)
+        text = f"The raw results of each scan are saved in the directory {path_res}"
+        add_data_report(pdf, text)
         return pdf
     except Exception as e:
         print(f"An error occurred during PDF creation: {str(e)}")
@@ -31,16 +31,16 @@ def add_data_report(pdf, data):
         pdf.ln(1)
     except Exception as e:
         print(f"An error occurred while adding data to the report: {str(e)}")
-        print(f"Problematic text: {data}")
+        #print(f"Problematic text: {data}")
         sys.exit(-1)
 
 
 # Function to add a heading to a paragraph in the report
-def add_titoletto_report(pdf, titoletto):
+def add_little_title_report(pdf, title):
     
     try:
         pdf.set_font("helvetica", 'B', 14)
-        pdf.cell(0, 10, titoletto, 0, 1, 'L')
+        pdf.cell(0, 10, title, 0, 1, 'L')
     except Exception as e:
         print(f"An error occurred while adding the heading to the report: {str(e)}")
         sys.exit(-1)
@@ -66,7 +66,7 @@ def save_pdf(pdf, path_to_save, type):
         match type:
             case "report":
                 print(f"\nScan report generated successfully: {path_to_save}\n")
-            case "allegato":
+            case "attachment":
                 print(f"\nCVE attachment generated successfully: {path_to_save}\n")
     except Exception as e:
         print(f"An error occurred while saving the file: {str(e)}")

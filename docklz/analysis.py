@@ -98,7 +98,7 @@ def mission_wellbeing(V3Vector):
 
 
 # Function that calculates the weight to be assigned to each CVE
-async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
+async def weight_calculation(session, semaphore, V3Vector, VulnerabilityID):
     try:
         exploit = await exploitability(session, semaphore, VulnerabilityID)
 
@@ -114,18 +114,18 @@ async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
         
         match outcome_cutted:
             case "TRACK":
-                peso = 0
+                weight = 0
             case "TRACK_STAR":
-                peso = 1
+                weight = 1
             case "ATTEND":
-                peso = 2
+                weight = 2
             case "ACT":
-                peso = 3
+                weight = 3
             case _:
                 print("Error, weight set to maximum for precaution")
-                peso = 3
+                weight = 3
         
-        return peso
+        return weight
     except Exception as e:
         print(f"An error occurred while calculating the weight of a CVE: {str(e)}")
         sys.exit(-1)
@@ -178,7 +178,7 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
 
 
 # Function that analyzes CVE information and calculates the weight
-async def analisi_CVE(vulnerabilities_list):
+async def cve_analysis(vulnerabilities_list):
     try:
         new_vulnerabilities_list = []
         semaphore = asyncio.Semaphore(4) #limit simultaneous connections
@@ -186,14 +186,14 @@ async def analisi_CVE(vulnerabilities_list):
             tasks = []
             for vulnerability in vulnerabilities_list:
                 if vulnerability['V3Vector'] != "-1" and vulnerability['V3Score'] != "-1":
-                    tasks.append(calcolo_peso(session, semaphore, vulnerability['V3Vector'], vulnerability['VulnerabilityID']))
+                    tasks.append(weight_calculation(session, semaphore, vulnerability['V3Vector'], vulnerability['VulnerabilityID']))
                 else:
                     tasks.append(asyncio.sleep(0, result=0))
 
             pesi = await asyncio.gather(*tasks)
 
-            for vulnerability, peso in zip(vulnerabilities_list, pesi):
-                vulnerability['Peso'] = peso
+            for vulnerability, weight in zip(vulnerabilities_list, pesi):
+                vulnerability['Weight'] = weight
                 new_vulnerabilities_list.append(vulnerability)
             print("\nCVE analysis completed\n")  
 
@@ -204,50 +204,50 @@ async def analisi_CVE(vulnerabilities_list):
 
 
 # Function that combines the previous functions, sorts by descending weight and prepares the text to print
-def ordina_prepara_trivy_image(json_file):
+def order_prepare_trivy_image(json_file):
 
     try: 
-        peso3 = 0
-        peso2 = 0
-        peso1 = 0
-        peso0 = 0
+        weight3 = 0
+        weight2 = 0
+        weight1 = 0
+        weight0 = 0
         vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
         if vulnerabilities_list:
-            vulnerabilities_list_peso = asyncio.run(analisi_CVE(vulnerabilities_list))
+            vulnerabilities_list_weight = asyncio.run(cve_analysis(vulnerabilities_list))
             #Descending sorting by weight
-            vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
+            vulnerabilities_list_sorted = sorted(vulnerabilities_list_weight, key=lambda x: x['Weight'], reverse=True)
             #text for the report
-            testo = f"\nThe analyzed image was found to be potentially vulnerable to {len(vulnerabilities_list_sorted)} CVEs. They are sorted in descending order of weight [max=3, min=0], a calculated parameter that estimates the relevance of the CVE and indicates how urgent it is to take mitigation actions.\n\n-------------------"
+            text = f"\nThe analyzed image was found to be potentially vulnerable to {len(vulnerabilities_list_sorted)} CVEs. They are sorted in descending order of weight [max=3, min=0], a calculated parameter that estimates the relevance of the CVE and indicates how urgent it is to take mitigation actions.\n\n-------------------"
             for vulnerability in vulnerabilities_list_sorted:
-                match vulnerability['Peso']:
+                match vulnerability['Weight']:
                     case 3:
-                        peso = "3 - Act immediately"
-                        peso3 += 1
+                        weight = "3 - Act immediately"
+                        weight3 += 1
                     case 2:
-                        peso = "2 - Monitor and plan the intervention"
-                        peso2 += 1
+                        weight = "2 - Monitor and plan the intervention"
+                        weight2 += 1
                     case 1:
-                        peso = "1 - Monitor the vulnerability"
-                        peso1 += 1
+                        weight = "1 - Monitor the vulnerability"
+                        weight1 += 1
                     case 0:
-                        peso = "0 - Situation under control"
-                        peso0 += 1
-                image_file = make_graph(peso3, peso2, peso1, peso0)
-                testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
-                testo += f"Title: {vulnerability['Title']}\n"
-                testo += f"Peso: {peso}\n"
-                testo += "-------------------"       
+                        weight = "0 - Situation under control"
+                        weight0 += 1
+                image_file = make_graph(weight3, weight2, weight1, weight0)
+                text += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
+                text += f"Title: {vulnerability['Title']}\n"
+                text += f"Weight: {weight}\n"
+                text += "-------------------"       
         else:
-            testo = "\nThe image was not found to be vulnerable to any CVEs."
+            text = "\nThe image was not found to be vulnerable to any CVEs."
 
-        return testo, image_file
+        return text, image_file
     except Exception as e:
         print(f"An error occurred while assigning the weight to the CVEs: {str(e)}")
         sys.exit(-1)
 
 
 # Function that extracts the image name from the JSON generated by docker inspect
-def estrai_da_JSON_Docker_inspect(json_file):
+def extract_from_JSON_Docker_inspect(json_file):
     
     try:
         with open(json_file, 'r') as file:
@@ -264,86 +264,86 @@ def estrai_da_JSON_Docker_inspect(json_file):
         sys.exit(-1)
 
 # Function that extracts any issues detected in the JSON produced by Trivy fs
-def estrai_da_JSON_trivy_fs(json_file):
+def extract_from_JSON_trivy_fs(json_file):
 
     with open(json_file, 'r') as file:
         data = json.load(file)
 
     if 'Title' in data:
-        testo = f"Here are the main issues detected by Trivy:\n{estrai_titoli(data, testo)}"
+        text = f"Here are the main issues detected by Trivy:\n{extract_titles(data, text)}"
     else:
-        testo = "No issues were detected in this analysis"
-    return testo
+        text = "No issues were detected in this analysis"
+    return text
 
 
 # Function that extracts titles from a JSON content recursively
-def estrai_titoli(data, testo):
+def extract_titles(data, text):
     
     try:
         if isinstance(data, dict):
             for key, value in data.items():
                 if key == 'Title':
-                    testo += f"- {value}\n"
+                    text += f"- {value}\n"
                 else:
-                    testo = estrai_titoli(value, testo)
+                    text = extract_titles(value, text)
         elif isinstance(data, list):
             for element in data:
-                testo = estrai_titoli(element, testo)
+                text = extract_titles(element, text)
             
-        return testo
+        return text
     except Exception as e:
         print(f"An error occurred while extracting titles from the JSON: {str(e)}")
         sys.exit(-1)
         
 
 # Function that extracts any issues detected from the txt produced by Semgrep
-def estrai_da_semgrep(txt_file):
+def extract_from_semgrep(txt_file):
 
     try:
-        titoli = []
+        titles = []
 
         with open(txt_file, 'r') as file:
             if (os.path.getsize(txt_file) == 0):
-                testo = "No issues were detected in this analysis"
+                text = "No issues were detected in this analysis"
             else:
-                testo = "Here are the main issues detected:\n"
+                text = "Here are the main issues detected:\n"
                 for line in file:
                     line = line.strip()
                     if line.startswith('❯❯❱'):
-                        titolo = line[4:]
+                        title = line[4:]
                     elif line.startswith('❯❱'):
-                        titolo = line[3:]
+                        title = line[3:]
                     elif line.startswith('❯'):
-                        titolo = line[1:]
+                        title = line[1:]
                     elif line.startswith('❱'):
-                        titolo = line[1:]
+                        title = line[1:]
                     else:
                         continue
 
-                    titolo = titolo.replace('.', ' ').replace('-', ' ')
-                    if titolo not in titoli:
-                        titoli.append(titolo)
-                        testo += f"- {titolo}\n"
+                    title = title.replace('.', ' ').replace('-', ' ')
+                    if title not in titles:
+                        titles.append(title)
+                        text += f"- {title}\n"
                     
-        return testo
+        return text
     except Exception as e:
         print(f"An error occurred while extracting from Semgrep: {str(e)}")
         sys.exit(-1)
 
 
 # Function that extracts the number of issues from Docker Bench for Security
-def estrai_da_dockerbenchsec(txt_file):
+def extract_from_dockerbenchsec(txt_file):
 
     try:
         with open(txt_file, 'r') as file:
             content = file.read()
         warn_count = content.count("[WARN]")
         if (warn_count == 0):
-            testo = "No issues were detected in the Docker configuration"
+            text = "No issues were detected in the Docker configuration"
         else:
-            testo = f"{warn_count} issues were detected in the Docker configuration.\nCheck the file for entries with WARN and compare with the CIS Docker Benchmark v1.6.0"
+            text = f"{warn_count} issues were detected in the Docker configuration.\nCheck the file for entries with WARN and compare with the CIS Docker Benchmark v1.6.0"
 
-        return testo
+        return text
     except Exception as e:
         print(f"An error occurred while extracting the number of issues from Docker Bench for Security: {str(e)}")
         sys.exit(-1)
