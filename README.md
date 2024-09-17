@@ -15,17 +15,6 @@ It's based on some existing tools, such as [Docker Bench for Security](https://g
 4. Run the command `docklz` to execute the scan
 5. The **report** of the scan, along with raw results from each tool, can be found in the *results* folder
 
-### Opzioni di `Docklz`:
-|Opzione|Descrizione|
-|:---|:---|
-|`-h, --help`|Stampa il messaggio di help|
-|`-light`|LIGHT: analisi della configurazione di Docker presente nel sistema|
-|`-base [nome immagine]`|BASE: analisi di un'immagine Docker, specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
-|`-full [nome immagine]`|FULL: analisi completa di un progetto Docker (configurazione + immagine + source code), specificare l'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell'IMAGE ID, visualizzabili con `docker images`)|
-|`-pathris [path risultati]`|Permette di specificare il path assoluto/relativo in cui creare la cartella dei risultati. Di default viene considerato quello attuale|
-|`-git [path HHTPS repository]`|Permette di specificare il path HTTPS di una repository (es. GitHub, GitLab) da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code|
-|`-install`|Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati. Opzionale|
-
 **Docklz Options:**
 
 | Option | Description |
