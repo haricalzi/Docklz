@@ -48,6 +48,6 @@ It's based on some existing tools, such as [Docker Bench for Security](https://g
 
 ### Credits
 Created and developed by *Hari Calzi*, a university student. For any information, feedback, or potential improvements:
-- [Email] (calzihari@gmail.com)
+- calzihari@gmail.com
 - [GitHub](https://github.com/haricalzi)
 - [LinkedIn](https://www.linkedin.com/in/haricalzi/)
