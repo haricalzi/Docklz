@@ -15,7 +15,7 @@ def main():
     parser.add_argument('-light', action="store_true", help='LIGHT: analysis of the Docker configuration present in the system')
     parser.add_argument('-base', action="store", dest="image_base", help='BASE: analysis of a Docker image, specify the image to analyze (the full name of the REPOSITORY or the first characters of the IMAGE ID, viewable with "docker images")')
     parser.add_argument('-full', action="store", dest="image_full", help='FULL: complete analysis of a Docker project (configuration + image + source code), specify the image to analyze (the full name of the REPOSITORY or the first characters of the IMAGE ID, viewable with "docker images")')
-    parser.add_argument('-path_res', action="store", dest="path_results", default=".", help='Allows you to specify the absolute/relative path where to create the results folder. By default, the current path is used')
+    parser.add_argument('-pathres', action="store", dest="path_results", default=".", help='Allows you to specify the absolute/relative path where to create the results folder. By default, the current path is used')
     parser.add_argument('-git', action="store", dest="path_git", help='Allows you to specify the HTTPS path of a repository (e.g., GitHub, GitLab) from which to download the source code. Optional, do not use if the source code is already present')
     parser.add_argument('-install', action="store_true", help='Allows automatic installation of commands used during the script, or check if they are already installed')
 
