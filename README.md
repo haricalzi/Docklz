@@ -15,7 +15,7 @@ It's based on some existing tools, such as [Docker Bench for Security](https://g
 4. Run the command `docklz` to execute the scan
 5. The **report** of the scan, along with raw results from each tool, can be found in the *results* folder
 
-**Docklz Options:**
+### Docklz Options
 
 | Option | Description |
 |:---|:---|
