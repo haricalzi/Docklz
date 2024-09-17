@@ -57,7 +57,7 @@ It's based on some existing tools, such as [Docker Bench for Security](https://g
 | Additional metrics for evaluating CVEs |
 | Optimization of execution time |
 
-### Developer
+### Credits
 Created and developed by *Hari Calzi*, a university student. For any information, feedback, or potential improvements:
 - [GitHub](https://github.com/haricalzi)
 - [LinkedIn](https://www.linkedin.com/in/haricalzi/)
