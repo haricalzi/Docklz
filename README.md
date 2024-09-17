@@ -1,19 +1,19 @@
-# Analisi statica di immagini e container Docker
-Docklz è uno strumento che effettua analisi di sicurezza relative a immagini e container Docker in modo automatizzato.
+# Static analysis of Docker images and containers
+Docklz is a tool that performs automated security analysis of Docker images and containers.
 
-Si basa su alcuni tool già esistenti, come [Docker Bench for Security](https://github.com/docker/docker-bench-security), [Trivy](https://github.com/aquasecurity/trivy), [Semgrep](https://github.com/semgrep/semgrep).
+It's based on some existing tools, such as [Docker Bench for Security](https://github.com/docker/docker-bench-security), [Trivy](https://github.com/aquasecurity/trivy), [Semgrep](https://github.com/semgrep/semgrep).
 
-### Note importanti
-- prerequisito: sul sistema devono essere installati e configurati correttamente **Docker** e **Python (>=3.11)**
-- potrebbe essere richiesta la password di root in alcuni passaggi, in quanto alcuni comandi necessitano di **sudo** per essere eseguiti
-- a seconda della tipologia di analisi scelta possono essere necessari alcuni comandi (*wget*, *curl*, *pip*, *trivy*, *semgrep*), i quali possono essere installati automaticamente tramite un'opzione, vedi sezione *Opzioni di Docklz*:
+### Relevant notes
+- Prerequisite: the system must have the following tools installed and properly configured: **Docker** and **Python (>=3.11)**
+- The root password may be required at certain steps, as some commands need **sudo** privileges to be executed.
+- Depending on the type of analysis selected, some commands (*wget*, *curl*, *pip*, *trivy*, *semgrep*) may be required. These can be automatically installed through an option, refer to the *Docklz Options* section for more details.
 
-### Setup ed utilizzo
-1. clonare la repository `git clone https://github.com/haricalzi/Docklz.git`
-2. utilizzare il comando `pip install Docklz` per installare `docklz` all'interno del sistema
-3. spostarsi nella directory da analizzare (in cui è presente il source code)
-4. utilizzare il comando `docklz` per eseguire la scansione
-5. nella cartella *results* è presente il **report** della scansione, oltre ai risultati grezzi di ogni tool
+### Setup and Usage
+1. Clone the repository: `git clone https://github.com/haricalzi/Docklz.git`
+2. Use the command `pip install Docklz` to install `docklz` on your system
+3. Navigate to the directory to be analyzed (where the source code is located)
+4. Run the command `docklz` to execute the scan
+5. The **report** of the scan, along with raw results from each tool, can be found in the *results* folder
 
 ### Opzioni di `Docklz`:
 |Opzione|Descrizione|
@@ -26,27 +26,38 @@ Si basa su alcuni tool già esistenti, come [Docker Bench for Security](https://
 |`-git [path HHTPS repository]`|Permette di specificare il path HTTPS di una repository (es. GitHub, GitLab) da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code|
 |`-install`|Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati. Opzionale|
 
-### Esempi di utilizzo
-|Esempio|Descrizione|
+**Docklz Options:**
+
+| Option | Description |
 |:---|:---|
-|`docklz -light`|Scansione LIGHT|
-|`docklz -base nginx:latest`|Scansione BASE specificando il nome completo dell'immagine|
-|`docklz -full a06`|Scansione FULL specificando i primi caratteri dell'IMAGE ID|
-|`docklz -base f77 -pathris dir/var `|Scansione BASE specificando il path dove salvare i risultati|
-|`docklz -full h99 -install -git https://github.com/quay/clair.git`|Scansione FULL specificando di installare i tool necessari e di clonare il source code dalla repository indicata|
+| `-h, --help` | Prints the help message |
+| `-light` | LIGHT: analyzes the Docker configuration present on the system |
+| `-base [image name]` | BASE: analyzes a Docker image; specify the image to be analyzed (either the full REPOSITORY name or the first few characters of the IMAGE ID, which can be viewed with `docker images`) |
+| `-full [image name]` | FULL: performs a complete analysis of a Docker project (configuration + image + source code); specify the image to be analyzed (either the full REPOSITORY name or the first few characters of the IMAGE ID, which can be viewed with `docker images`) |
+| `-pathris [results path]` | Allows specifying the absolute/relative path where the results folder will be created. By default, the current directory is used |
+| `-git [HTTPS repository path]` | Allows specifying the HTTPS path of a repository (e.g., GitHub, GitLab) from which to download the source code. (Optional) |
+| `-install` | Allows automatic installation of commands used during the script, or checks if they are already installed. (Optional) |
 
-### Implementazioni future in programma
-|Elenco|
+### Usage Examples
+| Example | Description |
+|:---|:---|
+| `docklz -light` | LIGHT scan |
+| `docklz -base nginx:latest` | BASE scan specifying the full image name |
+| `docklz -full a06` | FULL scan specifying the first few characters of the IMAGE ID |
+| `docklz -base f77 -pathris dir/var` | BASE scan specifying the path where to save the results |
+| `docklz -full h99 -install -git https://github.com/quay/clair.git` | FULL scan specifying the installation of necessary tools and cloning the source code from the provided repository |
+
+### Planned Future Implementations
+| List |
 |:---|
-|AI all'interno della fase di analisi dei risultati|
-|Miglioramento del calcolo del technical impact|
-|Calcolo della mission prevalence|
-|Calcolo del pubblic well-being impact|
-|Ulteriore metrica per valutare i CVE|
-|Ottimizzazione del tempo di esecuzione|
+| AI integration into the results analysis phase |
+| Improvement of technical impact calculation |
+| Calculation of mission prevalence |
+| Calculation of public well-being impact |
+| Additional metrics for evaluating CVEs |
+| Optimization of execution time |
 
-### Sviluppatore
-Ideato e sviluppato da *Hari Calzi*, uno studente universitario.
-Per qualsiasi informazione, segnalazione o possibile miglioramento:
+### Developer
+Created and developed by *Hari Calzi*, a university student. For any information, feedback, or potential improvements:
 - [GitHub](https://github.com/haricalzi)
-- [Linkedin](https://www.linkedin.com/in/haricalzi/)
+- [LinkedIn](https://www.linkedin.com/in/haricalzi/)
