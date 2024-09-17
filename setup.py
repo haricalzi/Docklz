@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='docklz',
     version='1.0.0',
-    description='Strumento che effettua analisi di sicurezza relative a immagini e container Docker in modo automatizzato',
+    description='Docklz is a tool that performs automated security analysis of Docker images and containers',
     author='Hari Calzi',
     author_email='calzihari@gmail.com',
     download_url='https://github.com/haricalzi/Docklz',

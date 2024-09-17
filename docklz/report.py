@@ -2,7 +2,7 @@ from fpdf import FPDF
 import matplotlib.pyplot as plt
 import sys
 
-# Funzione che permette di creare il report PDF
+# Function to create the PDF report
 def create_pdf(title, path_ris):
 
     try:
@@ -14,15 +14,15 @@ def create_pdf(title, path_ris):
         pdf.multi_cell(0, 10, title, align='C')
         #pdf.cell(0, 10, title, 0, 1, 'C')
         pdf.ln(10)
-        testo = f"I risultati grezzi di ogni scansione sono salvati all'interno della directory {path_ris}"
+        testo = f"The raw results of each scan are saved in the directory {path_ris}"
         add_data_report(pdf, testo)
         return pdf
     except Exception as e:
-            print(f"Si è verificato un errore durante la creazione del PDF: {str(e)}")
-            sys.exit(-1)
+        print(f"An error occurred during PDF creation: {str(e)}")
+        sys.exit(-1)
 
 
-# Funzione che permette di aggiungere dei dati al report
+# Function to add data to the report
 def add_data_report(pdf, data):
 
     try:
@@ -30,22 +30,22 @@ def add_data_report(pdf, data):
         pdf.multi_cell(0, 5, data, align='L')
         pdf.ln(1)
     except Exception as e:
-        print(f"Si è verificato un errore durante l'aggiunta dei dati al report: {str(e)}")
-        print(f"Testo problematico: {data}")
+        print(f"An error occurred while adding data to the report: {str(e)}")
+        print(f"Problematic text: {data}")
         sys.exit(-1)
 
 
-# Funzione che permette di aggiungere un titolo ad un paragrafo nel report
+# Function to add a heading to a paragraph in the report
 def add_titoletto_report(pdf, titoletto):
     
     try:
         pdf.set_font("helvetica", 'B', 14)
         pdf.cell(0, 10, titoletto, 0, 1, 'L')
     except Exception as e:
-        print(f"Si è verificato un errore durante l'aggiunta del titoletto al report: {str(e)}")
+        print(f"An error occurred while adding the heading to the report: {str(e)}")
         sys.exit(-1)
 
-# Funzione che permette di aggiungere un link ad un paragrafo nel report
+# Function to add a link to a paragraph in the report
 def add_link_report(pdf, text, url):
 
     try:
@@ -54,10 +54,10 @@ def add_link_report(pdf, text, url):
         pdf.cell(0, 5, text, 0, 1, 'L', link=url)
         pdf.set_text_color(0, 0, 0)
     except Exception as e:
-        print(f"Si è verificato un errore durante l'aggiunta del link al report: {str(e)}")
+        print(f"An error occurred while adding the link to the report: {str(e)}")
         sys.exit(-1)
 
-# Funzione che permette di salvare il PDF del report
+# Function to save the report PDF
 def save_pdf(pdf, path_to_save, type):
 
     try:
@@ -65,38 +65,38 @@ def save_pdf(pdf, path_to_save, type):
         pdf.output(path_to_save)
         match type:
             case "report":
-                print(f"\nReport delle scansioni generato correttamente: {path_to_save}\n")
+                print(f"\nScan report generated successfully: {path_to_save}\n")
             case "allegato":
-                print(f"\nAllegato relativo ai CVE generato correttamente: {path_to_save}\n")
+                print(f"\nCVE attachment generated successfully: {path_to_save}\n")
     except Exception as e:
-        print(f"Si è verificato un errore durante il salvataggio del file: {str(e)}")
+        print(f"An error occurred while saving the file: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che permette di creare un grafico a colonne
-def make_graph(peso3, peso2, peso1, peso0):
+# Function to create a bar chart
+def make_graph(weight3, weight2, weight1, weight0):
 
     try:
-        labels = ['Peso 3', 'Peso 2', 'peso 1', 'Peso 0']
-        values = [peso3, peso2, peso1, peso0]
+        labels = ['Weight 3', 'Weight 2', 'Weight 1', 'Weight 0']
+        values = [weight3, weight2, weight1, weight0]
         colors = ['lightcoral', 'gold', 'lightskyblue', 'yellowgreen']
         bars = plt.bar(labels, values, color=colors)
-        plt.xlabel('Categorie di peso')
-        plt.ylabel('Numero di CVE')
+        plt.xlabel('Weight Categories')
+        plt.ylabel('Number of CVEs')
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height}', ha='center', va='bottom')
-        nome_grafico = 'CVE_peso_grafico.png'
-        plt.savefig(nome_grafico)
+        chart_name = 'CVE_weight_chart.png'
+        plt.savefig(chart_name)
         plt.close()
 
-        return nome_grafico
+        return chart_name
     except Exception as e:
-        print(f"Si è verificato un errore durante la creazione del grafico: {str(e)}")
+        print(f"An error occurred while creating the chart: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che permette di inserire un'immagine nel report
+# Function to insert an image into the report
 def add_image_report(pdf, image_file):
 
     try:
@@ -107,5 +107,5 @@ def add_image_report(pdf, image_file):
         pdf.image(image_file, x=x, y=y, w=image_width)
         pdf.set_y(y + image_width + 5)
     except Exception as e:
-        print(f"Si è verificato un errore durante l'aggiunta dell'immagine nel report: {str(e)}")
+        print(f"An error occurred while adding the image to the report: {str(e)}")
         sys.exit(-1)

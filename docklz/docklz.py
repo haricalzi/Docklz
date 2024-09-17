@@ -6,36 +6,37 @@ from .report import *
 
 os.system("clear")
 
+
 def main():
-        #creo il parser
-        parser = argparse.ArgumentParser(description='Analisi di immagini e container Docker')
+        # Create the parser
+        parser = argparse.ArgumentParser(description='Analysis of Docker images and containers')
 
-        #aggiungo le opzioni
-        parser.add_argument('-light', action="store_true", help='LIGHT: analisi della configurazione di Docker presente nel sistema')
-        parser.add_argument('-base', action="store", dest="immagine_base", help='BASE: analisi di un\'immagine Docker, specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con "docker images")')
-        parser.add_argument('-full', action="store", dest="immagine_full", help='FULL: analisi completa di un progetto Docker (configurazione + immagine + source code), specificare l\'immagine da analizzare (il nome completo della REPOSITORY oppure i primi caratteri dell\'IMAGE ID, visualizzabili con "docker images")')
-        parser.add_argument('-pathris', action="store", dest="path_risultati", default=".", help='Permette di specificare il path assoluto/relativo in cui creare la cartella dei risultati. Di default viene considerato quello attuale')
-        parser.add_argument('-git', action="store", dest="path_git", help='Permette di specificare il path HTTPS di una repository (es. GitHub, GitLab) da cui scaricare il source code. Opzionale, non utilizzare se è già presente il source code')
-        parser.add_argument('-install', action="store_true", help='Permette di installare in automatico i comandi utilizzati durante lo script, oppure controllare se sono già installati')
+        # Add options
+        parser.add_argument('-light', action="store_true", help='LIGHT: analysis of the Docker configuration present in the system')
+        parser.add_argument('-base', action="store", dest="immagine_base", help='BASE: analysis of a Docker image, specify the image to analyze (the full name of the REPOSITORY or the first characters of the IMAGE ID, viewable with "docker images")')
+        parser.add_argument('-full', action="store", dest="immagine_full", help='FULL: complete analysis of a Docker project (configuration + image + source code), specify the image to analyze (the full name of the REPOSITORY or the first characters of the IMAGE ID, viewable with "docker images")')
+        parser.add_argument('-pathris', action="store", dest="path_risultati", default=".", help='Allows you to specify the absolute/relative path where to create the results folder. Optional, by default, the current path is used')
+        parser.add_argument('-git', action="store", dest="path_git", help='Allows you to specify the HTTPS path of a repository (e.g., GitHub, GitLab) from which to download the source code. Optional')
+        parser.add_argument('-install', action="store_true", help='Allows automatic installation of commands used during the script, or check if they are already installed. Optional')
 
-        #parso gli argomenti passati da linea di comando
+        # Parse command-line arguments
         args = parser.parse_args()
 
-        #se passo il comando senza parametri stampo anche l'help, altrimenti solo il menù iniziale
+        # If no parameters are passed, print help, otherwise just the initial menu
         stampa_iniziale()
         if not (args.light or args.immagine_base or args.immagine_full or args.path_git or args.install):
                 stampa_help()
-        
-        #controllo se devo clonare da GitHub / GitLab
+
+        # Check if cloning from GitHub/GitLab is needed
         if(args.path_git):
                 git_clone_sourcecode(args.path_git)
 
-        #controllo di non aver specificato più modalità di scansione
+        # Check if more than one scan mode is specified
         if((args.light and args.immagine_base) or (args.light and args.immagine_full) or (args.immagine_base and args.immagine_full)):
-                print("Errore: puoi specificare al massimo uno tra -light, -base, -immagine_full")
-        #eseguo l'opzione specificata
+                print("Error: You can specify at most one of -light, -base, -full")
+        # Execute the specified option
         elif(args.light):
-                #light 
+                # light 
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
                 report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
                 if(args.install):
@@ -44,7 +45,7 @@ def main():
                 save_pdf(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf", "report")
 
         elif(args.immagine_base):
-                #base  
+                # base  
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
                 report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
                 if(args.install):
@@ -55,7 +56,7 @@ def main():
                 save_pdf(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf", "report")
 
         elif(args.immagine_full):
-                #full   
+                # full   
                 path_ris, nome_pdf = mkdir_results(args.path_risultati)
                 report_pdf = create_pdf(f"REPORT {nome_pdf}", path_ris)
                 if(args.install):
@@ -70,7 +71,7 @@ def main():
                 save_pdf(report_pdf, f"{path_ris}/report_{nome_pdf}.pdf", "report")
         else:
                 sys.exit(-1)
-        
+
         os.system("sudo rm -rf CVE_peso_grafico.png")
         print("----------------------------------------------------------------")
 

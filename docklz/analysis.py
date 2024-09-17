@@ -2,27 +2,27 @@ import ssvc, json, os, sys, aiohttp, asyncio
 from .report import *
 
 
-# Funzione che calcola l'expoitability di un CVE
+# Function that calculates the exploitability of a CVE
 async def exploitability(session, semaphore, VulnerabilityID): 
-    anno = VulnerabilityID[4:8]
-    url = f"https://github.com/trickest/cve/blob/main/{anno}/{VulnerabilityID}.md"
+    year = VulnerabilityID[4:8]
+    url = f"https://github.com/trickest/cve/blob/main/{year}/{VulnerabilityID}.md"
 
     async with semaphore:
         try:
             async with session.get(url) as response:
-                print(f"Analisi {VulnerabilityID} in corso")
+                print(f"Analyzing {VulnerabilityID}")
                 if response.status == 404:
                     exploit_calc = 'none'
                 else:
                     exploit_calc = 'poc'
         except aiohttp.ClientError as e:
-            print(f"Errore durante la richiesta: {e}")
+            print(f"Error during the request: {e}")
             exploit_calc = 'none'
 
     return exploit_calc
 
 
-# Funzione che calcola l'automatibility di un CVE
+# Function that calculates the automatability of a CVE
 def automatibility(V3Vector):
 
     try:
@@ -35,10 +35,10 @@ def automatibility(V3Vector):
         
         return automation_calc
     except Exception as e:
-        print(f"Si è verificato un errore durante il calcolo dell'automatibility di un CVE: {str(e)}")
+        print(f"An error occurred while calculating the automatibility of a CVE: {str(e)}")
         sys.exit(-1)
 
-# Funzione che calcola il technical impact di un CVE
+# Function that calculates the technical impact of a CVE
 def technical_impact(V3Vector):
 
     try:
@@ -59,7 +59,7 @@ def technical_impact(V3Vector):
         # Impact Sub-Score
         iss = 1 - ((1 - confidentiality_value) * (1 - integrity_value) * (1 - availability_value))
 
-        # soglia per l'iss
+        # threshold for the ISS
         threshold = 0.67
 
         if (iss > threshold):
@@ -69,21 +69,21 @@ def technical_impact(V3Vector):
 
         return ti_calc
     except Exception as e:
-        print(f"Si è verificato un errore durante il calcolo del technical impact di un CVE: {str(e)}")
+        print(f"An error occurred while calculating the technical impact of a CVE: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che calcola il mission wellbeing di un CVE
+# Function that calculates the mission well-being of a CVE
 def mission_wellbeing(V3Vector):
 
-    # mission prevalence (minimal, support, essential), rilevanza dell'oggetto vulnerabile all'interno del progetto, default = essential (livello massimo)
+    # Mission prevalence (minimal, support, essential): relevance of the vulnerable object within the project, default = essential (highest level)
     mp = "essential" 
-    # pubblic well-being impact (minimal, material, irrevesible), impatto dei sistemi compromessi sull'uomo, default = irreversible (livello massimo)
+    # Public well-being impact (minimal, material, irreversible): impact of compromised systems on humans, default = irreversible (highest level)
     pwbi = "irreversible"
 
     mw_calc = 'high'
 
-    # nel caso venisse implementato un modo per calcolare mp e pwbi, decommentare la parte sottostante
+    # If a method to calculate mp and pwbi is implemented, uncomment the following part
 
     # if (pwbi == "irreversible"):
     #     mw_calc = 'high'
@@ -97,7 +97,7 @@ def mission_wellbeing(V3Vector):
     return mw_calc
 
 
-# Funzione che calcola il peso da associare ad ogni CVE
+# Function that calculates the weight to be assigned to each CVE
 async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
     try:
         exploit = await exploitability(session, semaphore, VulnerabilityID)
@@ -106,7 +106,7 @@ async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
             exploitation=exploit,                           # none, poc, (active)   --> from trickest on github
             automatable=automatibility(V3Vector),           # yes, no               --> from V3Vector, human interaction field
             technical_impact=technical_impact(V3Vector),    # partial, total        --> from V3Vector, Confidentiality, Integrity, Availability fields
-            mission_wellbeing=mission_wellbeing(V3Vector),  # low, medium, high     --> default ad high
+            mission_wellbeing=mission_wellbeing(V3Vector),  # low, medium, high     --> default is high
         )
 
         outcome = decision.evaluate()
@@ -122,16 +122,16 @@ async def calcolo_peso(session, semaphore, V3Vector, VulnerabilityID):
             case "ACT":
                 peso = 3
             case _:
-                print("Errore, peso settato al massimo per precauzione")
+                print("Error, weight set to maximum for precaution")
                 peso = 3
         
         return peso
     except Exception as e:
-        print(f"Si è verificato un errore durante il calcolo del peso di un CVE: {str(e)}")
+        print(f"An error occurred while calculating the weight of a CVE: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che estrae CVE e relative informazioni dal json generato da trivy image
+# Function that extracts CVEs and their information from the JSON generated by Trivy image
 def estrai_CVE_da_JSON_Trivy_image(json_file):
     try:
         vulnerabilities_dict = {}
@@ -157,11 +157,11 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
                             v3vector = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Vector', '')
                             v3score = vulnerability.get('CVSS', {}).get('nvd', {}).get('V3Score', '')
 
-                        # Valori di default se non presenti i precedenti
+                        # Default values if previous ones are not present
                         v3vector = v3vector if v3vector else '-1'
                         v3score = v3score if v3score else '-1'
 
-                        # Aggiunge il dizionario al dizionario delle vulnerabilità
+                        # Add the dictionary to the vulnerabilities dictionary
                         vulnerabilities_dict[vulnerability_id] = {
                             'VulnerabilityID': vulnerability_id,
                             'Title': title,
@@ -173,15 +173,15 @@ def estrai_CVE_da_JSON_Trivy_image(json_file):
             
         return list(vulnerabilities_dict.values())
     except Exception as e:
-        print(f"Si è verificato un errore durante l'estrazione dei CVE dal JSON di Trivy image: {str(e)}")
+        print(f"An error occurred while extracting CVEs from Trivy image JSON: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che analizza le info di un CVE e ne calcola il peso
+# Function that analyzes CVE information and calculates the weight
 async def analisi_CVE(vulnerabilities_list):
     try:
         new_vulnerabilities_list = []
-        semaphore = asyncio.Semaphore(4) #limite connessioni in simultanea
+        semaphore = asyncio.Semaphore(4) #limit simultaneous connections
         async with aiohttp.ClientSession() as session:
             tasks = []
             for vulnerability in vulnerabilities_list:
@@ -195,15 +195,15 @@ async def analisi_CVE(vulnerabilities_list):
             for vulnerability, peso in zip(vulnerabilities_list, pesi):
                 vulnerability['Peso'] = peso
                 new_vulnerabilities_list.append(vulnerability)
-            print("\nAnalisi CVE completata\n") 
+            print("\nCVE analysis completed\n")  
 
         return new_vulnerabilities_list
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi dei CVE: {str(e)}")
+        print(f"An error occurred while analyzing CVEs: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che unisce le precedenti, ordina per peso decrescente e prepara il testo da stampare
+# Function that combines the previous functions, sorts by descending weight and prepares the text to print
 def ordina_prepara_trivy_image(json_file):
 
     try: 
@@ -214,23 +214,23 @@ def ordina_prepara_trivy_image(json_file):
         vulnerabilities_list = estrai_CVE_da_JSON_Trivy_image(json_file)
         if vulnerabilities_list:
             vulnerabilities_list_peso = asyncio.run(analisi_CVE(vulnerabilities_list))
-            #ordinamento decrescente per peso
+            #Descending sorting by weight
             vulnerabilities_list_sorted = sorted(vulnerabilities_list_peso, key=lambda x: x['Peso'], reverse=True)
-            #testo per report
-            testo = f"\nL'immagine analizzata è risultata potenzialmente vulnerabile a {len(vulnerabilities_list_sorted)} CVE. Vengono ordinati in ordine decrescente di peso [max=3, min=0], un parametro calcolato che stima la rilevanza del CVE ed indica quanto è urgente effettuare delle azioni di mitigazione\n\n-------------------"
+            #text for the report
+            testo = f"\nThe analyzed image was found to be potentially vulnerable to {len(vulnerabilities_list_sorted)} CVEs. They are sorted in descending order of weight [max=3, min=0], a calculated parameter that estimates the relevance of the CVE and indicates how urgent it is to take mitigation actions.\n\n-------------------"
             for vulnerability in vulnerabilities_list_sorted:
                 match vulnerability['Peso']:
                     case 3:
-                        peso = "3 - Agire immediatamente"
+                        peso = "3 - Act immediately"
                         peso3 += 1
                     case 2:
-                        peso = "2 - Monitorare e pianificare l'intervento"
+                        peso = "2 - Monitor and plan the intervention"
                         peso2 += 1
                     case 1:
-                        peso = "1 - Monitorare la vulnerabilità"
+                        peso = "1 - Monitor the vulnerability"
                         peso1 += 1
                     case 0:
-                        peso = "0 - Situazione sotto controllo"
+                        peso = "0 - Situation under control"
                         peso0 += 1
                 image_file = make_graph(peso3, peso2, peso1, peso0)
                 testo += f"\nVulnerabilityID: {vulnerability['VulnerabilityID']}\n"
@@ -238,15 +238,15 @@ def ordina_prepara_trivy_image(json_file):
                 testo += f"Peso: {peso}\n"
                 testo += "-------------------"       
         else:
-            testo = "\nL'immagine non è risultata vulnerabile a nessun CVE"
+            testo = "\nThe image was not found to be vulnerable to any CVEs."
 
         return testo, image_file
     except Exception as e:
-        print(f"Si è verificato un errore durante l'associazione del peso ai CVE: {str(e)}")
+        print(f"An error occurred while assigning the weight to the CVEs: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che estrae il nome dell'immagine dal json generato da docker inspect
+# Function that extracts the image name from the JSON generated by docker inspect
 def estrai_da_JSON_Docker_inspect(json_file):
     
     try:
@@ -256,27 +256,27 @@ def estrai_da_JSON_Docker_inspect(json_file):
         if 'RepoTags' in data[0]:
             repotags = data[0]['RepoTags'][0].replace("[","").replace("]","")
         else:
-            repotags = "ERRORE"
+            repotags = "ERROR"
 
         return repotags
     except Exception as e:
-        print(f"Si è verificato un errore durante l'estrazione del nome dell'immagine analizzata: {str(e)}")
+        print(f"An error occurred while extracting the name of the analyzed image: {str(e)}")
         sys.exit(-1)
 
-# Funzione che estrae le eventuali problematiche rilevate nel JSON prodotto da Trivy fs
+# Function that extracts any issues detected in the JSON produced by Trivy fs
 def estrai_da_JSON_trivy_fs(json_file):
 
     with open(json_file, 'r') as file:
         data = json.load(file)
 
     if 'Title' in data:
-        testo = f"Ecco le principali problematiche rilevate da Trivy:\n{estrai_titoli(data, testo)}"
+        testo = f"Here are the main issues detected by Trivy:\n{estrai_titoli(data, testo)}"
     else:
-        testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
+        testo = "No issues were detected in this analysis"
     return testo
 
 
-# Funzione che estrae i titoli dato il contenuto di un JSON in modo ricorsivo
+# Function that extracts titles from a JSON content recursively
 def estrai_titoli(data, testo):
     
     try:
@@ -292,11 +292,11 @@ def estrai_titoli(data, testo):
             
         return testo
     except Exception as e:
-        print(f"Si è verificato un errore durante l'estrazione dei titoli dal Json: {str(e)}")
+        print(f"An error occurred while extracting titles from the JSON: {str(e)}")
         sys.exit(-1)
         
 
-# Funzione che estrae le eventuali problematiche rilevate nel txt prodotto da Semgrep
+# Function that extracts any issues detected from the txt produced by Semgrep
 def estrai_da_semgrep(txt_file):
 
     try:
@@ -304,9 +304,9 @@ def estrai_da_semgrep(txt_file):
 
         with open(txt_file, 'r') as file:
             if (os.path.getsize(txt_file) == 0):
-                testo = "Non è stata rilevata alcuna problematica tramite questa analisi"
+                testo = "No issues were detected in this analysis"
             else:
-                testo = "Ecco le principali problematiche rilevate:\n"
+                testo = "Here are the main issues detected:\n"
                 for line in file:
                     line = line.strip()
                     if line.startswith('❯❯❱'):
@@ -327,11 +327,11 @@ def estrai_da_semgrep(txt_file):
                     
         return testo
     except Exception as e:
-        print(f"Si è verificato un errore durante l'estrazione da Semgrep: {str(e)}")
+        print(f"An error occurred while extracting from Semgrep: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che estrae il numero di problematiche dal Docker Bench for Security
+# Function that extracts the number of issues from Docker Bench for Security
 def estrai_da_dockerbenchsec(txt_file):
 
     try:
@@ -339,11 +339,11 @@ def estrai_da_dockerbenchsec(txt_file):
             content = file.read()
         warn_count = content.count("[WARN]")
         if (warn_count == 0):
-            testo = "Non sono stati rilevati problemi nella configurazione di Docker"
+            testo = "No issues were detected in the Docker configuration"
         else:
-            testo = f"Sono stati rilevati {warn_count} problemi nella configurazione di Docker.\nControllare nel file le voci con esito WARN e confrontare con il CIS Docker Benchmark v1.6.0"
+            testo = f"{warn_count} issues were detected in the Docker configuration.\nCheck the file for entries with WARN and compare with the CIS Docker Benchmark v1.6.0"
 
         return testo
     except Exception as e:
-        print(f"Si è verificato un errore durante l'estrazione del numero di problematiche dal Docker Bench for Security: {str(e)}")
+        print(f"An error occurred while extracting the number of issues from Docker Bench for Security: {str(e)}")
         sys.exit(-1)

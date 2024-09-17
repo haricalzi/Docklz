@@ -5,7 +5,7 @@ from .analysis import *
 from .report import *
 
 
-# Funzione che crea la cartella per i risultati
+# Function that creates the results folder
 def mkdir_results(path):
 
     actual = os.getcwd()
@@ -17,9 +17,9 @@ def mkdir_results(path):
     if not os.path.exists(nome_dir):
         try:
             os.mkdir(nome_dir)
-            print(f"\nCreo una cartella chiamata \"{nome_dir}\", contenente i risultati delle varie scansioni")
+            print(f"\nCreating a folder called \"{nome_dir}\", containing the results of the various scans")
         except OSError as e:
-            print(f"Errore durante la creazione della cartella \"{nome_dir}\": {e}")
+            print(f"Error during the creation of the folder \"{nome_dir}\": {e}")
             sys.exit(-1) 
     
     nome_sottodir = data_ora()
@@ -28,9 +28,9 @@ def mkdir_results(path):
         try:
             os.chdir(nome_dir)
             os.mkdir(nome_sottodir)
-            print(f"\nCreo una cartella chiamata \"{nome_sottodir}\" all'interno di \"{nome_dir}\", contenente i risultati della scansione attuale\n")
+            print(f"\nCreating a folder called \"{nome_sottodir}\" inside \"{nome_dir}\", containing the results of the current scan\n")
         except OSError as e:
-            print(f"Errore durante la creazione della cartella \"{nome_sottodir}\": {e}")
+            print(f"Error during the creation of the folder \"{nome_sottodir}\": {e}")
             os.chdir(actual)
             sys.exit(-1)
 
@@ -39,30 +39,30 @@ def mkdir_results(path):
     return f"{tosave}/{nome_dir}/{nome_sottodir}", f"{nome_sottodir}"
 
 
-# Funzione che clona una repository (path HTTPS)
+# Function that clones a repository (HTTPS path)
 def git_clone_sourcecode(path_git):
 
     print("----------------------------------------------------------------\n")
     try:
         os.system(f"git clone {path_git}")
-        print("\ngit clone effettuato correttamente")
+        print("\ngit clone successfully completed")
     except Exception as e:
-        print(f"Errore durante l'esecuzione di git clone: {str(e)}")
+        print(f"Error during git clone execution: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che gestisce data e ora per creare file e cartelle univoche ed evitare sovrascritture
+# Function that handles date and time to create unique files and folders to avoid overwriting
 def data_ora():
 
     try:
         attuale = datetime.now()
         return f"{attuale.day}-{attuale.month}-{attuale.year}__{attuale.hour}-{attuale.minute}-{attuale.second}"
     except Exception as e:
-        print(f"Errore durante la generazione di data ed ora: {e}")
+        print(f"Error during the generation of date and time: {e}")
         sys.exit(-1)
 
 
-# Funzione che stampa il messaggio iniziale
+# Function that prints the initial message
 def stampa_iniziale():
 
     print("\n\n--------------------------------------------------")
@@ -70,10 +70,9 @@ def stampa_iniziale():
     print("--------------------------------------------------")
     print("----- SECURITY ANALISYS OF DOCKER CONTAINERS -----")
     print("--------------------------------------------------\n\n")
-    
 
 
-# Funzione che stampa il menù di help
+# Function that prints the help menu
 def stampa_help():
 
     print("--------------------------------------------------")
@@ -81,69 +80,69 @@ def stampa_help():
     print("--------------------------------------------------\n\n")
 
 
-# Funzione che esegue un controllo della configurazione Docker presente sul sistema tramite il Docker Bench for security
+# Function that performs a Docker configuration check using Docker Bench for Security
 def docker_bench_security(path_ris, report_pdf):
 
     print("----------------------------------------------------------------")
     try:
-        print("\nInstallo il Docker Bench of Security\n")
+        print("\nInstalling Docker Bench for Security\n")
         os.system("git clone https://github.com/docker/docker-bench-security.git")
         os.chdir("docker-bench-security")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'installazione del Docker Bench for Security: {str(e)}")
+        print(f"An error occurred while installing Docker Bench for Security: {str(e)}")
         sys.exit(-1)
     nome_file = "DockerBenchmarkSecurity.txt"
     try:
-        print("\nAnalisi della configurazione di Docker in corso...")
+        print("\nRunning Docker configuration analysis...")
         os.system(f"sudo ./docker-bench-security.sh > {path_ris}/{nome_file}")
         os.chdir("..")
         os.system("sudo rm -rf docker-bench-security")
-        print(f"\nAnalisi completata\n")
-        #report pdf
-        add_titoletto_report(report_pdf, "Configurazione di Docker")
-        testo = f"Analisi della configurazione di Docker presente nel sistema completata, trovi i risultati nel file {nome_file}"
+        print(f"\nAnalysis completed\n")
+        # PDF report
+        add_titoletto_report(report_pdf, "Docker Configuration")
+        testo = f"Docker configuration analysis completed. Results can be found in the file {nome_file}"
         add_data_report(report_pdf, testo)
         testo = estrai_da_dockerbenchsec(f"{path_ris}/{nome_file}")
         add_data_report(report_pdf, testo)
-        testo = "Clicca qui per registrarti e scaricare il documento"
+        testo = "Click here to register and download the document"
         url = "https://www.cisecurity.org/benchmark/docker"
         add_link_report(report_pdf, testo, url)
-        testo = "Ulteriori consigli e spiegazioni sono presenti al suo interno"
+        testo = "Additional advice and explanations are provided within"
         add_data_report(report_pdf, testo)
     except Exception as e:
-        print(f"Si è verificato un errore durante l'esecuzione del Docker Bench for Security: {str(e)}")
+        print(f"An error occurred while running Docker Bench for Security: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che ispeziona un'immagine Docker tramite Docker CLI
+# Function that inspects a Docker image using Docker CLI
 def docker_inspect(path_ris, immagine, report_pdf):
 
     print("----------------------------------------------------------------")
-    print("\nAnalisi di un'immagine Docker tramite Docker CLI\n")
-    print("\nAnalisi in corso, attendere...\n")
+    print("\nInspecting a Docker image using Docker CLI\n")
+    print("\nAnalysis in progress, please wait...\n")
     nome_file = "docker_inspect.json"
     try:
         os.system(f"sudo docker image inspect -f json {immagine} > {path_ris}/{nome_file}")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Docker CLI: {str(e)}")
+        print(f"An error occurred while analyzing the image using Docker CLI: {str(e)}")
         sys.exit(-1)
-    print(f"\nAnalisi completata\n")
-    #report pdf
+    print(f"\nAnalysis completed\n")
+    # PDF report
     try:
         nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file}")
-        add_titoletto_report(report_pdf, f"Analisi dell'immagine {nome_immagine}")
-        testo = f"Analisi dell'immagine con Docker CLI completata, trovi i risultati nel file {nome_file}.\nEsso contiene varie informazioni utili per farsi un'idea iniziale dell'immagine in analisi. È importante porre l'attenzione sulle variabili d'ambiente: campo \"Env\", che non devono contenere alcun secret (password, key) in chiaro."
+        add_titoletto_report(report_pdf, f"Image {nome_immagine} analysis")
+        testo = f"Image analysis with Docker CLI completed. Results can be found in the file {nome_file}.\nIt contains various useful pieces of information to get an initial idea of the image being analyzed. Pay special attention to the environment variables: 'Env' field, which should not contain any secrets (passwords, keys) in plaintext."
         add_data_report(report_pdf, testo)
     except Exception as e:
-        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        print(f"An error occurred while writing the report: {str(e)}")
         sys.exit(-1)
 
-# Funzione che ispeziona un'immagine Docker tramite trivy
-def trivy_image(path_ris ,immagine, report_pdf):
+# Function that inspects a Docker image using Trivy
+def trivy_image(path_ris, immagine, report_pdf):
 
     print("----------------------------------------------------------------")
-    print("\nAnalisi di un'immagine Docker tramite Trivy\n")   
-    print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")
+    print("\nAnalyzing a Docker image with Trivy\n")   
+    print("\nAnalysis in progress, this step may take some time. Please wait......\n")
     nome_file = "trivy_image.json"
     nome_file2 = "trivy_image.txt"
     nome_file3 = "docker_inspect.json"
@@ -151,72 +150,72 @@ def trivy_image(path_ris ,immagine, report_pdf):
         os.system(f"sudo trivy image -f json {immagine} > {path_ris}/{nome_file}")
         os.system(f"sudo trivy image {immagine} > {path_ris}/{nome_file2}")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi dell'immagine tramite Trivy: {str(e)}")
+        print(f"An error occurred during the image analysis with Trivy: {str(e)}")
         sys.exit(-1)
-    #report pdf
+    # PDF report
     try:
         nome_immagine = estrai_da_JSON_Docker_inspect(f"{path_ris}/{nome_file3}")
-        add_titoletto_report(report_pdf, f"CVE relativi all'immagine {nome_immagine}")
-        testo = f"Analisi dell'immagine con trivy completata, trovi i risultati grezzi nei file {nome_file2} e {nome_file}"
+        add_titoletto_report(report_pdf, f"CVE related to the image {nome_immagine}")
+        testo = f"Trivy image analysis completed. Raw results can be found in files {nome_file2} and {nome_file}."
         add_data_report(report_pdf, testo)
         testo, image_file = ordina_prepara_trivy_image(f"{path_ris}/{nome_file}")
-        allegato_pdf = create_pdf("Elenco CVE con peso", path_ris)
+        allegato_pdf = create_pdf("CVE List by Severity", path_ris)
         add_data_report(allegato_pdf, testo)
         save_pdf(allegato_pdf, f"{path_ris}/Allegato_CVE.pdf", "allegato")
-        testo = f"Ecco un grafico che illustra i CVE analizzati, dividendoli in base al peso. Ulteriori informazioni disponibili nell'allegato \"Allegato_CVE.pdf\"\n"
+        testo = f"Here is a chart illustrating the analyzed CVEs, categorized by severity. Further information is available in the attachment \"Allegato_CVE.pdf\"\n"
         add_data_report(report_pdf, testo)
         add_image_report(report_pdf, image_file)
-        print(f"\nAnalisi completata\n")
+        print(f"\nAnalysis completed\n")
     except Exception as e:
-        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        print(f"An error occurred while writing the report: {str(e)}")
         sys.exit(-1)
 
-# Funzione che ispeziona tramite trivy una directory alla ricerca di vulnerabilità, secrets, misconfigurations
+# Function that inspects a directory with Trivy for vulnerabilities, secrets, and misconfigurations
 def trivy_fs(path_ris, report_pdf):
 
     print("----------------------------------------------------------------")
-    print("\nTrivy: analisi della directory alla ricerca di vulnerabilità, secrets, misconfigurations")
-    print("\nAnalisi in corso, attendere...\n")
+    print("\nTrivy: Analyzing the directory for vulnerabilities, secrets, and misconfigurations")
+    print("\nAnalysis in progress, please wait...\n")
     nome_file = "trivy_fs.json"
     nome_file2 = "trivy_fs.txt"
     try:
         os.system(f"sudo trivy fs -f json --scanners vuln,secret,misconfig . > {path_ris}/{nome_file}")
         os.system(f"sudo trivy fs --scanners vuln,secret,misconfig . > {path_ris}/{nome_file2}")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi di Trivy: {str(e)}")
+        print(f"An error occurred during the Trivy analysis: {str(e)}")
         sys.exit(-1)
-    print(f"\nAnalisi completata\n")
-    #report pdf
+    print(f"\nAnalysis completed\n")
+    # PDF report
     try:
-        add_titoletto_report(report_pdf, "Analisi del codice sorgente")
-        testo = f"L'analisi del codice sorgente è stata eseguita sfruttando due tool differenti, Trivy e Semgrep.\n\nTrovi i risultati dell'analisi con Trivy nei file {nome_file2} e {nome_file}"
+        add_titoletto_report(report_pdf, "Source Code Analysis")
+        testo = f"The source code analysis was performed using two different tools, Trivy and Semgrep.\n\nThe results of the Trivy analysis can be find in files {nome_file2} and {nome_file}."
         add_data_report(report_pdf, testo)
         testo = estrai_da_JSON_trivy_fs(f"{path_ris}/{nome_file}")
         add_data_report(report_pdf, testo)
     except Exception as e:
-        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        print(f"An error occurred while writing the report: {str(e)}")
         sys.exit(-1)
 
 
-# Funzione che ispeziona tramite semgrep il codice sorgente dell'applicazione
+# Function that inspects the application's source code with Semgrep
 def semgrep_scan(path_ris, report_pdf):
 
     print("----------------------------------------------------------------")
-    print("\nSemgrep: analisi del codice sorgente dell'applicazione\n")
-    print("\nAnalisi in corso, questo passaggio potrebbe richiedere un po' di tempo. Attendere......\n")
+    print("\nSemgrep: Analyzing the application's source code\n")
+    print("\nAnalysis in progress, this step may take some time. Please wait......\n")
     nome_file = "semgrep_scan.txt"
     try:
         os.system(f"semgrep scan --severity=WARNING --severity=ERROR > {path_ris}/{nome_file}")
     except Exception as e:
-        print(f"Si è verificato un errore durante l'analisi di Semgrep: {str(e)}")
+        print(f"An error occurred during the Semgrep analysis: {str(e)}")
         sys.exit(-1)
-    print(f"\nAnalisi completata\n")
-    #report pdf
+    print(f"\nAnalysis completed\n")
+    # PDF report
     try:
-        testo = f"\n-------------------\n\nTrovi i risultati dell'analisi con Semgrep nel file {nome_file}"
+        testo = f"\n-------------------\n\nThe results of the Semgrep analysis can be find in the file {nome_file}"
         add_data_report(report_pdf, testo)
         testo = estrai_da_semgrep(f"{path_ris}/{nome_file}")
         add_data_report(report_pdf, testo)
     except Exception as e:
-        print(f"Si è verificato un errore durante la scrittura del report: {str(e)}")
+        print(f"An error occurred while writing the report: {str(e)}")
         sys.exit(-1)

@@ -34,7 +34,7 @@ It's based on some existing tools, such as [Docker Bench for Security](https://g
 | `-light` | LIGHT: analyzes the Docker configuration present on the system |
 | `-base [image name]` | BASE: analyzes a Docker image; specify the image to be analyzed (either the full REPOSITORY name or the first few characters of the IMAGE ID, which can be viewed with `docker images`) |
 | `-full [image name]` | FULL: performs a complete analysis of a Docker project (configuration + image + source code); specify the image to be analyzed (either the full REPOSITORY name or the first few characters of the IMAGE ID, which can be viewed with `docker images`) |
-| `-pathris [results path]` | Allows specifying the absolute/relative path where the results folder will be created. By default, the current directory is used |
+| `-pathris [results path]` | Allows specifying the absolute/relative path where the results folder will be created. Optional, by default, the current directory is used |
 | `-git [HTTPS repository path]` | Allows specifying the HTTPS path of a repository (e.g., GitHub, GitLab) from which to download the source code. (Optional) |
 | `-install` | Allows automatic installation of commands used during the script, or checks if they are already installed. (Optional) |
 
