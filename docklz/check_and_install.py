@@ -1,7 +1,7 @@
 import os, sys
 
 
-# Function that checks if a command is already installed, if not, installs it
+# Function that checks if a command is already installed and, if not, installs it
 def check_command_installed(command):
 
     base_command = ["wget", "curl", "git"]
