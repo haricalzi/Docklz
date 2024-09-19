@@ -22,7 +22,7 @@ async def exploitability(session, semaphore, VulnerabilityID):
     return exploit_calc
 
 
-# Function that calculates the automatability of a CVE
+# Function that calculates the automatibility of a CVE
 def automatibility(V3Vector):
 
     try:
