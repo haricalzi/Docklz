@@ -269,27 +269,31 @@ def extract_from_JSON_trivy_fs(json_file):
     with open(json_file, 'r') as file:
         data = json.load(file)
 
-    if 'Title' in data:
-        text = f"Here are the main issues detected by Trivy:\n{extract_titles(data, text)}"
-    else:
-        text = "No issues were detected in this analysis"
-    return text
+    text = "Here are the main issues detected by Trivy:\n"
+    text2 = extract_titles(data, text)
 
+    if text2 == "Here are the main issues detected by Trivy:\n":
+        text2 = "No issues were detected in this analysis"
+        
+    return text2
 
 # Function that extracts titles from a JSON content recursively
-def extract_titles(data, text):
-    
+def extract_titles(data, text, found_titles=None):
+    if found_titles is None:
+        found_titles = set() 
+
     try:
         if isinstance(data, dict):
             for key, value in data.items():
-                if key == 'Title':
+                if key == 'Title' and value not in found_titles:
                     text += f"- {value}\n"
+                    found_titles.add(value)
                 else:
-                    text = extract_titles(value, text)
+                    text = extract_titles(value, text, found_titles)
         elif isinstance(data, list):
             for element in data:
-                text = extract_titles(element, text)
-            
+                text = extract_titles(element, text, found_titles)
+
         return text
     except Exception as e:
         print(f"An error occurred while extracting titles from the JSON: {str(e)}")
