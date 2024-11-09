@@ -17,6 +17,7 @@ setup(
         'matplotlib',
         'ssvc',
         'setuptools',
+        'fpdf'
     ],
     entry_points={
         'console_scripts': [
